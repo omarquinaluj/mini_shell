@@ -151,5 +151,4 @@ void	ft_init_exec(t_cmd **cmds, t_env **env)
 		close(file);
 	ft_wait_for_childs();
 	ft_free_cmd(cmds, envp);
-
 }
