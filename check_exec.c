@@ -55,7 +55,8 @@ int ft_check_cmd(t_cmd *current, char **envp)
 
 void	ft_breack_check(t_cmd *current, char **envp)
 {
-	if ((current->cmd && !current->cmd[0]) || (ft_check_cmd(current, envp) != 0))
+	if (((current->cmd && !current->cmd[0]) || (ft_check_cmd(current, envp) != 0)) &&
+		!(is_builtin(current)))
 		error_st(current->name_cmd, "command not found", 127);
 	if (current->infile && (!current->infile[0] || !current->infile[1]))
 		perror ("falla el infile");//status = 127;

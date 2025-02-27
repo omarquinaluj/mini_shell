@@ -588,7 +588,7 @@ int	ft_builtin(t_cmd *cmd, t_env **env, int len)
 		else
 			return (ft_execute_built(cmd, env));
 	}
-	else if (len == 1)
+	else if (is_builtin(cmd))
 		ft_cd_exit_export_unset(cmd, env);
 	return (STDIN_FILENO);
 }
