@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   señales_full.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/19 10:31:21 by alexander         #+#    #+#             */
+/*   Updated: 2025/02/19 10:31:23 by alexander        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "mini_shell.h"
 
 void	main_signal(int signal)
@@ -14,6 +26,7 @@ void	main_signal(int signal)
 			ft_itoa(128 + g_minishell.signal));
 	}
 }
+
 // sacado de un repo para heredoc
 void	sig_heredoc(void)
 {
@@ -588,7 +601,7 @@ int	ft_builtin(t_cmd *cmd, t_env **env, int len)
 		else
 			return (ft_execute_built(cmd, env));
 	}
-	else if (is_builtin(cmd))
+	else if (len == 1)
 		ft_cd_exit_export_unset(cmd, env);
 	return (STDIN_FILENO);
 }
