@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 10:24:55 by alexander         #+#    #+#             */
-/*   Updated: 2025/02/19 10:26:16 by alexander        ###   ########.fr       */
+/*   Updated: 2025/02/28 09:50:38 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char	**token_split(char **tokens, size_t *i, bool *split_token, int k)
 {
-	char		**new_tokens;
-	size_t 		j;
+	char	**new_tokens;
+	size_t	j;
 
 	new_tokens = (char **)malloc(sizeof (char *) * (k + 2));
 	if (!new_tokens)

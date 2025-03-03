@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:41:04 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/02/26 10:48:24 by alexander        ###   ########.fr       */
+/*   Updated: 2025/02/28 09:52:10 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,7 +220,7 @@ static	bool	readentry(t_env **envs, t_cmd **cmds)
 	*cmds = NULL;
 	*userr = expand_variable_2("$(USER)");
 	*hostnamee = get_hostname();
-	prompt =  concat_strings("\033[1;32m", concat_strings(userr, concat_strings("@", concat_strings(hostnamee, "\033[1;35m:~$ \033[0m"))));
+	prompt = concat_strings("\033[1;32m", concat_strings(userr, concat_strings("@", concat_strings(hostnamee, "\033[1;35m:~$ \033[0m"))));
 	line = readline(prompt);
 	if (!line)
 		return (false);

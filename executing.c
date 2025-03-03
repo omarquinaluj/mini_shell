@@ -6,10 +6,11 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 14:41:20 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/02/19 10:24:33 by alexander        ###   ########.fr       */
+/*   Updated: 2025/02/28 09:49:29 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "mini_shell.h"
 
 int	count_cmd_nodes(t_cmd *cmds)
 {
