@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 08:20:35 by alexander         #+#    #+#             */
-/*   Updated: 2025/02/27 16:16:24 by alexander        ###   ########.fr       */
+/*   Updated: 2025/02/28 10:51:38 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,82 +24,114 @@
 #include <fcntl.h>
 #include <sys/wait.h>
 
-char *custom_strtok(char *str, const char *delim) {
-    static char *saved_str = NULL;
-    if (str) saved_str = str;
-    if (!saved_str || *saved_str == '\0') return NULL;
-    
-    char *token_start = saved_str;
-    while (*saved_str && strchr(delim, *saved_str)) saved_str++;
-    if (*saved_str == '\0') return NULL;
-    
-    token_start = saved_str;
-    while (*saved_str && !strchr(delim, *saved_str)) saved_str++;
-    
-    if (*saved_str) {
-        *saved_str = '\0';
-        saved_str++;
-    }
-    
-    return token_start;
+char	*custom_strtok(char *str, const char *delim)
+{
+	static char	*saved_str;
+	char *token_start;
+
+	saved_str = NULL;
+	if (str)
+		saved_str = str;
+	if (!saved_str || *saved_str == '\0')
+		return (NULL);
+
+	token_start = saved_str;
+	while (*saved_str && strchr(delim, *saved_str))
+		saved_str++;
+	if (*saved_str == '\0')
+		return (NULL);
+
+	token_start = saved_str;
+	while (*saved_str && !strchr(delim, *saved_str))
+		saved_str++;
+
+	if (*saved_str)
+	{
+		*saved_str = '\0';
+		saved_str++;
+	}
+	return token_start;
 }
 
-char *find_executable(char *command) {
-    if (access(command, X_OK) == 0) return command;
-    
-    char *path = getenv("PATH");
-    if (!path) return NULL;
-    
-    char *path_copy = strdup(path);
-    char *dir = custom_strtok(path_copy, ":");
-    static char full_path[256];
-    
-    while (dir) {
-        snprintf(full_path, sizeof(full_path), "%s/%s", dir, command);
-        if (access(full_path, X_OK) == 0) {
-            free(path_copy);
-            return full_path;
-        }
-        dir = custom_strtok(NULL, ":");
-    }
-    free(path_copy);
-    return NULL;
+char	*find_executable(char *command)
+{
+	char		*path_copy;
+	char		*dir;
+	char		*path;
+	int			aux;
+	static char	full_path[256];
+
+	aux = access(command, X_OK);
+	if (aux == 0)
+		return (command);
+
+	path = getenv("PATH");
+	if (!path)
+		return (NULL);
+	path_copy = strdup(path);
+	dir = custom_strtok(path_copy, ":");
+
+	while (dir)
+	{
+		snprintf(full_path, sizeof(full_path), "%s/%s", dir, command);
+		if (access(full_path, X_OK) == 0)
+		{
+			free(path_copy);
+			return (full_path);
+		}
+		dir = custom_strtok(NULL, ":");
+	}
+	free(path_copy);
+	return (NULL);
 }
 
-int handle_heredoc(const char *delimiter) {
-    int pipe_fd[2];
-    if (pipe(pipe_fd) == -1) {
-        perror("pipe");
-        return -1;
-    }
-    
-    printf("[heredoc] Introduce líneas. Finaliza con '%s'.\n", delimiter);
-    char buffer[1024];
-    while (1) {
-        printf("heredoc> ");
-        fflush(stdout);
-        if (!fgets(buffer, sizeof(buffer), stdin)) {
-            break;
-        }
-        buffer[strcspn(buffer, "\n")] = 0;
-        if (strcmp(buffer, delimiter) == 0) {
-            break;
-        }
-        write(pipe_fd[1], buffer, strlen(buffer));
-        write(pipe_fd[1], "\n", 1);
-    }
-    close(pipe_fd[1]);
-    return pipe_fd[0];
+int	handle_heredoc(const char *delimiter)
+{
+	int		pipe_fd[2];
+	int		aux;
+	char	buffer[1024];
+
+	aux = pipe(pipe_fd);
+	if (aux == -1)
+	{
+		perror("pipe");
+		return (-1);
+	}
+	printf("[heredoc] Introduce líneas. Finaliza con '%s'.\n", delimiter);
+	while (1)
+	{
+		printf("heredoc> ");
+		fflush(stdout);
+		if (!fgets(buffer, sizeof(buffer), stdin))
+		{
+			break ;
+		}
+		buffer[strcspn(buffer, "\n")] = 0;
+		if (strcmp(buffer, delimiter) == 0)
+		{
+			break ;
+		}
+		write(pipe_fd[1], buffer, strlen(buffer));
+		write(pipe_fd[1], "\n", 1);
+	}
+	close(pipe_fd[1]);
+	return (pipe_fd[0]);
 }
 
-void execute_command(char *command) {
-    char *args[64];
-    char *input_file = NULL;
-    char *output_file = NULL;
-    char *heredoc_delim = NULL;
-    int append = 0;
-    int i = 0;
-    
+void	execute_command(char *command)
+{
+	char	*args[64];
+	char	*input_file;
+	char	*output_file;
+	char	*heredoc_delim;
+	int		append;
+	int		i;
+
+	*input_file = NULL;
+	*output_file = NULL;
+	*heredoc_delim = NULL;
+	append = 0;
+	i = 0;
     char *token = custom_strtok(command, " ");
     while (token != NULL) {
         if (strcmp(token, ">>") == 0) {
