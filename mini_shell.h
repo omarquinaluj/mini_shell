@@ -9,7 +9,7 @@
 /*   Updated: 2025/02/19 10:30:54 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
+# ifndef MINI_SHELL_H
 # define MINI_SHELL_H
 
 # include "Libft/libft.h"
