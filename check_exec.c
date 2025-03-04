@@ -31,7 +31,7 @@ int	ft_check_path(t_cmd *current, char **envp)
 		{
 			current->pth_cmd = ft_strdup(path_cmd);
 			free(path_cmd);
-			ft_free_double(env_path);//revisar si tengo este free
+			ft_free_double(env_path);
 			return (0);
 		}
 		free(path_cmd);
@@ -91,7 +91,6 @@ void	ft_break_dl(t_cmd *current, int *i)//funciones para heredoc
 	free(aux);
 }
 
-//no se para que esta la variable args, corrigelo cuando puedas.
 void	ft_break_redir(t_cmd *current, char **args, int *i)
 {
 	char	*aux;
@@ -104,7 +103,7 @@ void	ft_break_redir(t_cmd *current, char **args, int *i)
 		if (current->args[*i][1] == '<')
 			ft_break_dl(current, i);
 		else if (access(args[*i + 1], F_OK) == -1)
-			perror (args[*i]); //Gestionar mejor el error con exitstatus
+			perror (args[*i]);
 		current->infile = ft_split(aux, 32);
 	}
 	if (current->args[*i][0] == '>')

@@ -53,7 +53,7 @@ bool	check_newline(char **tokens)
 		}
 		i++;
 	}
-    return (true);// revisar si alguno caso false XD
+	return (true);
 }
 
 bool	handle_unexpected(char ***tokens)

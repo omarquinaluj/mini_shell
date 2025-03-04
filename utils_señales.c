@@ -12,7 +12,7 @@
 
 #include "mini_shell.h"
 
-long	long	ft_atoll(const char *str) // para proteger supongo
+long	long	ft_atoll(const char *str)
 {
 	int			i;
 	int			sign;

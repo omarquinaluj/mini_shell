@@ -34,7 +34,7 @@ t_cmd	*new_cmd(char **tokens, size_t start, size_t end)
 {
 	t_cmd	*cmd;
 
-	cmd = (t_cmd *)ft_calloc(sizeof(t_cmd), 1); //cambie el tipo de reserva
+	cmd = (t_cmd *)ft_calloc(sizeof(t_cmd), 1);
 	if (!cmd)
 		return (NULL);
 	cmd->has_pipe = false;

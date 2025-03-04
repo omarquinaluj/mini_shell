@@ -1,13 +1,14 @@
 
 NAME := minishell
-CFLAGS := -Wextra -Wall -Werror #-fsanitize=address -g
+CFLAGS := -Wextra -Wall -Werror -fsanitize=address -g
 LIBDEF_PATH := ./Libft
 LIBDEF := $(LIBDEF_PATH)/libft.a
 SRCS := check_exec.c free_exec.c parsing.c utils_file.c\
 	env_utils.c ft_free.c main.c token.c utils_token.c\
 	executing.c get_cmd.c tools_quotes.c extra_token.c\
 	utils_exec.c casos_dolar.c envs_urgencia.c error.c\
-	utils_parsing.c señales_full.c utils_señales.c
+	utils_parsing.c señales_full.c utils_señales.c\
+	utils_readentry.c error2.c open_file.c
 OBJS := ${SRCS:.c=.o}
 LDFLAGS := -lreadline
 

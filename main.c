@@ -115,7 +115,7 @@ char	*expand_variable_2(const char *input)
 char	*get_hostname(void)
 {
 	int		fd;
-	size_t	buffer_size;
+	ssize_t buffer_size;
 	char	*buffer;
 	ssize_t	total_read;
 	ssize_t	bytes_read;
@@ -224,8 +224,11 @@ static	bool	readentry(t_env **envs, t_cmd **cmds)
 	hostnamee = get_hostname();
 	promptt = concat_strings("\033[1;32m", concat_strings(userr, concat_strings("@", concat_strings(hostnamee, "\033[1;35m:~$ \033[0m"))));
 	line = readline(promptt);
-	if (!line)
+	if (!line || is_invalid_redirection(line))
+	{
+		free(line);
 		return (false);
+	}
 	add_history(line);
 	if (line[0] == '\0')
 		return (free(line), true);
@@ -297,7 +300,7 @@ int	main(int argc, char **argv, char **envp)
 	g_minishell.heredoc = false;
 	g_minishell.envs = init_envs(envp);
 	g_minishell.exit_status = program(&cmds, &g_minishell.envs);
-	if (g_minishell.signal > 0)// vainas que no entiendo ya me podre a ver
+	if (g_minishell.signal > 0)
 		g_minishell.exit_status = 128 + g_minishell.signal;
 	rl_clear_history();
 	while (g_minishell.envs)

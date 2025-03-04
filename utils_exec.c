@@ -9,8 +9,7 @@
 /*   Updated: 2025/02/15 18:42:31 by owmarqui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-# include "mini_shell.h"
+#include "mini_shell.h"
 
 char	*ft_strjoin_gnl(char *stash, char *buff)
 {

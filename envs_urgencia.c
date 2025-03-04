@@ -109,4 +109,3 @@ void	free_env(t_env *env)
 		free(env->value);
 	free(env);
 }
-

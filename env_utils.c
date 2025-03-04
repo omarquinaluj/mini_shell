@@ -12,15 +12,6 @@
 
 #include "mini_shell.h"
 
-// estructur hecha de momento para esto
-/*typedef struct s_env
-{
-	char			*key;
-	char			*value;
-	struct s_env	*next;
-}	t_env;
-*/
-
 size_t	count_envs(t_env *envs)
 {
 	size_t	i;
@@ -72,12 +63,6 @@ int	ft_path(char **env)
 			return (i);
 		i++;
 	}
-	perror("There is no PATH defined in the enviroment\n"); //mejorable
+	perror("There is no PATH defined in the enviroment\n");
 	return (i);
 }
-
-
-
-// aqui esta mas o menos el if que seria para remplazar el key
-/*if (ft_strchr(token, '$'))
-		token = ft_replace_env_var();*/

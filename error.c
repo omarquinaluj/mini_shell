@@ -36,11 +36,8 @@ void	error(char *msg, char *more)
 	ft_putchar_fd('\n', STDERR_FILENO);
 }
 
-// improvisaciones a ver
 void	error_st(char *msg, char *more, int exit_status)
 {
-	int	variable_g;
-
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(msg, STDERR_FILENO);
 	if (more)
@@ -49,14 +46,11 @@ void	error_st(char *msg, char *more, int exit_status)
 		ft_putstr_fd(more, STDERR_FILENO);
 	}
 	ft_putchar_fd('\n', STDERR_FILENO);
-	// para resolver dado a que no podre usar globales
-	variable_g = exit_status;
+	g_minishell.exit_status = exit_status;
 }
 
 void	error_e(char *msg, char *more, int exit_status)
 {
-	int	variable_g;
-
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(msg, STDERR_FILENO);
 	if (more)
@@ -64,8 +58,7 @@ void	error_e(char *msg, char *more, int exit_status)
 		ft_putstr_fd(": ", STDERR_FILENO);
 		ft_putstr_fd(more, STDERR_FILENO);
 	}
-	// otra vez tengo esto pero aqui devuelvo el valor
-	variable_g = exit_status;
+	g_minishell.exit_status = exit_status;
 	exit (exit_status);
 }
 
@@ -76,12 +69,4 @@ void	error_numerical_arg(char *name, char *arg)
 	ft_putstr_fd(": ", STDERR_FILENO);
 	ft_putstr_fd(arg, STDERR_FILENO);
 	ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
-}
-
-void	error_write(char *cmd)
-{
-	ft_putstr_fd("minishell: ", STDERR_FILENO);
-	ft_putstr_fd(cmd, STDERR_FILENO);
-	ft_putstr_fd(": write error: ", STDERR_FILENO);
-	ft_putstr_fd("No space left on device\n", STDERR_FILENO);
 }

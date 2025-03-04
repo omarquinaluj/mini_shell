@@ -29,7 +29,8 @@ bool	loop_get_next_token(char *line, int *quote, size_t *i)
 	return (true);
 }
 
-char *get_next_token(char **line, t_env *envs, bool *split_token, char *tokenpre)
+char	*get_next_token(char **line, t_env *envs, bool *split_token,
+			char *tokenpre)
 {
 	char	*token;
 	int		quote;
@@ -67,7 +68,7 @@ int	loop_count_tokens(char *line, size_t *i, size_t *count)
 		if ((*i) > 0 && !(is_space(line[(*i) - 1])) && line != line + (*i))
 			(*count)++;
 		increase_token_index(count, i);
-		if ((*i) > 0 && line[(*i) - 1] == line[(*i)]) //analizar esta linea
+		if ((*i) > 0 && line[(*i) - 1] == line[(*i)])
 			(*i)++;
 		skip_spaces(line, i);
 	}
@@ -106,9 +107,9 @@ size_t	count_tokens(char *line)
 
 char	**tokenize(char *line, t_env *envs, char *pretoken)
 {
-	size_t 	i;
-	size_t 	j;
-	size_t 	numers_tokens;
+	size_t	i;
+	size_t	j;
+	size_t	numers_tokens;
 	char	**tokens;
 	bool	split_token;
 

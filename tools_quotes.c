@@ -54,7 +54,6 @@ int	check_end_by_quote(char *line, int i)
 	return (0);
 }
 
-
 char	*trimm_token_quote(char **token)
 {
 	char	quote;
@@ -81,7 +80,7 @@ char	*trimm_token_quote(char **token)
 			str[str_index++] = (*token)[i++];
 	}
 	str[str_index] = '\0';
-	return (free(*token), tr);
+	return (free(*token), str);
 }
 
 bool	handle_quotes(char *line, size_t *i)

@@ -34,8 +34,6 @@ void	ft_free_cmd(t_cmd **cmds, char **envp)
 		ft_free_double(envp);
 	while (ps)
 	{
-		/* if (ps->args)
-			ft_free_double(ps->args) */;
 		if (ps->cmd)
 			ft_free_double(ps->cmd);
 		if (ps->infile)
@@ -49,8 +47,6 @@ void	ft_free_cmd(t_cmd **cmds, char **envp)
 			unlink(ps->pth_hd);
 			free(ps->pth_hd);
 		}
-		/* if (ps->name_cmd)
-			free(ps->name_cmd); */
 		ps = ps->next;
 	}
 }
