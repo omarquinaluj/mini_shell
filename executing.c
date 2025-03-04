@@ -56,14 +56,7 @@ int	ft_pipex(t_cmd *cmd, char **envp, int file)
 	return (pipex[READ]);
 }
 
-void	ft_wait_for_childs(void)
-{
-	while (1)
-	{
-		if (waitpid(-1, NULL, 0) == -1)
-			break ;
-	}
-}
+
 
 void	ft_init_exec(t_cmd **cmds, t_env **env)
 {
