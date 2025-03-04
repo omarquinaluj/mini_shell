@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 08:20:35 by alexander         #+#    #+#             */
-/*   Updated: 2025/02/28 10:51:38 by alexander        ###   ########.fr       */
+/*   Updated: 2025/03/03 12:40:34 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,14 +103,10 @@ int	handle_heredoc(const char *delimiter)
 		printf("heredoc> ");
 		fflush(stdout);
 		if (!fgets(buffer, sizeof(buffer), stdin))
-		{
 			break ;
-		}
 		buffer[strcspn(buffer, "\n")] = 0;
 		if (strcmp(buffer, delimiter) == 0)
-		{
 			break ;
-		}
 		write(pipe_fd[1], buffer, strlen(buffer));
 		write(pipe_fd[1], "\n", 1);
 	}
@@ -124,81 +120,108 @@ void	execute_command(char *command)
 	char	*input_file;
 	char	*output_file;
 	char	*heredoc_delim;
+	char	*token;
 	int		append;
 	int		i;
+	char	*exec_path
+	pid_t	pid;
+	int		fd;
+	int		heredoc_fd;
 
 	*input_file = NULL;
 	*output_file = NULL;
 	*heredoc_delim = NULL;
 	append = 0;
 	i = 0;
-    char *token = custom_strtok(command, " ");
-    while (token != NULL) {
-        if (strcmp(token, ">>") == 0) {
-            append = 1;
-            token = custom_strtok(NULL, " ");
-            output_file = token;
-        } else if (strcmp(token, ">") == 0) {
-            append = 0;
-            token = custom_strtok(NULL, " ");
-            output_file = token;
-        } else if (strcmp(token, "<<") == 0) {
-            token = custom_strtok(NULL, " ");
-            heredoc_delim = token;
-        } else if (strcmp(token, "<") == 0) {
-            token = custom_strtok(NULL, " ");
-            input_file = token;
-        } else {
-            args[i++] = token;
-        }
-        token = custom_strtok(NULL, " ");
-    }
-    args[i] = NULL;
-    
-    char *exec_path = find_executable(args[0]);
-    if (!exec_path) {
-        fprintf(stderr, "Comando no encontrado: %s\n", args[0]);
-        return;
-    }
-    
-    pid_t pid = fork();
-    if (pid == 0) { // Proceso hijo
-        if (output_file) {
-            int fd = open(output_file, O_WRONLY | O_CREAT | (append ? O_APPEND : O_TRUNC), 0644);
-            if (fd < 0) {
-                perror("open output file");
-                exit(EXIT_FAILURE);
-            }
-            dup2(fd, STDOUT_FILENO);
-            close(fd);
-        }
-        if (input_file) {
-            int fd = open(input_file, O_RDONLY);
-            if (fd < 0) {
-                perror("open input file");
-                exit(EXIT_FAILURE);
-            }
-            dup2(fd, STDIN_FILENO);
-            close(fd);
-        }
-        if (heredoc_delim) {
-            int heredoc_fd = handle_heredoc(heredoc_delim);
-            if (heredoc_fd != -1) {
-                dup2(heredoc_fd, STDIN_FILENO);
-                close(heredoc_fd);
-            }
-        }
-        execve(exec_path, args, NULL);
-        perror("execve");
-        exit(EXIT_FAILURE);
-    } else if (pid > 0) { // Proceso padre
-        wait(NULL);
-    } else {
-        perror("fork");
-    }
+	token = custom_strtok(command, " ");
+	while (token != NULL)
+	{
+		if (strcmp(token, ">>") == 0)
+		{
+			append = 1;
+			token = custom_strtok(NULL, " ");
+			output_file = token;
+		}
+		else if (strcmp(token, ">") == 0)
+		{
+			append = 0;
+			token = custom_strtok(NULL, " ");
+			output_file = token;
+		}
+		else if (strcmp(token, "<<") == 0)
+		{
+			token = custom_strtok(NULL, " ");
+			heredoc_delim = token;
+		}
+		else if (strcmp(token, "<") == 0)
+		{
+			token = custom_strtok(NULL, " ");
+			input_file = token;
+		}
+		else
+		{
+			args[i++] = token;
+		}
+		token = custom_strtok(NULL, " ");
+	}
+	args[i] = NULL;
+	exec_path = find_executable(args[0]);
+	if (!exec_path)
+	{
+		fprintf(stderr, "Comando no encontrado: %s\n", args[0]);
+		return ;
+	}
+
+	pid = fork();
+	if (pid == 0) 
+	{ // Proceso hijo
+		if (output_file)
+		{
+			fd = open(output_file, O_WRONLY | O_CREAT | (append ? O_APPEND : O_TRUNC), 0644);
+			if (fd < 0)
+			{
+				perror("open output file");
+				exit(EXIT_FAILURE);
+			}
+			dup2(fd, STDOUT_FILENO);
+			close(fd);
+		}
+		if (input_file)
+		{
+			fd = open(input_file, O_RDONLY);
+			if (fd < 0)
+			{
+				perror("open input file");
+				exit(EXIT_FAILURE);
+			}
+			dup2(fd, STDIN_FILENO);
+			close(fd);
+		}
+		if (heredoc_delim)
+		{
+			heredoc_fd = handle_heredoc(heredoc_delim);
+			if (heredoc_fd != -1)
+			{
+				dup2(heredoc_fd, STDIN_FILENO);
+				close(heredoc_fd);
+			}
+		}
+		execve(exec_path, args, NULL);
+		perror("execve");
+		exit(EXIT_FAILURE);
+	}
+	else if (pid > 0)
+	{// Proceso padre
+		wait(NULL);
+	}
+	else
+	{
+		perror("fork");
+	}
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
     if (argc < 2) {
         fprintf(stderr, "Uso: %s <comando>", argv[0]);
         return EXIT_FAILURE;
