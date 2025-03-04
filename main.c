@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:41:04 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/02/28 09:52:10 by alexander        ###   ########.fr       */
+/*   Updated: 2025/03/04 09:54:28 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,37 +80,6 @@ t_env	*init_envs(char **envp)
 	if (getcwd(path, 1024))
 		set_env(&env, "PWD", ft_strdup(path));
 	return (env);
-}
-
-char	*concat_strings(const char *str1, const char *str2)
-{
-	size_t	len1;
-	size_t	len2;
-	char	*result;
-	size_t	i;
-	size_t	j;
-
-	if (!str1 || !str2)
-		return (NULL);
-	len1 = strlen(str1);
-	len2 = strlen(str2);
-	result = (char *)malloc(len1 + len2 + 1);
-	if (!result)
-		return (NULL);
-	i = 0;
-	while (i < len1)
-	{
-		result[i] = str1[i];
-		i++;
-	}
-	j = 0;
-	while (j < len2)
-	{
-		result[len1 + j] = str2[j];
-		j++;
-	}
-	result[len1 + len2] = '\0';
-	return (result);
 }
 
 char	*expand_variable_2(const char *input)
@@ -210,18 +179,51 @@ char	*get_hostname(void)
 	return (buffer);
 }
 
+char	*concat_strings(const char *str1, const char *str2)
+{
+	size_t	len1;
+	size_t	len2;
+	char	*result;
+	size_t	i;
+	size_t	j;
+
+	if (!str1 || !str2)
+		return (NULL);
+	len1 = strlen(str1);
+	len2 = strlen(str2);
+	result = (char *)malloc(len1 + len2 + 1);
+	if (!result)
+		return (NULL);
+	i = 0;
+	while (i < len1)
+	{
+		result[i] = str1[i];
+		i++;
+	}
+	j = 0;
+	while (j < len2)
+	{
+		result[len1 + j] = str2[j];
+		j++;
+	}
+	result[len1 + len2] = '\0';
+	return (result);
+}
+
 static	bool	readentry(t_env **envs, t_cmd **cmds)
 {
+	//char	*cmds;
 	char	*line;
 	char	**tokens;
 	char	*userr;
-	char	*hostname;
+	char	*hostnamee;
+	char	*promptt;
 
 	*cmds = NULL;
-	*userr = expand_variable_2("$(USER)");
-	*hostnamee = get_hostname();
-	prompt = concat_strings("\033[1;32m", concat_strings(userr, concat_strings("@", concat_strings(hostnamee, "\033[1;35m:~$ \033[0m"))));
-	line = readline(prompt);
+	userr = expand_variable_2("$(USER)");
+	hostnamee = get_hostname();
+	promptt = concat_strings("\033[1;32m", concat_strings(userr, concat_strings("@", concat_strings(hostnamee, "\033[1;35m:~$ \033[0m"))));
+	line = readline(promptt);
 	if (!line)
 		return (false);
 	add_history(line);
