@@ -56,8 +56,6 @@ int	ft_pipex(t_cmd *cmd, char **envp, int file)
 	return (pipex[READ]);
 }
 
-
-
 void	ft_init_exec(t_cmd **cmds, t_env **env)
 {
 	t_cmd	*current;

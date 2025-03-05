@@ -8,7 +8,10 @@ SRCS := check_exec.c free_exec.c parsing.c utils_file.c\
 	executing.c get_cmd.c tools_quotes.c extra_token.c\
 	utils_exec.c casos_dolar.c envs_urgencia.c error.c\
 	utils_parsing.c señales_full.c utils_señales.c\
-	utils_readentry.c error2.c open_file.c
+	utils_readentry.c error2.c open_file.c check_exec2.c\
+	builds_part1.c build_cd.c build_path.c build_echo.c\
+	build_env.c build_exit.c
+
 OBJS := ${SRCS:.c=.o}
 LDFLAGS := -lreadline
 
