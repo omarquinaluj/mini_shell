@@ -115,7 +115,7 @@ char	*expand_variable_2(const char *input)
 char	*get_hostname(void)
 {
 	int		fd;
-	size_t	buffer_size;
+	ssize_t	buffer_size;
 	char	*buffer;
 	ssize_t	total_read;
 	ssize_t	bytes_read;
@@ -217,7 +217,6 @@ static	bool	readentry(t_env **envs, t_cmd **cmds)
 	char	**tokens;
 	char	*userr;
 	char	*hostnamee;
-	char	*promptt;
 
 	userr = expand_variable_2("$(USER)");
 	hostnamee = get_hostname();
@@ -237,13 +236,13 @@ static	bool	readentry(t_env **envs, t_cmd **cmds)
 	add_history(line);
 	if (line[0] == '\0')
 	{
-		free(hostname);
+		free(hostnamee);
 		free(userr);
 		free(promptt);
 		return (free(line), true);
 	}
 	tokens = tokenize(line, *envs, NULL);
-	free(hostname);
+	free(hostnamee);
 	free(userr);
 	free(promptt);
 	free(line);
