@@ -18,14 +18,18 @@ void	main_signal(int signal)
 	if (signal == SIGINT)
 	{
 		if (!g_minishell.heredoc)
+		{
 			write(1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
+			rl_on_new_line();
+			rl_replace_line("", 0);
+			if (isatty(STDIN_FILENO)) // Solo si la entrada es interactiva
+				rl_redisplay();
+		}
 		set_env(&g_minishell.envs, "?",
 			ft_itoa(128 + g_minishell.signal));
 	}
 }
+
 
 // sacado de un repo para heredoc
 void	sig_heredoc(void)

@@ -232,14 +232,19 @@ static	bool	readentry(t_env **envs, t_cmd **cmds)
 	free(temp3);
 	free(temp4);
 	if (!line)
+	{
+		if (hostnamee) free(hostnamee);
+		if (userr) free(userr);
+		if (promptt) free(promptt);
 		return (false);
+	}
 	add_history(line);
 	if (line[0] == '\0')
 	{
 		free(hostnamee);
 		free(userr);
 		free(promptt);
-		return (free(line), true);
+		return (free(line), false);
 	}
 	tokens = tokenize(line, *envs, NULL);
 	free(hostnamee);
@@ -291,6 +296,8 @@ static int	program(t_cmd **cmds, t_env **envs)
 		}
 		if (g_minishell.signal > 0)
 			g_minishell.exit_status = 128 + g_minishell.signal;
+		if (g_minishell.signal == SIGINT)
+			g_minishell.exit_status = 130; 
 		set_env(envs, "?", ft_itoa(g_minishell.exit_status));
 		if (g_minishell.force_exit /* || is_child_process(*cmds) */)
 			return (free_cmds(*cmds), g_minishell.exit_status);
