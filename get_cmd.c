@@ -89,6 +89,8 @@ void	free_cmds(t_cmd *cmds)
 			free(tmp->args[i++]);
 		if (tmp->args)
 			free(tmp->args);
+		if (tmp->pth_cmd)
+			free(tmp->pth_cmd);
 		free(tmp);
 	}
 }
