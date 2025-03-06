@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:41:04 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/03/06 12:37:10 by alexander        ###   ########.fr       */
+/*   Updated: 2025/03/06 16:09:00 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,8 @@ char	*get_hostname(void)
 			}
 			buffer = new_buffer;
 		}
-		bytes_read = read(fd, buffer + total_read, buffer_size - total_read - 1);
+		bytes_read = read(fd, buffer + total_read,
+				buffer_size - total_read - 1);
 	}
 	if (bytes_read < 0)
 	{
@@ -216,7 +217,7 @@ static	bool	readentry(t_env **envs, t_cmd **cmds)
 	char	**tokens;
 	char	*userr;
 	char	*hostnamee;
-	//hola
+
 	userr = expand_variable_2("$(USER)");
 	hostnamee = get_hostname();
 	char *temp1 = concat_strings(userr, "@");
