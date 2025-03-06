@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:41:04 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/03/06 11:30:40 by alexander        ###   ########.fr       */
+/*   Updated: 2025/03/06 12:37:10 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,12 +212,11 @@ char	*concat_strings(const char *str1, const char *str2)
 
 static	bool	readentry(t_env **envs, t_cmd **cmds)
 {
-	//char	*cmds;
 	char	*line;
 	char	**tokens;
 	char	*userr;
 	char	*hostnamee;
-
+	//hola
 	userr = expand_variable_2("$(USER)");
 	hostnamee = get_hostname();
 	char *temp1 = concat_strings(userr, "@");
