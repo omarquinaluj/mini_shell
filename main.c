@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:41:04 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/03/06 09:06:26 by alexander        ###   ########.fr       */
+/*   Updated: 2025/03/06 09:15:25 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,22 +218,34 @@ static	bool	readentry(t_env **envs, t_cmd **cmds)
 	char	*userr;
 	char	*hostnamee;
 	char	*promptt;
+
+	userr = expand_variable_2("$(USER)");
+	hostnamee = get_hostname();
 	char *temp1 = concat_strings(userr, "@");
     char *temp2 = concat_strings(temp1, hostnamee);
     char *temp3 = concat_strings(temp2, ":~$ ");
     char *temp4 = concat_strings(temp3, "\033[1;35m");
     char *promptt = concat_strings("\033[1;32m", temp4);
 	*cmds = NULL;
-	userr = expand_variable_2("$(USER)");
-	hostnamee = get_hostname();
-	
 	line = readline(promptt);
+	free(temp1);
+	free(temp2);
+	free(temp3);
+	free(temp4);
 	if (!line)
 		return (false);
 	add_history(line);
 	if (line[0] == '\0')
+	{
+		free(hostname);
+		free(userr);
+		free(promptt);
 		return (free(line), true);
+	}
 	tokens = tokenize(line, *envs, NULL);
+	free(hostname);
+	free(userr);
+	free(promptt);
 	free(line);
 	if (!tokens)
 	{
