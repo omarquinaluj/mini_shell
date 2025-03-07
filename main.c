@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:41:04 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/03/06 11:30:40 by alexander        ###   ########.fr       */
+/*   Updated: 2025/03/07 08:15:23 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,14 +217,19 @@ static	bool	readentry(t_env **envs, t_cmd **cmds)
 	char	**tokens;
 	char	*userr;
 	char	*hostnamee;
+	char	*temp1;
+	char	*temp2;
+	char	*temp3;
+	char	*temp4;
+	char	*promptt;
 
 	userr = expand_variable_2("$(USER)");
 	hostnamee = get_hostname();
-	char *temp1 = concat_strings(userr, "@");
-    char *temp2 = concat_strings(temp1, hostnamee);
-    char *temp3 = concat_strings(temp2, ":~$ ");
-    char *temp4 = concat_strings(temp3, "\033[1;35m");
-    char *promptt = concat_strings("\033[1;32m", temp4);
+	temp1 = concat_strings(userr, "@");
+	temp2 = concat_strings(temp1, hostnamee);
+	temp3 = concat_strings(temp2, ":~$ ");
+	temp4 = concat_strings(temp3, "\033[1;35m");
+	promptt = concat_strings("\033[1;32m", temp4);
 	*cmds = NULL;
 	line = readline(promptt);
 	free(temp1);
@@ -233,9 +238,12 @@ static	bool	readentry(t_env **envs, t_cmd **cmds)
 	free(temp4);
 	if (!line)
 	{
-		if (hostnamee) free(hostnamee);
-		if (userr) free(userr);
-		if (promptt) free(promptt);
+		if (hostnamee)
+			free(hostnamee);
+		if (userr)
+			free(userr);
+		if (promptt)
+			free(promptt);
 		write(1, "exit\n", 5);
 		return (false);
 	}
