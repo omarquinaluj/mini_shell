@@ -67,6 +67,7 @@ typedef struct s_minishell
 {
 	bool	force_exit;
 	bool	heredoc; //para que tu quieres eso
+	bool	child_running;
 	int		signal;
 	int		exit_status;
 	t_env	*envs;

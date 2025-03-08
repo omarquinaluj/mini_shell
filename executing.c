@@ -37,7 +37,6 @@ void	ft_execute(t_cmd *current, char **envp, int infile, int outfile)
 	pid = ft_fork();
 	if (pid == 0)
 	{
-		//sig_child();
 		ft_infile(current, infile);
 		ft_outfile(current, outfile);
 		if (execve(current->pth_cmd, current->cmd, envp) == -1)

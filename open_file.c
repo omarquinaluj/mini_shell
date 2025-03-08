@@ -76,6 +76,9 @@ void	ft_wait_for_childs(void)
 	while (1)
 	{
 		if (waitpid(-1, NULL, 0) == -1)
+		{
+			g_minishell.child_running = 0;
 			break ;
+		}
 	}
 }
