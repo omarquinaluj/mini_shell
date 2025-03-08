@@ -17,11 +17,16 @@ void	main_signal(int signal)
 	g_minishell.signal = signal;
 	if (signal == SIGINT)
 	{
-		if (!g_minishell.heredoc)
+		if (!g_minishell.child_running)
 			write(1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
+		else
+		{
+			if (!g_minishell.heredoc)
+				write(1, "\n", 1);
+			rl_on_new_line();
+			rl_replace_line("", 0);
+			rl_redisplay();
+		}
 		set_env(&g_minishell.envs, "?",
 			ft_itoa(128 + g_minishell.signal));
 	}

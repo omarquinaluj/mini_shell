@@ -326,6 +326,7 @@ int	main(int argc, char **argv, char **envp)
 	g_minishell.force_exit = false;
 	g_minishell.signal = 0;
 	g_minishell.heredoc = false;
+	g_minishell.child_running = 0;
 	g_minishell.envs = init_envs(envp);
 	g_minishell.exit_status = program(&cmds, &g_minishell.envs);
 	if (g_minishell.signal > 0)// vainas que no entiendo ya me podre a ver
