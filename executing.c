@@ -70,7 +70,7 @@ void	ft_init_exec(t_cmd **cmds, t_env **env)
 	len = count_cmd_nodes(*cmds);
 	envp = format_env(*env);
 	ft_check_exec(current, envp);
-	//ft_init_heredoc(current, env); // apañetelas 
+	ft_init_heredoc(current, env); // apañetelas 
 	file = STDIN_FILENO;
 	while (current)
 	{

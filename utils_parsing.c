@@ -20,14 +20,13 @@ bool	check_tokens(char **tokens, int i)
 		if (tokens[i][0] == '|' || tokens[i][0] == '<' || tokens[i][0] == '>')
 		{
 			if (tokens[i + 1] && tokens[i][0] == tokens[i + 1][0])
-				return (error_unexpected(tokens[i + 1], 1 + (tokens[i][0] == '<'
-						|| tokens[i][0] == '>')), false);
-			if (tokens[i][0] == '|' && (i == 0 || !tokens[i][0]
-				|| tokens[i - 1][0] == '|' || tokens[i - 1][0] == '>'
-				|| tokens[i - 1][0] == '<'))
+				return (error_unexpected(tokens[i + 1], 1
+						+ (tokens[i][0] == '<' || tokens[i][0] == '>')), false);
+			if (tokens[i][0] == '|' && (i == 0 || !tokens[i - 1]
+					|| tokens[i - 1][0] == '|' || tokens[i - 1][0] == '>'
+					|| tokens[i - 1][0] == '<'))
 				return (error_unexpected("|", 1), false);
-			if ((tokens[i][0] == '<' || tokens[i][0] == '>')
-				&& !tokens[i - 1][0])
+			if ((tokens[i][0] == '<' || tokens[i][0] == '>') && !tokens[i + 1])
 				return (true);
 			if ((tokens[i][0] == '<' || tokens[i][0] == '>') && tokens[i + 1]
 				&& (tokens[i + 1][0] == '<' || tokens[i + 1][0] == '>'))

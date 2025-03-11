@@ -19,10 +19,10 @@ void	main_signal(int signal)
 	{
 		if (!g_minishell.child_running)
 			write(1, "\n", 1);
+		else if (!g_minishell.heredoc)
+			write(1, "\n", 1);
 		else
 		{
-			if (!g_minishell.heredoc)
-				write(1, "\n", 1);
 			rl_on_new_line();
 			rl_replace_line("", 0);
 			rl_redisplay();
