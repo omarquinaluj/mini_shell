@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:41:04 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/03/12 10:59:27 by alexander        ###   ########.fr       */
+/*   Updated: 2025/03/12 17:05:54 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ char	*expand_variable_2(const char *input)
 	}
 	return (NULL);
 }
-
+//original
 char	*get_hostname(void)
 {
 	int		fd;
@@ -122,17 +122,13 @@ char	*get_hostname(void)
 
 	fd = open("/etc/hostname", O_RDONLY);
 	if (fd < 0)
-	{
-		perror("Error al abrir /etc/hostname");
-		return (NULL);
-	}
+		return (perror("Error al abrir /etc/hostname"), NULL);
 	buffer_size = 64;
 	buffer = (char *)malloc(buffer_size);
 	if (!buffer)
 	{
 		perror("Error al asignar memoria");
-		close(fd);
-		return (NULL);
+		return (close(fd), NULL);
 	}
 	total_read = 0;
 	bytes_read = 0;
@@ -148,19 +144,18 @@ char	*get_hostname(void)
 			{
 				perror("Error al reasignar memoria");
 				free(buffer);
-				close(fd);
-				return (NULL);
+				return (close(fd), NULL);
 			}
 			buffer = new_buffer;
 		}
-		bytes_read = read(fd, buffer + total_read, buffer_size - total_read - 1);
+		bytes_read = read(fd, buffer + total_read,
+				buffer_size - total_read - 1);
 	}
 	if (bytes_read < 0)
 	{
 		perror("Error al leer /etc/hostname");
 		free(buffer);
-		close(fd);
-		return (NULL);
+		return (close(fd), NULL);
 	}
 	buffer[total_read] = '\0';
 	i = 0;
@@ -173,17 +168,28 @@ char	*get_hostname(void)
 		}
 		i++;
 	}
-	close(fd);
-	return (buffer);
+	return (close(fd), buffer);
+}
+//funcion original
+
+void	str_plus(char *result, char *str2, int len1, int len2)
+{
+	int	j;
+
+	j = 0;
+	while (j < len2)
+	{
+		result[len1 + j] = str2[j];
+		j++;
+	}
 }
 
-char	*concat_strings(const char *str1, const char *str2)
+char	*concat_strings(char *str1, char *str2)
 {
 	size_t	len1;
 	size_t	len2;
 	char	*result;
 	size_t	i;
-	size_t	j;
 
 	if (!str1 || !str2)
 		return (NULL);
@@ -198,71 +204,77 @@ char	*concat_strings(const char *str1, const char *str2)
 		result[i] = str1[i];
 		i++;
 	}
-	j = 0;
-	while (j < len2)
-	{
-		result[len1 + j] = str2[j];
-		j++;
-	}
+	str_plus(result, str2, len1, len2);
 	result[len1 + len2] = '\0';
 	return (result);
 }
 
-static	bool	readentry(t_env **envs, t_cmd **cmds)
+char	*funtion_prompt(void)
 {
-	char	*line;
-	char	**tokens;
 	char	*userr;
 	char	*hostnamee;
 	char	*temp1;
 	char	*temp2;
 	char	*temp3;
-	char	*temp4;
-	char	*promptt;
-	//hola
 
 	userr = expand_variable_2("$(USER)");
 	hostnamee = get_hostname();
 	temp1 = concat_strings(userr, "@");
 	temp2 = concat_strings(temp1, hostnamee);
 	temp3 = concat_strings(temp2, ":~$ ");
-	temp4 = concat_strings(temp3, "\033[1;35m");
-	promptt = concat_strings("\033[1;32m", temp4);
-	*cmds = NULL;
-	line = readline(promptt);
 	free(temp1);
 	free(temp2);
-	free(temp3);
-	free(temp4);
-	if (!line)
-	{
-		if (hostnamee)
-			free(hostnamee);
-		if (userr)
-			free(userr);
-		if (promptt)
-			free(promptt);
-		write(1, "exit\n", 5);
-		return (false);
-	}
-	add_history(line);
-	if (*line == '\0')
-	{
-		free(hostnamee);
-		free(userr);
-		free(promptt);
-		return (free(line), true);
-	}
-	tokens = tokenize(line, *envs, NULL);
-	free(hostnamee);
 	free(userr);
+	free(hostnamee);
+	return (temp3);
+}
+
+static	bool  false_funtion(char *promptt)
+{
+	if (promptt)
+		free(promptt);
+	write(1, "exit\n", 5);
+	return (false);
+}
+
+void funtion_my_free(char *promptt, char *line)
+{
 	free(promptt);
 	free(line);
+}
+
+char	*funtion_aux2(void)
+{
+	char	*aux;
+	char	*temp4;
+	char	*promptt;
+
+	aux = funtion_prompt();
+	temp4 = concat_strings(aux, "\033[1;35m");
+	promptt = concat_strings("\033[1;32m", temp4);
+	free(aux);
+	free(temp4);
+	return (promptt);
+}
+
+static	bool	readentry(t_env **envs, t_cmd **cmds)
+{
+	char	*line;
+	char	**tokens;
+	char	*promptt;
+
+	*cmds = NULL;
+	promptt = funtion_aux2();
+	line = readline(promptt);
+	if (!line)
+		return (false_funtion(promptt));
+	add_history(line);
+	if (*line == '\0')
+		return (funtion_my_free(promptt, line), true);
+	tokens = tokenize(line, *envs, NULL);
+	funtion_my_free(promptt, line);
 	if (!tokens)
-	{
-		set_env(envs, "?", ft_strdup("2"));
-		return (true);
-	}
+		return (set_env(envs, "?", ft_strdup("2")), true);
 	*cmds = init_cmds(tokens);
 	free_tokens(tokens);
 	return (true);
