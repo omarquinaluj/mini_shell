@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: owmarqui <owmarqui@student.42madrid.c      +#+  +:+       +#+        */
+/*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 16:55:39 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/03/11 16:55:41 by owmarqui         ###   ########.fr       */
+/*   Updated: 2025/03/12 17:29:48 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,9 @@ char	*ft_temp_name()
 void	ft_init_heredoc(t_cmd *current, t_env **envs)
 {
 	int	fd;
-	int	i;
+	//int	i;
 
-	i = 0;
+	//i = 0;
 	sig_heredoc();
 	while (current)
 	{
