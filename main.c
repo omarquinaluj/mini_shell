@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:41:04 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/03/12 09:40:02 by alexander        ###   ########.fr       */
+/*   Updated: 2025/03/12 10:59:27 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,6 +219,7 @@ static	bool	readentry(t_env **envs, t_cmd **cmds)
 	char	*temp3;
 	char	*temp4;
 	char	*promptt;
+	//hola
 
 	userr = expand_variable_2("$(USER)");
 	hostnamee = get_hostname();
