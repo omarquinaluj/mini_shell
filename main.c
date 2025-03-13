@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:41:04 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/03/12 17:05:54 by alexander        ###   ########.fr       */
+/*   Updated: 2025/03/13 11:56:01 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void printtokens(t_cmd **cmds)
     }
 }*/
 
-t_cmd	*init_cmds(char **tokens)
+/*t_cmd	*init_cmds(char **tokens)
 {
 	t_cmd	*cmds;
 	size_t	start;
@@ -109,16 +109,73 @@ char	*expand_variable_2(const char *input)
 	}
 	return (NULL);
 }
-//original
+
+void	funtion_perror(char *txt, char **buffer, int fd)
+{
+	perror(txt);
+	free(*buffer);
+	close(fd);
+}
+
+char	*read_hostname_file(int fd, char **buffer, ssize_t *buffer_size, ssize_t *total_read)
+{
+	ssize_t	bytes_read;
+	char	*new_buffer;
+
+	bytes_read = read(fd, *buffer + *total_read,
+			*buffer_size - *total_read - 1);
+	while (bytes_read > 0)
+	{
+		*total_read += bytes_read;
+		if (*total_read >= *buffer_size - 1)
+		{
+			*buffer_size *= 2;
+			new_buffer = (char *)realloc(*buffer, *buffer_size);
+			if (!new_buffer)
+				return (funtion_perror("Error al reasignar memoria",
+						buffer, fd), NULL);
+			*buffer = new_buffer;
+		}
+		bytes_read = read(fd, *buffer + *total_read,
+				*buffer_size - *total_read - 1);
+	}
+	if (bytes_read < 0)
+		return (funtion_perror("Error al leer /etc/hostname",
+				buffer, fd), NULL);
+	return (*buffer);
+}*/
+
+/*void funtion_return(int fd)
+{
+	perror("Error al asignar memoria");
+	close(fd);
+}
+
+//original dividido
+
+void	funtion_while(char *buffer, ssize_t	total_read)
+{
+	int	i;
+
+	i = 0;
+	while (i < total_read)
+	{
+		if (buffer[i] == '\n')
+		{
+			buffer[i] = '\0';
+			return ;
+		}
+		i++;
+	}
+	return ;
+}
+
 char	*get_hostname(void)
 {
 	int		fd;
 	ssize_t	buffer_size;
 	char	*buffer;
 	ssize_t	total_read;
-	ssize_t	bytes_read;
-	char	*new_buffer;
-	int		i;
 
 	fd = open("/etc/hostname", O_RDONLY);
 	if (fd < 0)
@@ -126,51 +183,19 @@ char	*get_hostname(void)
 	buffer_size = 64;
 	buffer = (char *)malloc(buffer_size);
 	if (!buffer)
-	{
-		perror("Error al asignar memoria");
-		return (close(fd), NULL);
-	}
+		return (funtion_return(fd), NULL);
 	total_read = 0;
-	bytes_read = 0;
-	bytes_read = read(fd, buffer + total_read, buffer_size - total_read - 1);
-	while (bytes_read > 0)
-	{
-		total_read += bytes_read;
-		if (total_read >= buffer_size - 1)
-		{
-			buffer_size *= 2;
-			new_buffer = (char *)realloc(buffer, buffer_size);
-			if (!new_buffer)
-			{
-				perror("Error al reasignar memoria");
-				free(buffer);
-				return (close(fd), NULL);
-			}
-			buffer = new_buffer;
-		}
-		bytes_read = read(fd, buffer + total_read,
-				buffer_size - total_read - 1);
-	}
-	if (bytes_read < 0)
-	{
-		perror("Error al leer /etc/hostname");
-		free(buffer);
-		return (close(fd), NULL);
-	}
+	if (!read_hostname_file(fd, &buffer, &buffer_size, &total_read))
+		return (NULL);
 	buffer[total_read] = '\0';
-	i = 0;
-	while (i < total_read)
-	{
-		if (buffer[i] == '\n')
-		{
-			buffer[i] = '\0';
-			break ;
-		}
-		i++;
-	}
+	funtion_while(buffer, total_read);
 	return (close(fd), buffer);
 }
-//funcion original
+//original dividida
+
+/////hahah
+
+////jahahha
 
 void	str_plus(char *result, char *str2, int len1, int len2)
 {
@@ -207,9 +232,9 @@ char	*concat_strings(char *str1, char *str2)
 	str_plus(result, str2, len1, len2);
 	result[len1 + len2] = '\0';
 	return (result);
-}
+}*/
 
-char	*funtion_prompt(void)
+/*char	*funtion_prompt(void)
 {
 	char	*userr;
 	char	*hostnamee;
@@ -278,29 +303,7 @@ static	bool	readentry(t_env **envs, t_cmd **cmds)
 	*cmds = init_cmds(tokens);
 	free_tokens(tokens);
 	return (true);
-}
-
-/*int	main(void)
-{
-	char	*line;
-	char    *prompt;
-	char    *expanded;
-
-	signal(SIGINT, handle_sigint); //ctrl-c
-	signal(SIGQUIT, SIG_IGN);
-	line = NULL;
-	while (1)
-	{
-        //expand_variable_2("$(USER)");
-		int parse_error;
-		char *userr = expand_variable_2("$(USER)");
-		char *hostnamee = get_hostname();
-        //printf("%s", hostnamee);
-		prompt =  concat_strings("\033[1;32m", concat_strings(userr, concat_strings("@", concat_strings(hostnamee, "\033[1;35m:~$ \033[0m"))));
-		line = readline(prompt);*/
-
-		//hola
-		
+}*/
 
 static int	program(t_cmd **cmds, t_env **envs)
 {
