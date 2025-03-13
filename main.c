@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:41:04 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/03/13 11:56:01 by alexander        ###   ########.fr       */
+/*   Updated: 2025/03/13 12:01:16 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void printtokens(t_cmd **cmds)
     }
 }*/
 
-/*t_cmd	*init_cmds(char **tokens)
+t_cmd	*init_cmds(char **tokens)
 {
 	t_cmd	*cmds;
 	size_t	start;
@@ -143,9 +143,9 @@ char	*read_hostname_file(int fd, char **buffer, ssize_t *buffer_size, ssize_t *t
 		return (funtion_perror("Error al leer /etc/hostname",
 				buffer, fd), NULL);
 	return (*buffer);
-}*/
+}
 
-/*void funtion_return(int fd)
+void funtion_return(int fd)
 {
 	perror("Error al asignar memoria");
 	close(fd);
@@ -232,9 +232,9 @@ char	*concat_strings(char *str1, char *str2)
 	str_plus(result, str2, len1, len2);
 	result[len1 + len2] = '\0';
 	return (result);
-}*/
+}
 
-/*char	*funtion_prompt(void)
+char	*funtion_prompt(void)
 {
 	char	*userr;
 	char	*hostnamee;
@@ -303,7 +303,7 @@ static	bool	readentry(t_env **envs, t_cmd **cmds)
 	*cmds = init_cmds(tokens);
 	free_tokens(tokens);
 	return (true);
-}*/
+}
 
 static int	program(t_cmd **cmds, t_env **envs)
 {
