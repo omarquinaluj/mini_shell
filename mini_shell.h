@@ -6,10 +6,10 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 15:11:06 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/02/19 10:30:54 by alexander        ###   ########.fr       */
+/*   Updated: 2025/03/15 12:48:12 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef MINI_SHELL_H
+
 # define MINI_SHELL_H
 
 # include "Libft/libft.h"
@@ -212,5 +212,18 @@ void		ft_echo_env_pwd(t_cmd *cmd, t_env **env);
 void		ft_cd_exit_export_unset(t_cmd *cmd, t_env **env);
 int			ft_execute_built(t_cmd *cmd, t_env **env);
 int			ft_builtin(t_cmd *cmd, t_env **env, int len);
+t_cmd		*init_cmds(char **tokens);
+t_env		*init_envs(char **envp);
+char		*expand_variable_2(const char *input);
+void		funtion_perror(char *txt, char **buffer, int fd);
+char		*read_hostname_file(int fd, char **buffer, ssize_t *buffer_size, ssize_t *total_read);
+void		funtion_return(int fd);
+void		funtion_while(char *buffer, ssize_t	total_read);
+char		*get_hostname(void);
+void		str_plus(char *result, char *str2, int len1, int len2);
+char		*concat_strings(char *str1, char *str2);
+char		*funtion_prompt(void);
+void		funtion_my_free(char *promptt, char *line);
+char		*funtion_aux2(void);
 int			is_builtin(t_cmd *cmd);
 #endif

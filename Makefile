@@ -11,7 +11,8 @@ SRCS := check_exec.c free_exec.c parsing.c utils_file.c\
 	utils_readentry.c error2.c open_file.c check_exec2.c\
 	builds_part1.c build_cd.c build_path.c build_echo.c\
 	build_env.c build_exit.c build_export.c build_unset.c\
-	build_pwd.c heredoc.c
+	build_pwd.c heredoc.c extension_main.c extension2_main.c\
+	extension3_main.c \
 
 OBJS := ${SRCS:.c=.o}
 LDFLAGS := -lreadline
