@@ -6,10 +6,11 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 15:11:06 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/03/15 12:48:12 by alexander        ###   ########.fr       */
+/*   Updated: 2025/03/15 13:26:38 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef MINI_SHELL_H
 # define MINI_SHELL_H
 
 # include "Libft/libft.h"
