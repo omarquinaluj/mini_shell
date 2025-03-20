@@ -12,14 +12,8 @@
 
 #include "mini_shell.h"
 
-<<<<<<< HEAD
 void	funtion_aux_check(t_cmd *current, char *aux, char **envp)
 {
-=======
-void	auxiliar_check_exec(t_cmd *current, char *aux, char **envp)
-{
-	current->cmd = ft_split(aux, 32);
->>>>>>> owmarqui
 	free(aux);
 	ft_breack_check(current, envp);
 }
@@ -47,12 +41,8 @@ void	ft_check_exec(t_cmd *current, char **envp)
 				i++;
 			}
 		}
-<<<<<<< HEAD
 		current->cmd = ft_split(aux, 32);
 		funtion_aux_check(current, aux, envp);
-=======
-		auxiliar_check_exec(current, aux, envp);
->>>>>>> owmarqui
 		current = current->next;
 	}
 }

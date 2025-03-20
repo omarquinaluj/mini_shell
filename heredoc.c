@@ -102,17 +102,12 @@ char *ft_temp_name(void)
 
 void	ft_init_heredoc(t_cmd *current, t_env **envs)
 {
-<<<<<<< HEAD
-	int	fd;
 
-	sig_heredoc();
-=======
 	int fd;
 
 	//g_minishell.signal_heredoc = 1;  // Indicamos que estamos en heredoc
 	signal(SIGINT, sigint_heredoc_handler);  // Activamos el manejador de señales para heredoc
     g_minishell.signal_heredoc = 1;
->>>>>>> owmarqui
 	while (current)
 	{
 		if (current->infile && current->infile[0][1] == '<'
@@ -140,10 +135,7 @@ void	ft_init_heredoc(t_cmd *current, t_env **envs)
 		}
 		current = current->next;
 	}
-<<<<<<< HEAD
-=======
 	signal(SIGINT, main_signal);
 	g_minishell.signal_heredoc = 0;
->>>>>>> owmarqui
 }
 
