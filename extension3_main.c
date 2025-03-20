@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:41:04 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/03/15 12:33:59 by alexander        ###   ########.fr       */
+/*   Updated: 2025/03/20 11:59:45 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*funtion_prompt(void)
 	return (temp3);
 }
 
-void funtion_my_free(char *promptt, char *line)
+void	funtion_my_free(char *promptt, char *line)
 {
 	free(promptt);
 	free(line);

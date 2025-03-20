@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:41:04 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/03/14 11:47:00 by alexander        ###   ########.fr       */
+/*   Updated: 2025/03/20 11:59:27 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,8 @@ void	funtion_perror(char *txt, char **buffer, int fd)
 	close(fd);
 }
 
-char	*read_hostname_file(int fd, char **buffer, ssize_t *buffer_size, ssize_t *total_read)
+char	*read_hostname_file(int fd, char **buffer,
+			ssize_t *buffer_size, ssize_t *total_read)
 {
 	ssize_t	bytes_read;
 	char	*new_buffer;

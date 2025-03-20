@@ -3,14 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   check_exec2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: owmarqui <owmarqui@student.42madrid.c      +#+  +:+       +#+        */
+/*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 14:15:31 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/03/06 14:15:33 by owmarqui         ###   ########.fr       */
+/*   Updated: 2025/03/20 11:53:54 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_shell.h"
+
+void	funtion_aux_check(t_cmd *current, char *aux, char **envp)
+{
+	free(aux);
+	ft_breack_check(current, envp);
+}
 
 void	ft_check_exec(t_cmd *current, char **envp)
 {
@@ -36,8 +42,7 @@ void	ft_check_exec(t_cmd *current, char **envp)
 			}
 		}
 		current->cmd = ft_split(aux, 32);
-		free(aux);
-		ft_breack_check(current, envp);
+		funtion_aux_check(current, aux, envp);
 		current = current->next;
 	}
 }
