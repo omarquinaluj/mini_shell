@@ -48,7 +48,7 @@ void	ft_check_exec(t_cmd *current, char **envp)
 }
 int	is_spaces(char c)
 {
-	if (c == ' ' || (c <= 9 && c >= 13))
+	if (c == ' ' || (c >= 9 && c <= 13))
 		return (1);
 	return (0);
 }
