@@ -6,9 +6,10 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 14:41:20 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/02/28 09:49:29 by alexander        ###   ########.fr       */
+/*   Updated: 2025/03/20 10:54:04 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "mini_shell.h"
 
 pid_t	ft_fork(void)
@@ -76,7 +77,7 @@ void	ft_init_exec(t_cmd **cmds, t_env **env)
 	{
 		if (is_builtin(current))
 			file = ft_builtin(current, env, len);
-		if (!current->next)
+		else if (!current->next)
 			ft_execute(current, envp, file, STDOUT_FILENO);
 		else
 			file = ft_pipex(current, envp, file);
