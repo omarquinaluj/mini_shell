@@ -45,8 +45,8 @@ typedef struct s_cmd
 	char			**dl_hd;	//Delmitadores el heredoc
 	char			*pth_hd;	//nombre dle archivo tmp
 	char			*pth_cmd;
-	char			*name_cmd;	//no lo uso
-	bool			has_pipe;	//no lo uso, las variables de abajo
+	char			*name_cmd;
+	bool			has_pipe;	
 	int				cmd_count;
 	struct s_cmd	*next;
 }	t_cmd;
@@ -67,7 +67,8 @@ typedef struct s_builtin
 typedef struct s_minishell
 {
 	bool	force_exit;
-	bool	heredoc; //para que tu quieres eso
+	bool	heredoc;
+	bool	signal_heredoc;
 	bool	child_running;
 	int		signal;
 	int		exit_status;
@@ -79,6 +80,7 @@ extern t_minishell	g_minishell;
 long long	ft_atoll(const char *str);
 
 bool		is_invalid_redirection(const char *line);
+void		sigint_heredoc_handler(int sig);
 
 t_cmd		*init_cmds(char **tokens);
 
@@ -88,6 +90,8 @@ char		*last_cmd_arg(t_cmd *cmds);
 void		free_cmds(t_cmd *cmds);
 
 void		ft_check_exec(t_cmd *current, char **envp);
+int			control_cases(char *line);
+int			is_arrows(t_cmd *cmd);
 void		ft_break_redir(t_cmd *current, char **args, int *i);
 void		ft_break_dl(t_cmd *current, int *i);
 void		ft_breack_check(t_cmd *current, char **envp);

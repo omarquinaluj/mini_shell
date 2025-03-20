@@ -110,6 +110,8 @@ size_t	count_tokens(char *line)
 		if (!loop_count_tokens(line, &i, &count))
 			return (0);
 	}
+	//if (!control_cases(line) && !is_arrows(line))
+		//error_st("", "syntax error near unexpected token `newline'", 2);
 	if ((line[i] == '\0' && !is_space(line[i - 1])
 			&& line[i - 1] != '<' && line[i - 1] != '>')
 		|| (check_end_by_quote(line, i) && count == 0))
