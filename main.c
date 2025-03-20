@@ -18,9 +18,17 @@ static	bool  false_funtion(char *promptt)
 {
 	if (promptt)
 		free(promptt);
-	write(1, "exit\n", 5);
+	write (1, "exit\n", 5);
 	return (false);
 }
+/*
+static bool interruption(char *promptt)
+{
+	if (promptt)
+		free(promptt);
+	g_minishell.heredoc = 0;  // Resetear la señal
+	return true;
+}*/
 
 static	bool	readentry(t_env **envs, t_cmd **cmds)
 {
@@ -31,6 +39,7 @@ static	bool	readentry(t_env **envs, t_cmd **cmds)
 	*cmds = NULL;
 	promptt = funtion_aux2();
 	line = readline(promptt);
+	
 	if (!line)
 		return (false_funtion(promptt));
 	add_history(line);

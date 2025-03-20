@@ -56,13 +56,13 @@ int	ft_check_cmd(t_cmd *current, char **envp)
 void	ft_breack_check(t_cmd *crt, char **envp)
 {
 	if (((crt->cmd && !crt->cmd[0]) || (ft_check_cmd(crt, envp) != 0))
-		&& (!(is_builtin(crt))))
+		&& (!(is_builtin(crt) || (is_arrows(crt)))))
 		error_st(crt->name_cmd, "command not found", 127);
-	if (crt->infile && (!crt->infile[0] || !crt->infile[1]))
+	else if (crt->infile && (!crt->infile[0] || !crt->infile[1]))
 		perror ("falla el infile");//status = 127;
-	if (crt->outfile && (!crt->outfile[0] || !crt->outfile[1]))
+	else if (crt->outfile && (!crt->outfile[0] || !crt->outfile[1]))
 		perror ("falla el outfile");//status = 127;
-	if (crt->infile && crt->infile[0][1] == '<'
+	else if (crt->infile && crt->infile[0][1] == '<'
 		&& crt->infile[0][0] == '<')
 		if (crt->dl_hd && !crt->dl_hd[0])
 			perror ("falla el heredoc, el dl");//status = 127;		

@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "mini_shell.h"
-
+/*
 void	main_signal(int signal)
 {
 	g_minishell.signal = signal;
@@ -19,25 +19,41 @@ void	main_signal(int signal)
 	{
 		if (!g_minishell.child_running)
 			write(1, "\n", 1);
-		else if (!g_minishell.heredoc)
-			write(1, "\n", 1);
 		else
 		{
+			
+			void	main_signal(int sig)
+			write(1, "\n", 1);
+			if (g_minishell.signal_heredoc == 0)  // Solo si NO estamos en heredoc
 			rl_on_new_line();
-			rl_replace_line("", 0);
-			rl_redisplay();
+		rl_replace_line("", 0);
+		rl_redisplay();
+
 		}
 		set_env(&g_minishell.envs, "?",
 			ft_itoa(128 + g_minishell.signal));
 	}
+}*/
+
+void	main_signal(int sig)
+{
+	g_minishell.signal = sig;
+	if (sig == SIGINT)
+	{
+		
+		if (g_minishell.signal_heredoc == 0)  // Solo si NO estamos en heredoc
+			write(1, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line(" ", 1);
+		rl_redisplay();
+	}
 }
 
-
-// sacado de un repo para heredoc
-void	sig_heredoc(void)
+void	sigint_heredoc_handler(int sig)
 {
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_IGN);
+	(void)sig;
+	g_minishell.heredoc = 1;
+	write(1, "\n", 1);
 }
 
 void	sig_child(void)
