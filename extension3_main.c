@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:41:04 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/03/20 11:59:45 by alexander        ###   ########.fr       */
+/*   Updated: 2025/03/20 12:34:18 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ char	*funtion_aux2(void)
 	char	*promptt;
 
 	aux = funtion_prompt();
-	temp4 = concat_strings(aux, "\033[1;35m");
-	promptt = concat_strings("\033[1;32m", temp4);
+	temp4 = concat_strings(aux, "");
+	promptt = concat_strings("", temp4);
 	free(aux);
 	free(temp4);
 	return (promptt);
