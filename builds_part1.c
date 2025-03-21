@@ -12,7 +12,7 @@
 
 #include "mini_shell.h"
 
-int	ft_execute_built(t_cmd *cmd, t_env **env)
+int	ft_execute_built(t_cmd *cmd, t_env **env, t_shell shell)
 {
 	int	pipex[2];
 
@@ -25,26 +25,26 @@ int	ft_execute_built(t_cmd *cmd, t_env **env)
 		else
 			dup2(pipex[WRITE], STDOUT_FILENO);
 		close(pipex[WRITE]);
-		ft_echo_env_pwd(cmd, env);
+		ft_echo_env_pwd(cmd, env, shell);
 		exit(0);
 	}
 	close(pipex[WRITE]);
 	return (pipex[READ]);
 }
 
-int	ft_builtin(t_cmd *cmd, t_env **env, int len)
+int	ft_builtin(t_cmd *cmd, t_env **env, int len, t_shell shell)
 {
 	if (ft_strcmp(cmd->name_cmd, "echo") == 0 || \
 		ft_strcmp(cmd->name_cmd, "env") == 0 || \
 		ft_strcmp(cmd->name_cmd, "pwd") == 0)
 	{
 		if ((len == 1 || !cmd->next) && (cmd->outfile == NULL))
-			ft_echo_env_pwd(cmd, env);
+			ft_echo_env_pwd(cmd, env, shell);
 		else
-			return (ft_execute_built(cmd, env));
+			return (ft_execute_built(cmd, env, shell));
 	}
 	else if (len == 1)
-		ft_cd_exit_export_unset(cmd, env);
+		ft_cd_exit_export_unset(cmd, env, shell);
 	return (STDIN_FILENO);
 }
 

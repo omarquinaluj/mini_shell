@@ -43,6 +43,8 @@ void	ft_infile(struct s_cmd *ps, int std)
 			std = ft_open(ps->pth_hd, O_RDONLY);
 		else
 			std = ft_open(ps->infile[1], O_RDONLY);
+		if (std == -1)
+			exit(1);
 		dup2(std, STDIN_FILENO);
 		close(std);
 	}
@@ -71,14 +73,17 @@ void	ft_outfile(struct s_cmd *ps, int std)
 	}
 }
 
-void	ft_wait_for_childs(void)
+void	ft_wait_for_childs(t_exec exec)
 {
-	while (1)
+	int	j;
+
+	j = 0;
+	while (j < exec.i)
 	{
-		if (waitpid(-1, NULL, 0) == -1)
-		{
-			g_minishell.child_running = 0;
-			break ;
-		}
+		waitpid(exec.pid[j], &exec.status, 0);
+		j++;
 	}
+	free(exec.pid);
+	if (exec.file != STDIN_FILENO)
+		close(exec.file);
 }

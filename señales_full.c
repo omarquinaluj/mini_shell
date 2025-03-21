@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "mini_shell.h"
+
+
 /*
 void	main_signal(int signal)
 {
@@ -35,24 +37,23 @@ void	main_signal(int signal)
 	}
 }*/
 
-void	main_signal(int sig)
+void	main_signal(int signal)
 {
-	g_minishell.signal = sig;
-	if (sig == SIGINT)
+	(void) signal;
+	kill(0, SIGQUIT);
+	write(STDOUT_FILENO, "\n", 1);
+	if (g_sig == 0)
 	{
-		
-		if (g_minishell.signal_heredoc == 0)  // Solo si NO estamos en heredoc
-			write(1, "\n", 1);
 		rl_on_new_line();
-		rl_replace_line(" ", 1);
+		rl_replace_line("", 0);
 		rl_redisplay();
 	}
+	g_sig = 0;
 }
 
 void	sigint_heredoc_handler(int sig)
 {
 	(void)sig;
-	g_minishell.heredoc = 1;
 	write(1, "\n", 1);
 }
 
@@ -234,7 +235,7 @@ void	error_numerical_arg2(char *arg)
 	ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
 }
 
-int	verify_args(char **args)
+int	verify_args(char **args, t_shell shell)
 {
 	int	i;
 	int	j;
@@ -253,7 +254,7 @@ int	verify_args(char **args)
 		}
 		if (args[i + 1])
 		{
-			g_minishell.force_exit = false;
+			shell.force_exit = false;
 			return (error("exit", "too many arguments"), EXIT_FAILURE);
 		}
 		i++;
@@ -277,14 +278,14 @@ bool	is_overflowing(const char *s)
 	return (false);
 }
 
-void	ft_echo_env_pwd(t_cmd *cmd, t_env **env)
+void	ft_echo_env_pwd(t_cmd *cmd, t_env **env, t_shell shell)
 {
 	if (ft_strcmp(cmd->name_cmd, "echo") == 0)
-		g_minishell.exit_status = builtin_echo(cmd, env);
+		shell.exit_status = builtin_echo(cmd, env);
 	else if (ft_strcmp(cmd->name_cmd, "env") == 0)
-		g_minishell.exit_status = builtin_env(cmd, env);
+		shell.exit_status = builtin_env(cmd, env);
 	else if (ft_strcmp(cmd->name_cmd, "pwd") == 0)
-		g_minishell.exit_status = builtin_pwd(cmd, env);
+		shell.exit_status = builtin_pwd(cmd, env);
 	/* if(g_minishell.exit_status == EXIT_FAILURE) //si meten opt en lo comando los tira como bien
 	{
 		ft_putstr_fd("minishell: ", 2);
@@ -293,16 +294,16 @@ void	ft_echo_env_pwd(t_cmd *cmd, t_env **env)
 	} */
 }
 
-void	ft_cd_exit_export_unset(t_cmd *cmd, t_env **env)
+void	ft_cd_exit_export_unset(t_cmd *cmd, t_env **env, t_shell shell)
 {
 	if (ft_strcmp(cmd->name_cmd, "cd") == 0)
-		g_minishell.exit_status = builtin_cd(cmd, env);
+		shell.exit_status = builtin_cd(cmd, env);
 	else if (ft_strcmp(cmd->name_cmd, "exit") == 0)
-		g_minishell.exit_status = builtin_exit(cmd, env);
+		shell.exit_status = builtin_exit(cmd, env, shell);
 	else if (ft_strcmp(cmd->name_cmd, "export") == 0)
-		g_minishell.exit_status = builtin_export(cmd, env);
+		shell.exit_status = builtin_export(cmd, env);
 	else if (ft_strcmp(cmd->name_cmd, "unset") == 0)
-		g_minishell.exit_status = builtin_unset(cmd, env);
+		shell.exit_status = builtin_unset(cmd, env);
 	/* if(g_minishell.exit_status == EXIT_FAILURE) //si meten opt en lo comando los tira como bien
 	{
 		perror(cmd->name_cmd);

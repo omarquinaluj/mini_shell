@@ -39,13 +39,13 @@ void ft_heredoc_write(char *ln, int file, t_env **envs)
     write(file, "\n", 1);
 }
 
-void ft_heredoc(t_cmd *current, int file, t_env **envs)
+void ft_heredoc(t_cmd *current, int file, t_env **envs, t_shell shell)
 {
     char *line;
     int i;
 
     i = 0;
-    g_minishell.heredoc = 0;
+    shell.heredoc = 0;
      if (!current->dl_hd)
     {
         perror("Error con el delimitador");
@@ -53,7 +53,7 @@ void ft_heredoc(t_cmd *current, int file, t_env **envs)
     }
     while ((line = readline("> ")))
     {
-        if (g_minishell.heredoc) // Si Ctrl+C se presionó, salir del loop
+        if (shell.heredoc) // Si Ctrl+C se presionó, salir del loop
         {
             free(line);
             break;
@@ -100,14 +100,14 @@ char *ft_temp_name(void)
     return (NULL);
 }
 
-void	ft_init_heredoc(t_cmd *current, t_env **envs)
+void	ft_init_heredoc(t_cmd *current, t_env **envs, t_shell shell)
 {
 
 	int fd;
 
 	//g_minishell.signal_heredoc = 1;  // Indicamos que estamos en heredoc
 	signal(SIGINT, sigint_heredoc_handler);  // Activamos el manejador de señales para heredoc
-    g_minishell.signal_heredoc = 1;
+    shell.signal_heredoc = 1;
 	while (current)
 	{
 		if (current->infile && current->infile[0][1] == '<'
@@ -125,9 +125,9 @@ void	ft_init_heredoc(t_cmd *current, t_env **envs)
 				perror("Error al abrir archivo temporal");
 				return;
 			}
-			ft_heredoc(current, fd, envs);
+			ft_heredoc(current, fd, envs, shell);
 			// 🔴 Si `Ctrl+C` interrumpió heredoc, salimos del bucle
-			if (g_minishell.heredoc)
+			if (shell.heredoc)
 			{  // Resetear flag de interrupción
 				break;
 			}
@@ -136,6 +136,6 @@ void	ft_init_heredoc(t_cmd *current, t_env **envs)
 		current = current->next;
 	}
 	signal(SIGINT, main_signal);
-	g_minishell.signal_heredoc = 0;
+	shell.signal_heredoc = 0;
 }
 

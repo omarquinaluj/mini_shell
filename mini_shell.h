@@ -64,19 +64,27 @@ typedef struct s_builtin
 	int		(*func)(t_cmd *cmd, t_env **envs);
 }	t_builtin;
 
-typedef struct s_minishell
+typedef struct s_exec
+{
+	pid_t	*pid;
+	int		i;
+	int		status;
+	int		file;
+}	t_exec;
+
+typedef struct s_shell
 {
 	bool	force_exit;
 	bool	heredoc;
 	bool	signal_heredoc;
 	bool	child_running;
-	int		signal;
+	//int		signal;
 	int		exit_status;
 	t_env	*envs;
-}	t_minishell;
-
-extern t_minishell	g_minishell;
+}	t_shell;
 //util bueno para la libft
+extern int g_sig;
+
 long long	ft_atoll(const char *str);
 
 bool		is_invalid_redirection(const char *line);
@@ -89,29 +97,30 @@ void		add_cmd(t_cmd **cmds, t_cmd *new);
 char		*last_cmd_arg(t_cmd *cmds);
 void		free_cmds(t_cmd *cmds);
 
-void		ft_check_exec(t_cmd *current, char **envp);
+void		ft_check_exec(t_cmd *current, char **envp, t_shell shell);
 int			control_cases(char *line);
 int			is_arrows(t_cmd *cmd);
 void		ft_break_redir(t_cmd *current, char **args, int *i);
 void		ft_break_dl(t_cmd *current, int *i);
-void		ft_breack_check(t_cmd *current, char **envp);
+void		ft_breack_check(t_cmd *current, char **envp, t_shell shell);
 int			ft_check_cmd(t_cmd *current, char **envp);
 int			ft_check_path(t_cmd *current, char **envp);
 
 char		**format_env(t_env *envs);
 size_t		count_envs(t_env *envs);
 int			ft_path(char **env);
-
+//----------executing---------------------------------------
 int			count_cmd_nodes(t_cmd *cmds);
 int			ft_open(char *file, int flags);
 void		ft_infile(struct s_cmd *ps, int std);
 void		ft_outfile(struct s_cmd *ps, int std);
 pid_t		ft_fork(void);
 void		ft_pipe(int fd[2]);
-void		ft_execute(t_cmd *current, char **envp, int infile, int outfile);
-int			ft_pipex(t_cmd *cmd, char **envp, int file);
-void		ft_wait_for_childs(void);
-void		ft_init_exec(t_cmd **cmds, t_env **env);
+pid_t		ft_execute(t_cmd *current, char **envp, int infile, int outfile);
+int			ft_pipex(t_cmd *cmd, char **envp, int file, t_exec exec);
+void		ft_wait_for_childs(t_exec exec);
+void		ft_init_exec(t_cmd **cmds, t_env **env, t_shell shell);
+t_exec		init_t_exec(int len);
 
 char		**token_split(char **tokens, size_t *i, bool *split_token, int k);
 
@@ -146,8 +155,8 @@ bool		handle_unexpected(char ***tokens);
 //funciones de errores
 void		error_unexpected(char *token, size_t len);
 void		error(char *msg, char *more);
-void		error_st(char *msg, char *more, int exit_status);
-void		error_e(char *msg, char *more, int exit_status);
+void		error_st(char *msg, char *more, int exit_status, t_shell shell);
+void		error_e(char *msg, char *more, int exit_status, t_shell shell);
 void		error_numerical_arg(char *name, char *arg);
 void		error_write(char *cmd);
 //frees
@@ -169,7 +178,7 @@ char		*ft_replace_env_var(t_env *envs, char *token,
 				bool *split_token, char *tokenpre);
 
 // funcion de heredoc en proceso recordar
-void		ft_init_heredoc(t_cmd *current, t_env **envs);
+void		ft_init_heredoc(t_cmd *current, t_env **envs, t_shell shell);
 
 // gestionar cat -e cuando aparece C^ puede que se duplique
 
@@ -196,10 +205,10 @@ void		swap_env_nodes(t_env *tmp1, t_env *tmp2);
 t_env		*create_new_env_node(char *key_value);
 //exit
 void		error_numerical_arg2(char *arg);
-int			verify_args(char **args);
+int			verify_args(char **args, t_shell shell);
 bool		is_overflowing(const char *s);
-void		exit_arg(t_cmd *cmd);
-int			builtin_exit(t_cmd *cmd, t_env **envs);
+void		exit_arg(t_cmd *cmd, t_shell shell);
+int			builtin_exit(t_cmd *cmd, t_env **envs, t_shell shell);
 //env
 bool		is_special_env(char *key);
 int			builtin_env(t_cmd *cmd, t_env **envs);
@@ -213,10 +222,10 @@ char		*get_path(t_cmd *cmd, t_env **envs);
 void		tilted_path(t_env **envs, char **path);
 int			builtin_cd(t_cmd *cmd, t_env **envs);
 //building general
-void		ft_echo_env_pwd(t_cmd *cmd, t_env **env);
-void		ft_cd_exit_export_unset(t_cmd *cmd, t_env **env);
-int			ft_execute_built(t_cmd *cmd, t_env **env);
-int			ft_builtin(t_cmd *cmd, t_env **env, int len);
+void		ft_echo_env_pwd(t_cmd *cmd, t_env **env, t_shell shell);
+void		ft_cd_exit_export_unset(t_cmd *cmd, t_env **env, t_shell shell);
+int			ft_execute_built(t_cmd *cmd, t_env **env, t_shell shell);
+int			ft_builtin(t_cmd *cmd, t_env **env, int len, t_shell shell);
 t_cmd		*init_cmds(char **tokens);
 t_env		*init_envs(char **envp);
 char		*expand_variable_2(const char *input);
@@ -231,4 +240,4 @@ char		*funtion_prompt(void);
 void		funtion_my_free(char *promptt, char *line);
 char		*funtion_aux2(void);
 int			is_builtin(t_cmd *cmd);
-#endif
+# endif

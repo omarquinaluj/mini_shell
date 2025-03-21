@@ -12,7 +12,7 @@
 
 #include "mini_shell.h"
 
-t_minishell g_minishell;
+int g_sig = 0;
 
 static	bool  false_funtion(char *promptt)
 {
@@ -54,7 +54,7 @@ static	bool	readentry(t_env **envs, t_cmd **cmds)
 	return (true);
 }
 
-static int	program(t_cmd **cmds, t_env **envs)
+static int	program(t_cmd **cmds, t_env **envs, t_shell shell)
 {
 	while (1)
 	{
@@ -66,44 +66,44 @@ static int	program(t_cmd **cmds, t_env **envs)
 			set_env(envs, "_", ft_strdup(last_cmd_arg(*cmds)));
 			//printtokens(cmds);
 			// retorne el exit status capaz que tenga que hacer parte o implementalos atraves de una estrcutura
-			ft_init_exec(cmds, envs);
+			ft_init_exec(cmds, envs, shell);
 		}
-		if (g_minishell.signal > 0)
-			g_minishell.exit_status = 128 + g_minishell.signal;
-		if (g_minishell.signal == SIGINT)
-			g_minishell.exit_status = 130; 
-		set_env(envs, "?", ft_itoa(g_minishell.exit_status));
-		if (g_minishell.force_exit /* || is_child_process(*cmds) */)
-			return (free_cmds(*cmds), g_minishell.exit_status);
+		if (g_sig > 0)
+			shell.exit_status = 128 + g_sig;
+		if (g_sig == SIGINT)
+			shell.exit_status = 130; 
+		set_env(envs, "?", ft_itoa(shell.exit_status));
+		if (shell.force_exit /* || is_child_process(*cmds) */)
+			return (free_cmds(*cmds), shell.exit_status);
 		free_cmds(*cmds);
-		g_minishell.signal = 0;
 	}
-	return (g_minishell.exit_status);
+	return (shell.exit_status);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_cmd	*cmds;
 	t_env	*tmp;
+	t_shell shell;
 
 	(void)argc;
 	(void)argv;
-	g_minishell.force_exit = false;
-	g_minishell.signal = 0;
-	g_minishell.heredoc = false;
-	g_minishell.child_running = 0;
-	g_minishell.envs = init_envs(envp);
-	g_minishell.exit_status = program(&cmds, &g_minishell.envs);
-	if (g_minishell.signal > 0)// vainas que no entiendo ya me podre a ver
-		g_minishell.exit_status = 128 + g_minishell.signal;
+	shell.force_exit = false;
+	//shell.signal = 0;
+	shell.heredoc = false;
+	shell.child_running = 0;
+	shell.envs = init_envs(envp);
+	shell.exit_status = program(&cmds, &shell.envs, shell);
+	if (g_sig > 0)// vainas que no entiendo ya me podre a ver
+		shell.exit_status = 128 + g_sig;
 	rl_clear_history();
-	while (g_minishell.envs)
+	while (shell.envs)
 	{
-		tmp = g_minishell.envs;
-		g_minishell.envs = g_minishell.envs->next;
+		tmp = shell.envs;
+		shell.envs = shell.envs->next;
 		free_env(tmp);
 	}
-	return (g_minishell.exit_status);
+	return (shell.exit_status);
 }
 
 
