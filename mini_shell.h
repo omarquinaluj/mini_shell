@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 15:11:06 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/03/15 13:26:38 by alexander        ###   ########.fr       */
+/*   Updated: 2025/03/24 22:46:43 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ int			skip_quotes(char *line);
 int			isinquote(char *token, size_t *i);
 int			check_end_by_quote(char *line, int i);
 char		*trimm_token_quote(char **token);
-bool		handle_quotes(char *line, size_t *i);
+int		handle_quotes(char *line, size_t *i);
 
 char		*ft_strjoin_gnl(char *stash, char *buff);
 void		cmds_has_pipes(t_cmd *cmds);
