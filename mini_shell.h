@@ -20,6 +20,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
+# include <sys/ioctl.h>
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -83,7 +84,7 @@ typedef struct s_shell
 	t_env	*envs;
 }	t_shell;
 //util bueno para la libft
-extern int g_sig;
+extern volatile sig_atomic_t g_sig;
 
 long long	ft_atoll(const char *str);
 
@@ -178,7 +179,8 @@ char		*ft_replace_env_var(t_env *envs, char *token,
 				bool *split_token, char *tokenpre);
 
 // funcion de heredoc en proceso recordar
-void		ft_init_heredoc(t_cmd *current, t_env **envs, t_shell shell);
+void		ft_init_heredoc(t_cmd *current, t_env **envs);
+void		ft_heredoc_write(char *ln, int file, t_env **envs);
 
 // gestionar cat -e cuando aparece C^ puede que se duplique
 

@@ -12,7 +12,7 @@
 
 #include "mini_shell.h"
 
-int g_sig = 0;
+volatile sig_atomic_t	g_sig = 0;
 
 static	bool  false_funtion(char *promptt)
 {
@@ -89,12 +89,11 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	shell.force_exit = false;
-	//shell.signal = 0;
 	shell.heredoc = false;
 	shell.child_running = 0;
 	shell.envs = init_envs(envp);
 	shell.exit_status = program(&cmds, &shell.envs, shell);
-	if (g_sig > 0)// vainas que no entiendo ya me podre a ver
+	if (g_sig > 0)
 		shell.exit_status = 128 + g_sig;
 	rl_clear_history();
 	while (shell.envs)
