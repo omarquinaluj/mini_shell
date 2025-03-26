@@ -19,7 +19,7 @@ void	error_numerical_arg2(char *arg)
 	ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
 }
 
-int	verify_args(char **args, t_shell shell)
+int	verify_args(char **args, t_shell *shell)
 {
 	int	i;
 	int	j;
@@ -38,7 +38,7 @@ int	verify_args(char **args, t_shell shell)
 		}
 		if (args[i + 1])
 		{
-			shell.force_exit = false;
+			shell->force_exit = false;
 			return (error("exit", "too many arguments"), EXIT_FAILURE);
 		}
 		i++;
@@ -62,14 +62,14 @@ bool	is_overflowing(const char *s)
 	return (false);
 }
 
-void	ft_echo_env_pwd(t_cmd *cmd, t_env **env, t_shell shell)
+void	ft_echo_env_pwd(t_cmd *cmd, t_env **env, t_shell *shell)
 {
 	if (ft_strcmp(cmd->name_cmd, "echo") == 0)
-		shell.exit_status = builtin_echo(cmd, env);
+		shell->exit_status = builtin_echo(cmd, env);
 	else if (ft_strcmp(cmd->name_cmd, "env") == 0)
-		shell.exit_status = builtin_env(cmd, env);
+		shell->exit_status = builtin_env(cmd, env);
 	else if (ft_strcmp(cmd->name_cmd, "pwd") == 0)
-		shell.exit_status = builtin_pwd(cmd, env);
+		shell->exit_status = builtin_pwd(cmd, env);
 	/* if(g_minishell.exit_status == EXIT_FAILURE) //si meten opt en lo comando los tira como bien
 	{
 		ft_putstr_fd("minishell: ", 2);
@@ -78,16 +78,16 @@ void	ft_echo_env_pwd(t_cmd *cmd, t_env **env, t_shell shell)
 	} */
 }
 
-void	ft_cd_exit_export_unset(t_cmd *cmd, t_env **env, t_shell shell)
+void	ft_cd_exit_export_unset(t_cmd *cmd, t_env **env, t_shell *shell)
 {
 	if (ft_strcmp(cmd->name_cmd, "cd") == 0)
-		shell.exit_status = builtin_cd(cmd, env);
+		shell->exit_status = builtin_cd(cmd, env);
 	else if (ft_strcmp(cmd->name_cmd, "exit") == 0)
-		shell.exit_status = builtin_exit(cmd, env, shell);
+		shell->exit_status = builtin_exit(cmd, env, shell);
 	else if (ft_strcmp(cmd->name_cmd, "export") == 0)
-		shell.exit_status = builtin_export(cmd, env);
+		shell->exit_status = builtin_export(cmd, env);
 	else if (ft_strcmp(cmd->name_cmd, "unset") == 0)
-		shell.exit_status = builtin_unset(cmd, env);
+		shell->exit_status = builtin_unset(cmd, env);
 	/* if(g_minishell.exit_status == EXIT_FAILURE) //si meten opt en lo comando los tira como bien
 	{
 		perror(cmd->name_cmd);

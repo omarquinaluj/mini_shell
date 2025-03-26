@@ -12,28 +12,28 @@
 
 #include "mini_shell.h"
 
-void	exit_arg(t_cmd *cmd, t_shell shell)
+void	exit_arg(t_cmd *cmd, t_shell *shell)
 {
 	long long	exit_code;
 	t_env		*tmp;
 
 	exit_code = ft_atoll(cmd->args[1]);
 	free_cmds(cmd);
-	while (shell.envs)
+	while (shell->envs)
 	{
-		tmp = shell.envs;
-		shell.envs = shell.envs->next;
+		tmp = shell->envs;
+		shell->envs = shell->envs->next;
 		free_env(tmp);
 	}
 	exit(exit_code);
 }
 
-int	builtin_exit(t_cmd *cmd, t_env **envs, t_shell shell)
+int	builtin_exit(t_cmd *cmd, t_env **envs, t_shell *shell)
 {
 	int		verify_status;
 
 	(void)envs;
-	shell.force_exit = true;
+	shell->force_exit = true;
 	if (!cmd->has_pipe)
 		ft_putstr_fd("exit\n", STDERR_FILENO);
 	verify_status = verify_args(cmd->args, shell);

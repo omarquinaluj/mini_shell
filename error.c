@@ -36,7 +36,7 @@ void	error(char *msg, char *more)
 	ft_putchar_fd('\n', STDERR_FILENO);
 }
 
-void	error_st(char *msg, char *more, int exit_status, t_shell shell)
+void	error_st(char *msg, char *more, int exit_status, t_shell *shell)
 {
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(msg, STDERR_FILENO);
@@ -46,7 +46,8 @@ void	error_st(char *msg, char *more, int exit_status, t_shell shell)
 		ft_putstr_fd(more, STDERR_FILENO);
 	}
 	ft_putchar_fd('\n', STDERR_FILENO);
-	shell.exit_status = exit_status;
+	if (shell)
+		shell->exit_status = exit_status;
 }
 
 void	error_e(char *msg, char *more, int exit_status, t_shell shell)
@@ -59,7 +60,7 @@ void	error_e(char *msg, char *more, int exit_status, t_shell shell)
 		ft_putstr_fd(more, STDERR_FILENO);
 	}
 	shell.exit_status = exit_status;
-	exit (exit_status);
+	exit (shell.exit_status);
 }
 
 void	error_numerical_arg(char *name, char *arg)

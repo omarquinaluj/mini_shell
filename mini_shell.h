@@ -156,7 +156,7 @@ bool		handle_unexpected(char ***tokens);
 //funciones de errores
 void		error_unexpected(char *token, size_t len);
 void		error(char *msg, char *more);
-void		error_st(char *msg, char *more, int exit_status, t_shell shell);
+void		error_st(char *msg, char *more, int exit_status, t_shell *shell);
 void		error_e(char *msg, char *more, int exit_status, t_shell shell);
 void		error_numerical_arg(char *name, char *arg);
 void		error_write(char *cmd);
@@ -207,10 +207,10 @@ void		swap_env_nodes(t_env *tmp1, t_env *tmp2);
 t_env		*create_new_env_node(char *key_value);
 //exit
 void		error_numerical_arg2(char *arg);
-int			verify_args(char **args, t_shell shell);
+int			verify_args(char **args, t_shell *shell);
 bool		is_overflowing(const char *s);
-void		exit_arg(t_cmd *cmd, t_shell shell);
-int			builtin_exit(t_cmd *cmd, t_env **envs, t_shell shell);
+void		exit_arg(t_cmd *cmd, t_shell *shell);
+int			builtin_exit(t_cmd *cmd, t_env **envs, t_shell *shell);
 //env
 bool		is_special_env(char *key);
 int			builtin_env(t_cmd *cmd, t_env **envs);
@@ -224,8 +224,8 @@ char		*get_path(t_cmd *cmd, t_env **envs);
 void		tilted_path(t_env **envs, char **path);
 int			builtin_cd(t_cmd *cmd, t_env **envs);
 //building general
-void		ft_echo_env_pwd(t_cmd *cmd, t_env **env, t_shell shell);
-void		ft_cd_exit_export_unset(t_cmd *cmd, t_env **env, t_shell shell);
+void		ft_echo_env_pwd(t_cmd *cmd, t_env **env, t_shell *shell);
+void		ft_cd_exit_export_unset(t_cmd *cmd, t_env **env, t_shell *shell);
 int			ft_execute_built(t_cmd *cmd, t_env **env, t_shell shell);
 int			ft_builtin(t_cmd *cmd, t_env **env, int len, t_shell shell);
 t_cmd		*init_cmds(char **tokens);
