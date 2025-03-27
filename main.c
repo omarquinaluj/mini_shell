@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:41:04 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/03/27 12:13:42 by alexander        ###   ########.fr       */
+/*   Updated: 2025/03/27 12:22:40 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ static	bool	readentry(t_env **envs, t_cmd **cmds)
 	free_tokens(tokens);
 	return (true);
 }
+
 
 static int	program(t_cmd **cmds, t_env **envs, t_shell shell)
 {
