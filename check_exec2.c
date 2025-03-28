@@ -12,13 +12,13 @@
 
 #include "mini_shell.h"
 
-void	funtion_aux_check(t_cmd *current, char *aux, char **envp, t_shell shell)
+void	funtion_aux_check(t_cmd *current, char *aux, char **envp, t_shell *shell)
 {
 	free(aux);
 	ft_breack_check(current, envp, shell);
 }
 
-void	ft_check_exec(t_cmd *current, char **envp, t_shell shell)
+void	ft_check_exec(t_cmd *current, char **envp, t_shell *shell)
 {
 	char	*aux;
 	int		i;

@@ -22,7 +22,7 @@ bool	loop_get_next_token(char *line, int *quote, size_t *i)
 			if (handle_quotes(line, i) == 0)
 				return (error("unclosed quotes ", 0), false);
 			else if (handle_quotes(line, i) == 1)
-				return (error("command not found ", 0), false);
+				return (error("command not found", 0), false);
 			if (line[(*i)] == '|')
 				return (true);
 		}
@@ -77,7 +77,7 @@ int	loop_count_tokens(char *line, size_t *i, size_t *count)
 		if (handle_quotes(line, i) == 0)
 			return (error("unclosed quotes ", 0), 0);
 		else if (handle_quotes(line, i) == 1)
-			return (error("command not found ", 0), false);
+			return (error("command not found", 0), false);
 	}
 	else if (line[(*i)] == '<' || line[(*i)] == '>')
 	{

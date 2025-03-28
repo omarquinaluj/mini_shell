@@ -61,7 +61,7 @@ int	ft_pipex(t_cmd *cmd, char **envp, int file, t_exec exec)
 	return (pipex[READ]);
 }
 
-void	ft_init_exec(t_cmd **cmds, t_env **env, t_shell shell)
+void	ft_init_exec(t_cmd **cmds, t_env **env, t_shell *shell)
 {
 	t_cmd	*current;
 	t_exec	exec;
@@ -77,7 +77,7 @@ void	ft_init_exec(t_cmd **cmds, t_env **env, t_shell shell)
 	while (current)
 	{
 		if (is_builtin(current))
-			exec.file = ft_builtin(current, env, len, shell);
+			exec.file = ft_builtin(current, env, len, *shell);
 		else if (!current->next)
 			exec.pid[exec.i] = ft_execute(current, envp, exec.file, STDOUT_FILENO);
 		else

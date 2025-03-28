@@ -39,7 +39,6 @@ static	bool	readentry(t_env **envs, t_cmd **cmds)
 	*cmds = NULL;
 	promptt = funtion_aux2();
 	line = readline(promptt);
-	
 	if (!line)
 		return (false_funtion(promptt));
 	add_history(line);
@@ -54,7 +53,7 @@ static	bool	readentry(t_env **envs, t_cmd **cmds)
 	return (true);
 }
 
-static int	program(t_cmd **cmds, t_env **envs, t_shell shell)
+static int	program(t_cmd **cmds, t_env **envs, t_shell *shell)
 {
 	while (1)
 	{
@@ -69,30 +68,48 @@ static int	program(t_cmd **cmds, t_env **envs, t_shell shell)
 			ft_init_exec(cmds, envs, shell);
 		}
 		if (g_sig > 0)
-			shell.exit_status = 128 + g_sig;
+			shell->exit_status = 128 + g_sig;
 		if (g_sig == SIGINT)
-			shell.exit_status = 130; 
-		set_env(envs, "?", ft_itoa(shell.exit_status));
-		if (shell.force_exit /* || is_child_process(*cmds) */)
-			return (free_cmds(*cmds), shell.exit_status);
+			shell->exit_status = 130; 
+		set_env(envs, "?", ft_itoa(shell->exit_status));
+		if (shell->force_exit /* || is_child_process(*cmds) */)
+			return (free_cmds(*cmds), shell->exit_status);
 		free_cmds(*cmds);
 	}
-	return (shell.exit_status);
+	return (shell->exit_status);
+}
+
+void	inicialize_struct(t_shell *shell,char **envp)
+{
+	t_cmd	*cmds;
+
+	ft_bzero(shell, sizeof(t_shell));
+	shell->exit_status = 0;
+	shell->force_exit = false;
+	shell->heredoc = false;
+	shell->child_running = 0;
+	shell->envs = init_envs(envp);
+	shell->exit_status = program(&cmds, &shell->envs, shell);
+}
+
+void free_shell(t_shell *shell)
+{
+	if (shell->envs)
+	{
+		free (shell->envs);
+		shell->envs = NULL;
+	}
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_cmd	*cmds;
+	t_shell	shell;
 	t_env	*tmp;
-	t_shell shell;
+	int		def_exit_status;
 
+	inicialize_struct(&shell, envp);
 	(void)argc;
 	(void)argv;
-	shell.force_exit = false;
-	shell.heredoc = false;
-	shell.child_running = 0;
-	shell.envs = init_envs(envp);
-	shell.exit_status = program(&cmds, &shell.envs, shell);
 	if (g_sig > 0)
 		shell.exit_status = 128 + g_sig;
 	rl_clear_history();
@@ -102,7 +119,9 @@ int	main(int argc, char **argv, char **envp)
 		shell.envs = shell.envs->next;
 		free_env(tmp);
 	}
-	return (shell.exit_status);
+	def_exit_status = shell.exit_status;
+	free_shell(&shell);
+	return (def_exit_status);
 }
 
 

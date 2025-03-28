@@ -53,11 +53,11 @@ int	ft_check_cmd(t_cmd *current, char **envp)
 	}
 }
 
-void	ft_breack_check(t_cmd *crt, char **envp, t_shell shell)
+void	ft_breack_check(t_cmd *crt, char **envp, t_shell *shell)
 {
 	if (((crt->cmd && !crt->cmd[0]) || (ft_check_cmd(crt, envp) != 0))
 		&& (!(is_builtin(crt) || (is_arrows(crt)))))
-		error_st(crt->name_cmd, "command not found", 127, &shell);
+		error_st(crt->name_cmd, "command not found", 127, shell);
 	else if (crt->infile && (!crt->infile[0] || !crt->infile[1]))
 		perror ("falla el infile");//status = 127;
 	else if (crt->outfile && (!crt->outfile[0] || !crt->outfile[1]))

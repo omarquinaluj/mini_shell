@@ -98,12 +98,12 @@ void		add_cmd(t_cmd **cmds, t_cmd *new);
 char		*last_cmd_arg(t_cmd *cmds);
 void		free_cmds(t_cmd *cmds);
 
-void		ft_check_exec(t_cmd *current, char **envp, t_shell shell);
+void		ft_check_exec(t_cmd *current, char **envp, t_shell *shell);
 int			control_cases(char *line);
 int			is_arrows(t_cmd *cmd);
 void		ft_break_redir(t_cmd *current, char **args, int *i);
 void		ft_break_dl(t_cmd *current, int *i);
-void		ft_breack_check(t_cmd *current, char **envp, t_shell shell);
+void		ft_breack_check(t_cmd *current, char **envp, t_shell *shell);
 int			ft_check_cmd(t_cmd *current, char **envp);
 int			ft_check_path(t_cmd *current, char **envp);
 
@@ -120,7 +120,7 @@ void		ft_pipe(int fd[2]);
 pid_t		ft_execute(t_cmd *current, char **envp, int infile, int outfile);
 int			ft_pipex(t_cmd *cmd, char **envp, int file, t_exec exec);
 void		ft_wait_for_childs(t_exec exec);
-void		ft_init_exec(t_cmd **cmds, t_env **env, t_shell shell);
+void		ft_init_exec(t_cmd **cmds, t_env **env, t_shell *shell);
 t_exec		init_t_exec(int len);
 
 char		**token_split(char **tokens, size_t *i, bool *split_token, int k);
@@ -157,7 +157,7 @@ bool		handle_unexpected(char ***tokens);
 void		error_unexpected(char *token, size_t len);
 void		error(char *msg, char *more);
 void		error_st(char *msg, char *more, int exit_status, t_shell *shell);
-void		error_e(char *msg, char *more, int exit_status, t_shell shell);
+void		error_e(char *msg, char *more, int exit_status, t_shell *shell);
 void		error_numerical_arg(char *name, char *arg);
 void		error_write(char *cmd);
 //frees
