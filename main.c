@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:41:04 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/03/15 12:45:54 by alexander        ###   ########.fr       */
+/*   Updated: 2025/03/27 12:22:40 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static bool interruption(char *promptt)
 	return true;
 }*/
 
-static	bool	readentry(t_env **envs, t_cmd **cmds)
+/*static	bool	readentry(t_env **envs, t_cmd **cmds)
 {
 	char	*line;
 	char	**tokens;
@@ -39,6 +39,10 @@ static	bool	readentry(t_env **envs, t_cmd **cmds)
 	*cmds = NULL;
 	promptt = funtion_aux2();
 	line = readline(promptt);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4b916b514db6fbe3a83876e4137c157172c4b8ed
 	if (!line)
 		return (false_funtion(promptt));
 	add_history(line);
@@ -51,7 +55,87 @@ static	bool	readentry(t_env **envs, t_cmd **cmds)
 	*cmds = init_cmds(tokens);
 	free_tokens(tokens);
 	return (true);
+}*/
+
+char	*ft_dup_line(const char *str)
+{
+	char	*new_str;
+	int		i;
+
+	if (!str)
+		return (NULL);
+	while (*str == ' ')
+		str++;
+	new_str = malloc(strlen(str) + 1);
+	if (!new_str)
+		return (NULL);
+	i = 0;
+	while (str[i])
+	{
+		new_str[i] = str[i];
+		i++;
+	}
+	new_str[i] = '\0';
+	return (new_str);
 }
+int	ft_compared(char *line)
+{
+	int	i;
+
+	i = 0;
+	if (line && line[0] == ' ')
+	{
+		while (line[i] != '\0')
+		{
+			if (line[i] == '<')
+			{
+				if (line[i++])
+					return (1);
+			}
+			i++;
+		}
+	}
+	return (0);
+}
+
+
+static	bool	readentry(t_env **envs, t_cmd **cmds)
+{
+	char	*line;
+	char	**tokens;
+	char	*promptt;
+	char	*line2;
+	int		aux;
+
+	*cmds = NULL;
+	tokens = NULL;
+	promptt = funtion_aux2();
+	line = readline(promptt);
+	if (!line)
+		return (false_funtion(promptt));
+	add_history(line);
+	if (*line == '\0')
+		return (funtion_my_free(promptt, line), true);
+	aux = ft_compared(line);
+	if (aux == 1)
+	{
+		line2 = ft_dup_line(line);
+		if (!line2)
+			free(line);
+		tokens = tokenize(line2, *envs, NULL);
+	}
+	else if (aux == 0)
+		tokens = tokenize(line, *envs, NULL);
+	funtion_my_free(promptt, line);
+	if (aux == 1)
+		free(line2);
+	if (!tokens)
+		return (set_env(envs, "?", ft_strdup("2")), true);
+	*cmds = init_cmds(tokens);
+	free_tokens(tokens);
+	return (true);
+}
+
 
 static int	program(t_cmd **cmds, t_env **envs, t_shell *shell)
 {
@@ -123,5 +207,3 @@ int	main(int argc, char **argv, char **envp)
 	free_shell(&shell);
 	return (def_exit_status);
 }
-
-
