@@ -39,10 +39,6 @@ static bool interruption(char *promptt)
 	*cmds = NULL;
 	promptt = funtion_aux2();
 	line = readline(promptt);
-<<<<<<< HEAD
-=======
-
->>>>>>> 4b916b514db6fbe3a83876e4137c157172c4b8ed
 	if (!line)
 		return (false_funtion(promptt));
 	add_history(line);
@@ -139,9 +135,9 @@ static	bool	readentry(t_env **envs, t_cmd **cmds)
 
 static int	program(t_cmd **cmds, t_env **envs, t_shell *shell)
 {
+	sig_parent();
 	while (1)
 	{
-		sig_parent();
 		if (!readentry(envs, cmds))
 			break ;
 		if (*cmds)
@@ -153,8 +149,9 @@ static int	program(t_cmd **cmds, t_env **envs, t_shell *shell)
 		}
 		if (g_sig > 0)
 			shell->exit_status = 128 + g_sig;
-		if (g_sig == SIGINT)
-			shell->exit_status = 130; 
+		//if (g_sig == SIGINT)
+		//	shell->exit_status = 130; 
+
 		set_env(envs, "?", ft_itoa(shell->exit_status));
 		if (shell->force_exit /* || is_child_process(*cmds) */)
 			return (free_cmds(*cmds), shell->exit_status);

@@ -38,6 +38,7 @@ pid_t	ft_execute(t_cmd *current, char **envp, int infile, int outfile)
 	pid = ft_fork();
 	if (pid == 0)
 	{
+		signal(SIGINT, SIG_DFL);
 		ft_infile(current, infile);
 		ft_outfile(current, outfile);
 		if (execve(current->pth_cmd, current->cmd, envp) == -1)
@@ -74,6 +75,7 @@ void	ft_init_exec(t_cmd **cmds, t_env **env, t_shell *shell)
 	ft_check_exec(current, envp, shell);
 	ft_init_heredoc(current, env);
 	exec = init_t_exec(len);
+	signal(SIGINT, SIG_IGN);
 	while (current)
 	{
 		if (is_builtin(current))
@@ -86,5 +88,6 @@ void	ft_init_exec(t_cmd **cmds, t_env **env, t_shell *shell)
 		exec.i++;
 	}
 	ft_wait_for_childs(exec);
+	signal(SIGINT, main_signal);
 	ft_free_cmd(cmds, envp);
 }

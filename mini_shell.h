@@ -185,10 +185,11 @@ void		ft_heredoc_write(char *ln, int file, t_env **envs);
 // gestionar cat -e cuando aparece C^ puede que se duplique
 
 void		main_signal(int signal);
-void		sig_heredoc(void);
-void		sig_child(void);
+void		ft_ignore_sigint(void);
+void		ft_restore_sigint(void);
+void		sigint_heredoc_handler(int sig);
 void		sig_parent(void);
-void		sig_ignore(void);
+
 
 int			builtin_pwd(t_cmd *cmd, t_env **envs);//pwd
 int			builtin_unset(t_cmd *cmd, t_env **envs);//unset
