@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:41:04 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/03/27 12:22:40 by alexander        ###   ########.fr       */
+/*   Updated: 2025/03/31 11:23:46 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,8 +118,9 @@ static	bool	readentry(t_env **envs, t_cmd **cmds)
 		line2 = ft_dup_line(line);
 		if (!line2)
 			free(line);
-		tokens = tokenize(line2, *envs, NULL);
 	}
+	if (aux == 1)
+		tokens = tokenize(line2, *envs, NULL);
 	else if (aux == 0)
 		tokens = tokenize(line, *envs, NULL);
 	funtion_my_free(promptt, line);
