@@ -72,21 +72,6 @@ void	ft_outfile(struct s_cmd *ps, int std)
 		close(std);
 	}
 }
-/*
-void	ft_wait_for_childs(t_exec exec)
-{
-	int	j;
-
-	j = 0;
-	while (j < exec.i)
-	{
-		waitpid(exec.pid[j], &exec.status, 0);
-		j++;
-	}
-	free(exec.pid);
-	if (exec.file != STDIN_FILENO)
-		close(exec.file);
-}*/
 
 void	ft_wait_for_childs(t_exec exec)
 {
@@ -97,13 +82,13 @@ void	ft_wait_for_childs(t_exec exec)
 	while (j < exec.i)
 	{
 		waitpid(exec.pid[j], &status, 0);
-		if (WIFSIGNALED(status)) // Si el proceso terminó por una señal
+		if (WIFSIGNALED(status))
 		{
 			if (WTERMSIG(status) == SIGINT)
-				write(STDOUT_FILENO, "\n", 1); // Solo un salto de línea, sin doble prompt
+				write(STDOUT_FILENO, "\n", 1);
 		}
 		j++;
 	}
 	free(exec.pid);
+	signal(SIGINT, main_signal);
 }
-

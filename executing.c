@@ -79,15 +79,14 @@ void	ft_init_exec(t_cmd **cmds, t_env **env, t_shell *shell)
 	while (current)
 	{
 		if (is_builtin(current))
-			exec.file = ft_builtin(current, env, len, *shell);
+			exec.file = ft_builtin(current, env, len, shell);
 		else if (!current->next)
-			exec.pid[exec.i] = ft_execute(current, envp, exec.file, STDOUT_FILENO);
+			exec.pid[exec.i] = ft_execute(current, envp, exec.file, 1);
 		else
 			exec.file = ft_pipex(current, envp, exec.file, exec);
 		current = current->next;
 		exec.i++;
 	}
 	ft_wait_for_childs(exec);
-	signal(SIGINT, main_signal);
 	ft_free_cmd(cmds, envp);
 }

@@ -70,12 +70,6 @@ void	ft_echo_env_pwd(t_cmd *cmd, t_env **env, t_shell *shell)
 		shell->exit_status = builtin_env(cmd, env);
 	else if (ft_strcmp(cmd->name_cmd, "pwd") == 0)
 		shell->exit_status = builtin_pwd(cmd, env);
-	/* if(g_minishell.exit_status == EXIT_FAILURE) //si meten opt en lo comando los tira como bien
-	{
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(cmd->name_cmd, 2);
-		ft_putstr_fd(" command not found\n", 2);
-	} */
 }
 
 void	ft_cd_exit_export_unset(t_cmd *cmd, t_env **env, t_shell *shell)
@@ -88,8 +82,4 @@ void	ft_cd_exit_export_unset(t_cmd *cmd, t_env **env, t_shell *shell)
 		shell->exit_status = builtin_export(cmd, env);
 	else if (ft_strcmp(cmd->name_cmd, "unset") == 0)
 		shell->exit_status = builtin_unset(cmd, env);
-	/* if(g_minishell.exit_status == EXIT_FAILURE) //si meten opt en lo comando los tira como bien
-	{
-		perror(cmd->name_cmd);
-	} */
 }

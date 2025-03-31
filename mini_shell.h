@@ -83,9 +83,10 @@ typedef struct s_shell
 	int		exit_status;
 	t_env	*envs;
 }	t_shell;
-//util bueno para la libft
-extern volatile sig_atomic_t g_sig;
 
+extern volatile sig_atomic_t	g_sig;
+
+//util bueno para la libft
 long long	ft_atoll(const char *str);
 
 bool		is_invalid_redirection(const char *line);
@@ -136,7 +137,7 @@ int			skip_quotes(char *line);
 int			isinquote(char *token, size_t *i);
 int			check_end_by_quote(char *line, int i);
 char		*trimm_token_quote(char **token);
-int		handle_quotes(char *line, size_t *i);
+int			handle_quotes(char *line, size_t *i);
 
 char		*ft_strjoin_gnl(char *stash, char *buff);
 void		cmds_has_pipes(t_cmd *cmds);
@@ -157,7 +158,6 @@ bool		handle_unexpected(char ***tokens);
 void		error_unexpected(char *token, size_t len);
 void		error(char *msg, char *more);
 void		error_st(char *msg, char *more, int exit_status, t_shell *shell);
-void		error_e(char *msg, char *more, int exit_status, t_shell *shell);
 void		error_numerical_arg(char *name, char *arg);
 void		error_write(char *cmd);
 //frees
@@ -189,7 +189,6 @@ void		ft_ignore_sigint(void);
 void		ft_restore_sigint(void);
 void		sigint_heredoc_handler(int sig);
 void		sig_parent(void);
-
 
 int			builtin_pwd(t_cmd *cmd, t_env **envs);//pwd
 int			builtin_unset(t_cmd *cmd, t_env **envs);//unset
@@ -227,13 +226,14 @@ int			builtin_cd(t_cmd *cmd, t_env **envs);
 //building general
 void		ft_echo_env_pwd(t_cmd *cmd, t_env **env, t_shell *shell);
 void		ft_cd_exit_export_unset(t_cmd *cmd, t_env **env, t_shell *shell);
-int			ft_execute_built(t_cmd *cmd, t_env **env, t_shell shell);
-int			ft_builtin(t_cmd *cmd, t_env **env, int len, t_shell shell);
+int			ft_execute_built(t_cmd *cmd, t_env **env, t_shell *shell);
+int			ft_builtin(t_cmd *cmd, t_env **env, int len, t_shell *shell);
 t_cmd		*init_cmds(char **tokens);
 t_env		*init_envs(char **envp);
 char		*expand_variable_2(const char *input);
 void		funtion_perror(char *txt, char **buffer, int fd);
-char		*read_hostname_file(int fd, char **buffer, ssize_t *buffer_size, ssize_t *total_read);
+char		*read_hostname_file(int fd, char **buffer, ssize_t *buffer_size,
+				ssize_t *total_read);
 void		funtion_return(int fd);
 void		funtion_while(char *buffer, ssize_t	total_read);
 char		*get_hostname(void);
@@ -243,4 +243,5 @@ char		*funtion_prompt(void);
 void		funtion_my_free(char *promptt, char *line);
 char		*funtion_aux2(void);
 int			is_builtin(t_cmd *cmd);
-# endif
+
+#endif
