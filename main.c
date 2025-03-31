@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:41:04 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/03/27 12:22:40 by alexander        ###   ########.fr       */
+/*   Updated: 2025/03/31 11:16:39 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ char	*ft_dup_line(const char *str)
 	new_str[i] = '\0';
 	return (new_str);
 }
+
 int	ft_compared(char *line)
 {
 	int	i;
@@ -94,7 +95,6 @@ int	ft_compared(char *line)
 	return (0);
 }
 
-
 static	bool	readentry(t_env **envs, t_cmd **cmds)
 {
 	char	*line;
@@ -112,14 +112,24 @@ static	bool	readentry(t_env **envs, t_cmd **cmds)
 	add_history(line);
 	if (*line == '\0')
 		return (funtion_my_free(promptt, line), true);
+	/*aux = ft_compared(line);
+	if (aux == 0)
+	{
+		line2 = ft_dup_line(line);
+		if (!line2)
+			free(line);
+	}
+	else if (aux == 1)
+		tokens = tokenize(line, *envs, NULL);*/
 	aux = ft_compared(line);
 	if (aux == 1)
 	{
 		line2 = ft_dup_line(line);
 		if (!line2)
 			free(line);
-		tokens = tokenize(line2, *envs, NULL);
 	}
+	if (aux == 1)
+		tokens = tokenize(line2, *envs, NULL);
 	else if (aux == 0)
 		tokens = tokenize(line, *envs, NULL);
 	funtion_my_free(promptt, line);
