@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:41:04 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/03/31 11:23:46 by alexander        ###   ########.fr       */
+/*   Updated: 2025/04/01 09:29:33 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ char	*ft_dup_line(const char *str)
 	new_str[i] = '\0';
 	return (new_str);
 }
+
 int	ft_compared(char *line)
 {
 	int	i;
@@ -94,17 +95,35 @@ int	ft_compared(char *line)
 	return (0);
 }
 
+bool	ft_readentry(char *line, char *line2, t_cmd **cmds, char *promptt, t_env **envs)
+{
+	char	**tokens;
+	int		aux;
+
+	aux = ft_compared(line);
+	tokens = NULL;
+	if (aux == 1)
+		tokens = tokenize(line2, *envs, NULL);
+	else if (aux == 0)
+		tokens = tokenize(line, *envs, NULL);
+	funtion_my_free(promptt, line);
+	if (aux == 1)
+		free(line2);
+	if (!tokens)
+		return (set_env(envs, "?", ft_strdup("2")), true);
+	*cmds = init_cmds(tokens);
+	free_tokens(tokens);
+	return (true);
+}
 
 static	bool	readentry(t_env **envs, t_cmd **cmds)
 {
 	char	*line;
-	char	**tokens;
 	char	*promptt;
 	char	*line2;
 	int		aux;
 
 	*cmds = NULL;
-	tokens = NULL;
 	promptt = funtion_aux2();
 	line = readline(promptt);
 	if (!line)
@@ -119,18 +138,7 @@ static	bool	readentry(t_env **envs, t_cmd **cmds)
 		if (!line2)
 			free(line);
 	}
-	if (aux == 1)
-		tokens = tokenize(line2, *envs, NULL);
-	else if (aux == 0)
-		tokens = tokenize(line, *envs, NULL);
-	funtion_my_free(promptt, line);
-	if (aux == 1)
-		free(line2);
-	if (!tokens)
-		return (set_env(envs, "?", ft_strdup("2")), true);
-	*cmds = init_cmds(tokens);
-	free_tokens(tokens);
-	return (true);
+	return (ft_readentry(line, line2, cmds, promptt, envs));
 }
 
 
