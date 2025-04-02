@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:41:04 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/04/02 09:52:23 by alexander        ###   ########.fr       */
+/*   Updated: 2025/04/02 11:14:43 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 volatile sig_atomic_t	g_sig = 0;
 
-static	bool  false_funtion(char *promptt)
+/*static	bool  false_funtion(char *promptt)
 {
 	if (promptt)
 		free(promptt);
 	write (1, "exit\n", 5);
 	return (false);
-}
+}*/
 /*
 static bool interruption(char *promptt)
 {
@@ -53,7 +53,7 @@ static bool interruption(char *promptt)
 	return (true);
 }*/
 
-bool	ft_readentry(char *line, char *line2, t_cmd **cmds, char *promptt, t_env **envs)
+/*bool	ft_readentry(char *line, char *line2, t_cmd **cmds, char *promptt, t_env **envs)
 {
 	char	**tokens;
 	int		aux;
@@ -72,7 +72,7 @@ bool	ft_readentry(char *line, char *line2, t_cmd **cmds, char *promptt, t_env **
 	*cmds = init_cmds(tokens);
 	free_tokens(tokens);
 	return (true);
-}
+}*/
 
 static	bool	readentry(t_env **envs, t_cmd **cmds)
 {
@@ -141,7 +141,7 @@ void	inicialize_struct(t_shell *shell,char **envp)
 	shell->exit_status = program(&cmds, &shell->envs, shell);
 }
 
-void free_shell(t_shell *shell)
+void	free_shell(t_shell *shell)
 {
 	if (shell->envs)
 	{
