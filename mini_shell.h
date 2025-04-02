@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 15:11:06 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/03/25 08:27:24 by alexander        ###   ########.fr       */
+/*   Updated: 2025/04/02 09:51:22 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,5 +243,7 @@ char		*funtion_prompt(void);
 void		funtion_my_free(char *promptt, char *line);
 char		*funtion_aux2(void);
 int			is_builtin(t_cmd *cmd);
+char		*ft_dup_line(const char *str);
+int			ft_compared(char *line);
 
 #endif

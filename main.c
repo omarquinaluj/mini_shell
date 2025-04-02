@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:41:04 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/04/01 09:29:33 by alexander        ###   ########.fr       */
+/*   Updated: 2025/04/02 09:52:23 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,48 +52,6 @@ static bool interruption(char *promptt)
 	free_tokens(tokens);
 	return (true);
 }*/
-
-char	*ft_dup_line(const char *str)
-{
-	char	*new_str;
-	int		i;
-
-	if (!str)
-		return (NULL);
-	while (*str == ' ')
-		str++;
-	new_str = malloc(strlen(str) + 1);
-	if (!new_str)
-		return (NULL);
-	i = 0;
-	while (str[i])
-	{
-		new_str[i] = str[i];
-		i++;
-	}
-	new_str[i] = '\0';
-	return (new_str);
-}
-
-int	ft_compared(char *line)
-{
-	int	i;
-
-	i = 0;
-	if (line && line[0] == ' ')
-	{
-		while (line[i] != '\0')
-		{
-			if (line[i] == '<')
-			{
-				if (line[i++])
-					return (1);
-			}
-			i++;
-		}
-	}
-	return (0);
-}
 
 bool	ft_readentry(char *line, char *line2, t_cmd **cmds, char *promptt, t_env **envs)
 {
