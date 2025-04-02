@@ -6,7 +6,7 @@
 /*   By: acaro-su <acaro-su@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:41:04 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/04/02 16:26:41 by acaro-su         ###   ########.fr       */
+/*   Updated: 2025/04/02 16:43:55 by acaro-su         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ static	bool	readentry(t_env **envs, t_cmd **cmds)
 	int		aux;
 
 	*cmds = NULL;
+	line2 = NULL;
 	promptt = funtion_aux2();
 	line = readline(promptt);
 	if (!line)
