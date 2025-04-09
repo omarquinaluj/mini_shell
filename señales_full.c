@@ -21,20 +21,32 @@ void	main_signal(int signal)
 	rl_redisplay();
 }
 
-void	handle_eof(void)
-{
-	g_sig = -1;
-}
-
 void	sigint_heredoc_handler(int sig)
 {
+	g_sig = sig;
 	if (sig == SIGINT)
 	{
-		g_sig = SIGINT;
 		rl_on_new_line();
 		rl_replace_line("", 1);
 		ioctl(STDIN_FILENO, TIOCSTI, "\n");
 	}
+}
+
+int	obtain_last_status(int *status)
+{
+	if (WTERMSIG(*status) != 0)
+	{
+		if (WTERMSIG(*status) == 3)
+			ft_putstr_fd("Quit (core dumped)", 2);
+		ft_putstr_fd("\n", 2);
+		return (WTERMSIG(*status) + 128);
+	}
+	return (WEXITSTATUS(*status));
+}
+
+void	handle_eof(void)
+{
+	g_sig = -1;
 }
 
 void	sig_parent(void)

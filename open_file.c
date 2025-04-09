@@ -73,7 +73,7 @@ void	ft_outfile(struct s_cmd *ps, int std)
 	}
 }
 
-void	ft_wait_for_childs(t_exec exec)
+void	ft_wait_for_childs(t_exec exec, t_shell *shell)
 {
 	int	j;
 	int	status;
@@ -86,9 +86,14 @@ void	ft_wait_for_childs(t_exec exec)
 		{
 			if (WTERMSIG(status) == SIGINT)
 				write(STDOUT_FILENO, "\n", 1);
+			else if (WTERMSIG(status) == SIGQUIT)
+				ft_putstr_fd("Quit (core dumped)\n", 2);
+			shell->exit_status = 128 + WTERMSIG(status);
 		}
+		else
+			shell->exit_status = WEXITSTATUS(status);
 		j++;
 	}
 	free(exec.pid);
-	signal(SIGINT, main_signal);
+	signal(SIGINT, main_signal); // restaurar handler original
 }
