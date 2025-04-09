@@ -14,7 +14,7 @@
 
 t_exec	init_t_exec(int len)
 {
-	t_exec exec;
+	t_exec	exec;
 
 	exec.pid = malloc(sizeof(pid_t) * len);
 	if (!exec.pid)

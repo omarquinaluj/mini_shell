@@ -12,7 +12,8 @@
 
 #include "mini_shell.h"
 
-void	funtion_aux_check(t_cmd *current, char *aux, char **envp, t_shell *shell)
+void	funtion_aux_check(t_cmd *current, char *aux, char **envp,
+					t_shell *shell)
 {
 	free(aux);
 	ft_breack_check(current, envp, shell);
@@ -46,6 +47,7 @@ void	ft_check_exec(t_cmd *current, char **envp, t_shell *shell)
 		current = current->next;
 	}
 }
+
 int	is_spaces(char c)
 {
 	if (c == ' ' || (c >= 9 && c <= 13))
@@ -53,31 +55,31 @@ int	is_spaces(char c)
 	return (0);
 }
 
-int control_cases(char *line)
+int	control_cases(char *line)
 {
-    int i;
+	int	i;
 
 	i = 0;
-    while (line[i])
+	while (line[i])
 	{
-        if (is_space(line[i]))
-            i++;
-        if (line[i] == '<' || line[i] == '>')
-		{
-			if (line[i + 1] == line[i])  // Caso de << o >>
-                i += 2;  // Saltamos los dos símbolos
-            else
-				i++;  // Solo un símbolo < o >
-        }
 		if (is_space(line[i]))
-            i++;
+			i++;
+		if (line[i] == '<' || line[i] == '>')
+		{
+			if (line[i + 1] == line[i])
+				i += 2;
+			else
+				i++;
+		}
+		if (is_space(line[i]))
+			i++;
 		if (!is_spaces(line[i]) && line[i] != '<' && line[i] != '>')
 			return (0);
-    }
-    return (1);
+	}
+	return (1);
 }
 
-int is_arrows(t_cmd *cmd)
+int	is_arrows(t_cmd *cmd)
 {
 	if (ft_strcmp(cmd->name_cmd, "<") == 0)
 		return (1);

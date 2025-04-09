@@ -39,6 +39,7 @@ pid_t	ft_execute(t_cmd *current, char **envp, int infile, int outfile)
 	if (pid == 0)
 	{
 		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		ft_infile(current, infile);
 		ft_outfile(current, outfile);
 		if (execve(current->pth_cmd, current->cmd, envp) == -1)
@@ -68,7 +69,7 @@ void	ft_init_exec(t_cmd **cmds, t_env **env, t_shell *shell)
 	t_exec	exec;
 	int		len;
 	char	**envp;
-
+	
 	current = *cmds;
 	len = count_cmd_nodes(*cmds);
 	envp = format_env(*env);
@@ -79,15 +80,14 @@ void	ft_init_exec(t_cmd **cmds, t_env **env, t_shell *shell)
 	while (current)
 	{
 		if (is_builtin(current))
-			exec.file = ft_builtin(current, env, len, *shell);
+			exec.file = ft_builtin(current, env, len, shell);
 		else if (!current->next)
-			exec.pid[exec.i] = ft_execute(current, envp, exec.file, STDOUT_FILENO);
+			exec.pid[exec.i] = ft_execute(current, envp, exec.file, 1);
 		else
 			exec.file = ft_pipex(current, envp, exec.file, exec);
 		current = current->next;
 		exec.i++;
 	}
-	ft_wait_for_childs(exec);
-	signal(SIGINT, main_signal);
+	ft_wait_for_childs(exec, shell);
 	ft_free_cmd(cmds, envp);
 }
