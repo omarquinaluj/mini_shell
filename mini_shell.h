@@ -120,7 +120,7 @@ pid_t		ft_fork(void);
 void		ft_pipe(int fd[2]);
 pid_t		ft_execute(t_cmd *current, char **envp, int infile, int outfile);
 int			ft_pipex(t_cmd *cmd, char **envp, int file, t_exec exec);
-void		ft_wait_for_childs(t_exec exec);
+void		ft_wait_for_childs(t_exec exec, t_shell *shell);
 void		ft_init_exec(t_cmd **cmds, t_env **env, t_shell *shell);
 t_exec		init_t_exec(int len);
 
@@ -179,16 +179,17 @@ char		*ft_replace_env_var(t_env *envs, char *token,
 				bool *split_token, char *tokenpre);
 
 // funcion de heredoc en proceso recordar
+
+void	auxiliar_heredoc(char **line, t_cmd *current, int file, t_env **envs);
+void	auxiliar_heredoc_write(int *j, int *start, char *line);
 void		ft_init_heredoc(t_cmd *current, t_env **envs);
 void		ft_heredoc_write(char *ln, int file, t_env **envs);
-
 // gestionar cat -e cuando aparece C^ puede que se duplique
 
 void		main_signal(int signal);
-void		ft_ignore_sigint(void);
-void		ft_restore_sigint(void);
 void		sigint_heredoc_handler(int sig);
 void		sig_parent(void);
+int			obtain_last_status(int *status);
 
 int			builtin_pwd(t_cmd *cmd, t_env **envs);//pwd
 int			builtin_unset(t_cmd *cmd, t_env **envs);//unset
