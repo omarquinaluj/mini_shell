@@ -40,7 +40,6 @@ void	ft_heredoc_write(char *line, int file, t_env **envs)
 	write(file, "\n", 1);
 }
 
-
 void	ft_heredoc(t_cmd *current, int file, t_env **envs)
 {
 	char	*line;

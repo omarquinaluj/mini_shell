@@ -95,5 +95,5 @@ void	ft_wait_for_childs(t_exec exec, t_shell *shell)
 		j++;
 	}
 	free(exec.pid);
-	signal(SIGINT, main_signal); // restaurar handler original
+	signal(SIGINT, main_signal);
 }

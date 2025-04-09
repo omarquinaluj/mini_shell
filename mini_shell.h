@@ -180,8 +180,9 @@ char		*ft_replace_env_var(t_env *envs, char *token,
 
 // funcion de heredoc en proceso recordar
 
-void	auxiliar_heredoc(char **line, t_cmd *current, int file, t_env **envs);
-void	auxiliar_heredoc_write(int *j, int *start, char *line);
+void		auxiliar_heredoc(char **line, t_cmd *current, int file,
+				t_env **envs);
+void		auxiliar_heredoc_write(int *j, int *start, char *line);
 void		ft_init_heredoc(t_cmd *current, t_env **envs);
 void		ft_heredoc_write(char *ln, int file, t_env **envs);
 // gestionar cat -e cuando aparece C^ puede que se duplique

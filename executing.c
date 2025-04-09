@@ -69,7 +69,7 @@ void	ft_init_exec(t_cmd **cmds, t_env **env, t_shell *shell)
 	t_exec	exec;
 	int		len;
 	char	**envp;
-	
+
 	current = *cmds;
 	len = count_cmd_nodes(*cmds);
 	envp = format_env(*env);
