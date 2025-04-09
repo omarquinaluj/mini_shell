@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:43:18 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/03/31 11:22:41 by alexander        ###   ########.fr       */
+/*   Updated: 2025/04/01 09:29:52 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,6 @@ void	ft_break_redir(t_cmd *current, char **args, int *i)
 	{
 		if (current->args[*i][1] == '<')
 			ft_break_dl(current, i);
-		/*else if (access(args[*i + 1], F_OK) == -1)
-			perror (args[*i]);*/
 		current->infile = ft_split(aux, 32);
 	}
 	if (current->args[*i][0] == '>')

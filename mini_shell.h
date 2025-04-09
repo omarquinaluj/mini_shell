@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 15:11:06 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/03/25 08:27:24 by alexander        ###   ########.fr       */
+/*   Updated: 2025/04/02 11:11:08 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,8 +241,13 @@ char		*get_hostname(void);
 void		str_plus(char *result, char *str2, int len1, int len2);
 char		*concat_strings(char *str1, char *str2);
 char		*funtion_prompt(void);
+bool		ft_readentry(char *line, char *line2,
+				t_cmd **cmds, char *promptt, t_env **envs);
 void		funtion_my_free(char *promptt, char *line);
 char		*funtion_aux2(void);
 int			is_builtin(t_cmd *cmd);
+char		*ft_dup_line(const char *str);
+int			ft_compared(char *line);
+bool		false_funtion(char *promptt);
 
 #endif

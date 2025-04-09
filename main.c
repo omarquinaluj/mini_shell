@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
+/*   By: acaro-su <acaro-su@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:41:04 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/03/31 11:23:46 by alexander        ###   ########.fr       */
+/*   Updated: 2025/04/02 16:43:55 by acaro-su         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 volatile sig_atomic_t	g_sig = 0;
 
-static	bool  false_funtion(char *promptt)
+/*static	bool  false_funtion(char *promptt)
 {
 	if (promptt)
 		free(promptt);
 	write (1, "exit\n", 5);
 	return (false);
-}
+}*/
 /*
 static bool interruption(char *promptt)
 {
@@ -53,58 +53,38 @@ static bool interruption(char *promptt)
 	return (true);
 }*/
 
-char	*ft_dup_line(const char *str)
+/*bool	ft_readentry(char *line, char *line2, t_cmd **cmds, char *promptt, t_env **envs)
 {
-	char	*new_str;
-	int		i;
+	char	**tokens;
+	int		aux;
 
-	if (!str)
-		return (NULL);
-	while (*str == ' ')
-		str++;
-	new_str = malloc(strlen(str) + 1);
-	if (!new_str)
-		return (NULL);
-	i = 0;
-	while (str[i])
-	{
-		new_str[i] = str[i];
-		i++;
-	}
-	new_str[i] = '\0';
-	return (new_str);
-}
-int	ft_compared(char *line)
-{
-	int	i;
+	aux = ft_compared(line);
+	tokens = NULL;
+	if (aux == 1)
+		tokens = tokenize(line2, *envs, NULL);
+	else if (aux == 0)
+		tokens = tokenize(line, *envs, NULL);
+	funtion_my_free(promptt, line);
+	if (aux == 1)
+		free(line2);
+	if (!tokens)
+		return (set_env(envs, "?", ft_strdup("2")), true);
+	*cmds = init_cmds(tokens);
+	free_tokens(tokens);
+	return (true);
+}*/
 
-	i = 0;
-	if (line && line[0] == ' ')
-	{
-		while (line[i] != '\0')
-		{
-			if (line[i] == '<')
-			{
-				if (line[i++])
-					return (1);
-			}
-			i++;
-		}
-	}
-	return (0);
-}
-
+//hola esto es un comentario
 
 static	bool	readentry(t_env **envs, t_cmd **cmds)
 {
 	char	*line;
-	char	**tokens;
 	char	*promptt;
 	char	*line2;
 	int		aux;
 
 	*cmds = NULL;
-	tokens = NULL;
+	line2 = NULL;
 	promptt = funtion_aux2();
 	line = readline(promptt);
 	if (!line)
@@ -119,18 +99,7 @@ static	bool	readentry(t_env **envs, t_cmd **cmds)
 		if (!line2)
 			free(line);
 	}
-	if (aux == 1)
-		tokens = tokenize(line2, *envs, NULL);
-	else if (aux == 0)
-		tokens = tokenize(line, *envs, NULL);
-	funtion_my_free(promptt, line);
-	if (aux == 1)
-		free(line2);
-	if (!tokens)
-		return (set_env(envs, "?", ft_strdup("2")), true);
-	*cmds = init_cmds(tokens);
-	free_tokens(tokens);
-	return (true);
+	return (ft_readentry(line, line2, cmds, promptt, envs));
 }
 
 
@@ -175,7 +144,7 @@ void	inicialize_struct(t_shell *shell,char **envp)
 	shell->exit_status = program(&cmds, &shell->envs, shell);
 }
 
-void free_shell(t_shell *shell)
+void	free_shell(t_shell *shell)
 {
 	if (shell->envs)
 	{
