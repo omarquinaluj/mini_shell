@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 15:11:06 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/04/02 11:11:08 by alexander        ###   ########.fr       */
+/*   Updated: 2025/04/13 19:55:48 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,6 +249,27 @@ char		*funtion_aux2(void);
 int			is_builtin(t_cmd *cmd);
 char		*ft_dup_line(const char *str);
 int			ft_compared(char *line);
+int			chequer_quotes(char *line, t_shell *shell);
+int			detectedtour_quotes_1(char *line, int b, int aux);
+int			detectedtour_quotes_2(char *line, int b, int aux);
+int			funtion_quotes_echo(char *line);
+int			aux_detector_1(char *line, t_shell *shell);
+int			aux_detector_2(char *line, t_shell *shell);
+int			writequotes_34(char *line);
+int			is_valid(char *line, int *position, int aux);
+int			detectorecho(char *line, int i, int p);
+int			detectorecho_ok(char *line);
+int			writequotes(char *line);
+int			detectedtour_quotes(char *line);
+void		aux_counterquotes_34(char *line, int *counter_quotes, int j);
+int			*contquotes_34(char *line, int aux);
+int			aux_counterquotes_34_aux(char *line, int j);
+int			detected_quotes(char *line);
+void		aux_counterquotes(char *line, int *counter_quotes, int j);
+int			*contquotes(char *line, int aux);
+int			aux_counterquotes_aux(char *line, int j);
+int			dtectoreunset_ok(char *line);
+int			dtectorepwd_ok(char *line);
 bool		false_funtion(char *promptt);
 
 #endif

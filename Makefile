@@ -14,6 +14,8 @@ SRCS := check_exec.c free_exec.c parsing.c utils_file.c\
 	build_pwd.c heredoc.c extension_main.c extension2_main.c\
 	extension3_main.c  ft_t_exec.c utils_tool.c utils_tool2.c\
 	utils_tool3.c heredoc_auxiliar.c extension4_main.c\
+	chequer_quotes.c chequer_quotes_1.c\
+	chequer_quotes_2.c chequer_quotes_3.c chequer_quotes_4.c\
 
 OBJS := ${SRCS:.c=.o}
 LDFLAGS := -lreadline

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acaro-su <acaro-su@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:41:04 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/04/02 16:43:55 by acaro-su         ###   ########.fr       */
+/*   Updated: 2025/04/13 20:02:16 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,69 +14,7 @@
 
 volatile sig_atomic_t	g_sig = 0;
 
-/*static	bool  false_funtion(char *promptt)
-{
-	if (promptt)
-		free(promptt);
-	write (1, "exit\n", 5);
-	return (false);
-}*/
-/*
-static bool interruption(char *promptt)
-{
-	if (promptt)
-		free(promptt);
-	g_minishell.heredoc = 0;  // Resetear la señal
-	return true;
-}*/
-
-/*static	bool	readentry(t_env **envs, t_cmd **cmds)
-{
-	char	*line;
-	char	**tokens;
-	char	*promptt;
-
-	*cmds = NULL;
-	promptt = funtion_aux2();
-	line = readline(promptt);
-	if (!line)
-		return (false_funtion(promptt));
-	add_history(line);
-	if (*line == '\0')
-		return (funtion_my_free(promptt, line), true);
-	tokens = tokenize(line, *envs, NULL);
-	funtion_my_free(promptt, line);
-	if (!tokens)
-		return (set_env(envs, "?", ft_strdup("2")), true);
-	*cmds = init_cmds(tokens);
-	free_tokens(tokens);
-	return (true);
-}*/
-
-/*bool	ft_readentry(char *line, char *line2, t_cmd **cmds, char *promptt, t_env **envs)
-{
-	char	**tokens;
-	int		aux;
-
-	aux = ft_compared(line);
-	tokens = NULL;
-	if (aux == 1)
-		tokens = tokenize(line2, *envs, NULL);
-	else if (aux == 0)
-		tokens = tokenize(line, *envs, NULL);
-	funtion_my_free(promptt, line);
-	if (aux == 1)
-		free(line2);
-	if (!tokens)
-		return (set_env(envs, "?", ft_strdup("2")), true);
-	*cmds = init_cmds(tokens);
-	free_tokens(tokens);
-	return (true);
-}*/
-
-//hola esto es un comentario
-
-static	bool	readentry(t_env **envs, t_cmd **cmds)
+static	bool	readentry(t_env **envs, t_cmd **cmds, t_shell *shell)
 {
 	char	*line;
 	char	*promptt;
@@ -91,6 +29,8 @@ static	bool	readentry(t_env **envs, t_cmd **cmds)
 		return (false_funtion(promptt));
 	add_history(line);
 	if (*line == '\0')
+		return (funtion_my_free(promptt, line), true);
+	if (chequer_quotes(line, shell) == 1)
 		return (funtion_my_free(promptt, line), true);
 	aux = ft_compared(line);
 	if (aux == 1)
@@ -108,7 +48,7 @@ static int	program(t_cmd **cmds, t_env **envs, t_shell *shell)
 	sig_parent();
 	while (1)
 	{
-		if (!readentry(envs, cmds))
+		if (!readentry(envs, cmds, shell))
 			break ;
 		if (*cmds)
 		{

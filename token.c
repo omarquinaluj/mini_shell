@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 14:09:31 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/03/24 22:54:51 by alexander        ###   ########.fr       */
+/*   Updated: 2025/04/13 19:56:56 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ bool	loop_get_next_token(char *line, int *quote, size_t *i)
 			*quote = 1;
 			if (handle_quotes(line, i) == 0)
 				return (error("unclosed quotes ", 0), false);
-			else if (handle_quotes(line, i) == 1)
-				return (error("command not found", 0), false);
 			if (line[(*i)] == '|')
 				return (true);
 		}
@@ -76,8 +74,6 @@ int	loop_count_tokens(char *line, size_t *i, size_t *count)
 	{
 		if (handle_quotes(line, i) == 0)
 			return (error("unclosed quotes ", 0), 0);
-		else if (handle_quotes(line, i) == 1)
-			return (error("command not found", 0), false);
 	}
 	else if (line[(*i)] == '<' || line[(*i)] == '>')
 	{
