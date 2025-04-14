@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:41:04 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/04/13 20:02:16 by alexander        ###   ########.fr       */
+/*   Updated: 2025/04/14 08:53:54 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ static	bool	readentry(t_env **envs, t_cmd **cmds, t_shell *shell)
 		if (!line2)
 			free(line);
 	}
-	return (ft_readentry(line, line2, cmds, promptt, envs));
+	free (promptt);
+	return (ft_readentry(line, line2, cmds, envs));
 }
-
 
 static int	program(t_cmd **cmds, t_env **envs, t_shell *shell)
 {
@@ -55,14 +55,14 @@ static int	program(t_cmd **cmds, t_env **envs, t_shell *shell)
 			set_env(envs, "_", ft_strdup(last_cmd_arg(*cmds)));
 			//printtokens(cmds);
 			shell->exit_status = 0;
-			// retorne el exit status capaz que tenga que hacer parte o implementalos atraves de una estrcutura
+			// retorne el exit status capaz que tenga -
+			// que hacer parte o implementalos atraves de una estrcutura
 			ft_init_exec(cmds, envs, shell);
 		}
-
 		if (g_sig > 0)
 			shell->exit_status = 128 + g_sig;
 		if (g_sig == SIGINT)
-			shell->exit_status = 130; 
+			shell->exit_status = 130;
 		set_env(envs, "?", ft_itoa(shell->exit_status));
 		if (shell->force_exit /* || is_child_process(*cmds) */)
 			return (free_cmds(*cmds), shell->exit_status);
@@ -71,7 +71,7 @@ static int	program(t_cmd **cmds, t_env **envs, t_shell *shell)
 	return (shell->exit_status);
 }
 
-void	inicialize_struct(t_shell *shell,char **envp)
+void	inicialize_struct(t_shell *shell, char **envp)
 {
 	t_cmd	*cmds;
 

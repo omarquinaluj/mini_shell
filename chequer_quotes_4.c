@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:41:04 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/04/13 11:20:35 by alexander        ###   ########.fr       */
+/*   Updated: 2025/04/14 08:39:24 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	detectedtour_quotes_1(char *line, int b, int aux)
 	return (aux);
 }
 
-int detectedtour_quotes_2(char *line, int b, int aux)
+int	detectedtour_quotes_2(char *line, int b, int aux)
 {
 	int	*counter_quotes;
 	int	p;
@@ -88,8 +88,6 @@ int	funtion_quotes_echo(char *line)
 	else
 		return (0);
 }
-
-//excepto pwd " ", echo " ", unset " " en dtectorecho_ok()
 
 int	aux_detector_1(char *line, t_shell *shell)
 {

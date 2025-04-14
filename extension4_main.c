@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:41:04 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/04/02 11:13:41 by alexander        ###   ########.fr       */
+/*   Updated: 2025/04/14 08:43:55 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@ bool	false_funtion(char *promptt)
 	return (false);
 }
 
+//35 funtion_my_free(promptt, line);
 bool	ft_readentry(char *line, char *line2,
-			t_cmd **cmds, char *promptt, t_env **envs)
+			t_cmd **cmds, t_env **envs)
 {
 	char	**tokens;
 	int		aux;
@@ -32,7 +33,7 @@ bool	ft_readentry(char *line, char *line2,
 		tokens = tokenize(line2, *envs, NULL);
 	else if (aux == 0)
 		tokens = tokenize(line, *envs, NULL);
-	funtion_my_free(promptt, line);
+	free (line);
 	if (aux == 1)
 		free(line2);
 	if (!tokens)

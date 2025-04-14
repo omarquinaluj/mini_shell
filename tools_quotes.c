@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:42:38 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/04/13 19:58:30 by alexander        ###   ########.fr       */
+/*   Updated: 2025/04/14 08:33:58 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,10 @@ char	*trimm_token_quote(char **token)
 int	handle_quotes(char *line, size_t *i)
 {
 	int	skip;
+
 	skip = skip_quotes(line + (*i));
 	if (skip == -1)
 		return (0);
 	(*i) += skip;
-	return (1); //true
+	return (1);
 }
