@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 15:11:06 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/04/14 08:51:37 by alexander        ###   ########.fr       */
+/*   Updated: 2025/04/16 09:53:17 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,7 +232,7 @@ int			ft_execute_built(t_cmd *cmd, t_env **env, t_shell *shell);
 int			ft_builtin(t_cmd *cmd, t_env **env, int len, t_shell *shell);
 t_cmd		*init_cmds(char **tokens);
 t_env		*init_envs(char **envp);
-char		*expand_variable_2(const char *input);
+char		*expand_variable_2(char *input);
 void		funtion_perror(char *txt, char **buffer, int fd);
 char		*read_hostname_file(int fd, char **buffer, ssize_t *buffer_size,
 				ssize_t *total_read);
@@ -270,6 +270,8 @@ int			*contquotes(char *line, int aux);
 int			aux_counterquotes_aux(char *line, int j);
 int			dtectoreunset_ok(char *line);
 int			dtectorepwd_ok(char *line);
+char		*ft_strncpy(char *dest, const char *src, size_t n);
+char		*ft_strcpy(char *dest, const char *src);
 bool		false_funtion(char *promptt);
 
 #endif

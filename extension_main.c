@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:41:04 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/03/20 11:59:27 by alexander        ###   ########.fr       */
+/*   Updated: 2025/04/16 09:51:40 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,29 +61,29 @@ t_env	*init_envs(char **envp)
 	return (env);
 }
 
-char	*expand_variable_2(const char *input)
+char	*expand_variable_2(char *input)
 {
 	size_t	len;
 	char	*var_name;
 	char	*value;
 	char	*result;
 
-	if (!input || strlen(input) < 4 || input[0] != '$' || input[1] != '('
-		|| input[strlen(input) - 1] != ')')
+	if (!input || ft_strlen(input) < 4 || input[0] != '$' || input[1] != '('
+		|| input[ft_strlen(input) - 1] != ')')
 		return (NULL);
-	len = strlen(input) - 3;
+	len = ft_strlen(input) - 3;
 	var_name = (char *)malloc(len + 1);
 	if (!var_name)
 		return (NULL);
-	strncpy(var_name, input + 2, len);
+	ft_strncpy(var_name, input + 2, len);
 	var_name[len] = '\0';
 	value = getenv(var_name);
 	free(var_name);
 	if (value)
 	{
-		result = (char *)malloc(strlen(value) + 1);
+		result = (char *)malloc(ft_strlen(value) + 1);
 		if (result)
-			strcpy(result, value);
+			ft_strcpy(result, value);
 		return (result);
 	}
 	return (NULL);
