@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:41:04 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/04/16 09:30:53 by alexander        ###   ########.fr       */
+/*   Updated: 2025/04/16 10:02:25 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,7 @@ static int	program(t_cmd **cmds, t_env **envs, t_shell *shell)
 		if (*cmds)
 		{
 			set_env(envs, "_", ft_strdup(last_cmd_arg(*cmds)));
-			//printtokens(cmds);
 			shell->exit_status = 0;
-			// retorne el exit status capaz que tenga -
-			// que hacer parte o implementalos atraves de una estrcutura
 			ft_init_exec(cmds, envs, shell);
 		}
 		if (g_sig > 0)
@@ -64,7 +61,7 @@ static int	program(t_cmd **cmds, t_env **envs, t_shell *shell)
 		if (g_sig == SIGINT)
 			shell->exit_status = 130;
 		set_env(envs, "?", ft_itoa(shell->exit_status));
-		if (shell->force_exit /* || is_child_process(*cmds) */)
+		if (shell->force_exit)
 			return (free_cmds(*cmds), shell->exit_status);
 		free_cmds(*cmds);
 	}

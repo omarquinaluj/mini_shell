@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 14:09:31 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/04/13 19:56:56 by alexander        ###   ########.fr       */
+/*   Updated: 2025/04/16 10:01:50 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,6 @@ size_t	count_tokens(char *line)
 		if (!loop_count_tokens(line, &i, &count))
 			return (0);
 	}
-	//if (!control_cases(line) && !is_arrows(line))
-		//error_st("", "syntax error near unexpected token `newline'", 2);
 	if ((line[i] == '\0' && !is_space(line[i - 1])
 			&& line[i - 1] != '<' && line[i - 1] != '>')
 		|| (check_end_by_quote(line, i) && count == 0))
