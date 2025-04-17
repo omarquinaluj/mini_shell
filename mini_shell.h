@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 15:11:06 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/04/16 09:53:17 by alexander        ###   ########.fr       */
+/*   Updated: 2025/04/17 18:59:59 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,8 +243,8 @@ char		*get_hostname(void);
 void		str_plus(char *result, char *str2, int len1, int len2);
 char		*concat_strings(char *str1, char *str2);
 char		*funtion_prompt(void);
-bool		ft_readentry(char *line, char *line2,
-				t_cmd **cmds, t_env **envs, t_shell *shell);
+bool		ft_readentry(char *line, t_cmd **cmds,
+				t_env **envs, t_shell *shell);
 void		funtion_my_free(char *promptt, char *line);
 char		*funtion_aux2(void);
 int			is_builtin(t_cmd *cmd);
