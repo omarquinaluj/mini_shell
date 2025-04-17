@@ -64,22 +64,23 @@ int	chequer_quotes(char *line, t_shell *shell)
 {
 	int	b;
 
+	b = 0;
 	if (detected_quotes(line) == 1 && detectorecho_ok(line) == 0)
 	{
 		if (detectedtour_quotes(line) == 1)
-			b = aux_detector_1(line, shell);
+			b = aux_detector_1(line);
 		if (detectedtour_quotes(line) == 2)
-			b = aux_detector_2(line, shell);
+			b = aux_detector_2(line);
 	}
 	if (b == 1)
 	{
-		printf("command not found\n");
+		error_stb("command not found", 127, shell);
 		return (1);
 	}
 	if (detectorecho_ok(line) == 1)
 	{
-		if (funtion_quotes_echo(line) == 1)
-			return (shell->exit_status = 0, 1);
+		if (funtion_quotes_echo(line, shell) == 1)
+			return (1);
 		else
 			return (0);
 	}

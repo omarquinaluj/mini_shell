@@ -45,7 +45,7 @@ pid_t	ft_execute(t_cmd *current, char **envp, int infile, int outfile)
 		if (execve(current->pth_cmd, current->cmd, envp) == -1)
 		{
 			free(current->pth_cmd);
-			exit(1);
+			exit(127);
 		}
 	}
 	return (pid);

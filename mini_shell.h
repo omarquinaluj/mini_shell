@@ -131,7 +131,7 @@ char		*get_next_token(char **line, t_env *envs, bool *split_token,
 				char *tokenpre);
 int			loop_count_tokens(char *line, size_t *i, size_t *count);
 size_t		count_tokens(char *line);
-char		**tokenize(char *line, t_env *envs, char *pretoken);
+char		**tokenize(char *line, t_env *envs, char *pretoken, t_shell *shell);
 
 int			skip_quotes(char *line);
 int			isinquote(char *token, size_t *i);
@@ -151,12 +151,13 @@ void		increase_token_index(size_t *count, size_t *i);
 bool		special_char(char c);
 
 //utils parsing
-bool		check_tokens(char **tokens, int i);
+bool		check_tokens(char **tokens, int i, t_shell *shell);
 bool		check_newline(char **tokens);
-bool		handle_unexpected(char ***tokens);
+bool		handle_unexpected(char ***tokens, t_shell *shell);
 //funciones de errores
-void		error_unexpected(char *token, size_t len);
+void		error_unexpected(char *token, size_t len, t_shell *shell);
 void		error(char *msg, char *more);
+void		error_stb(char *msg, int exit_status, t_shell *shell);
 void		error_st(char *msg, char *more, int exit_status, t_shell *shell);
 void		error_numerical_arg(char *name, char *arg);
 void		error_write(char *cmd);
@@ -243,7 +244,7 @@ void		str_plus(char *result, char *str2, int len1, int len2);
 char		*concat_strings(char *str1, char *str2);
 char		*funtion_prompt(void);
 bool		ft_readentry(char *line, char *line2,
-				t_cmd **cmds, t_env **envs);
+				t_cmd **cmds, t_env **envs, t_shell *shell);
 void		funtion_my_free(char *promptt, char *line);
 char		*funtion_aux2(void);
 int			is_builtin(t_cmd *cmd);
@@ -252,9 +253,9 @@ int			ft_compared(char *line);
 int			chequer_quotes(char *line, t_shell *shell);
 int			detectedtour_quotes_1(char *line, int b, int aux);
 int			detectedtour_quotes_2(char *line, int b, int aux);
-int			funtion_quotes_echo(char *line);
-int			aux_detector_1(char *line, t_shell *shell);
-int			aux_detector_2(char *line, t_shell *shell);
+int			funtion_quotes_echo(char *line, t_shell *shell);
+int			aux_detector_1(char *line);
+int			aux_detector_2(char *line);
 int			writequotes_34(char *line);
 int			is_valid(char *line, int *position, int aux);
 int			detectorecho(char *line, int i, int p);

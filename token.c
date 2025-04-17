@@ -117,7 +117,7 @@ size_t	count_tokens(char *line)
 	return (count);
 }
 
-char	**tokenize(char *line, t_env *envs, char *pretoken)
+char	**tokenize(char *line, t_env *envs, char *pretoken, t_shell *shell)
 {
 	size_t	i;
 	size_t	j;
@@ -142,5 +142,5 @@ char	**tokenize(char *line, t_env *envs, char *pretoken)
 		pretoken = tokens[j - 1];
 	}
 	tokens[j] = NULL;
-	return (handle_unexpected(&tokens), tokens);
+	return (handle_unexpected(&tokens, shell), tokens);
 }

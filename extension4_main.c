@@ -22,7 +22,7 @@ bool	false_funtion(char *promptt)
 
 //35 funtion_my_free(promptt, line);
 bool	ft_readentry(char *line, char *line2,
-			t_cmd **cmds, t_env **envs)
+			t_cmd **cmds, t_env **envs, t_shell *shell)
 {
 	char	**tokens;
 	int		aux;
@@ -30,9 +30,9 @@ bool	ft_readentry(char *line, char *line2,
 	aux = ft_compared(line);
 	tokens = NULL;
 	if (aux == 1)
-		tokens = tokenize(line2, *envs, NULL);
+		tokens = tokenize(line2, *envs, NULL, shell);
 	else if (aux == 0)
-		tokens = tokenize(line, *envs, NULL);
+		tokens = tokenize(line, *envs, NULL, shell);
 	free (line);
 	if (aux == 1)
 		free(line2);

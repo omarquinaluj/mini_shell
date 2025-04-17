@@ -12,7 +12,7 @@
 
 #include "mini_shell.h"
 
-void	error_unexpected(char *token, size_t len)
+void	error_unexpected(char *token, size_t len, t_shell *shell)
 {
 	char	*str;
 
@@ -21,6 +21,7 @@ void	error_unexpected(char *token, size_t len)
 	ft_putstr_fd("syntax error near unexpected token '", STDERR_FILENO);
 	ft_putstr_fd(str, STDERR_FILENO);
 	ft_putstr_fd("'\n", STDERR_FILENO);
+	shell->exit_status = 2;
 	free (str);
 }
 
@@ -34,6 +35,14 @@ void	error(char *msg, char *more)
 		ft_putstr_fd(more, STDERR_FILENO);
 	}
 	ft_putchar_fd('\n', STDERR_FILENO);
+}
+
+void	error_stb(char *msg, int exit_status, t_shell *shell)
+{
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(msg, STDERR_FILENO);
+	ft_putchar_fd('\n', STDERR_FILENO);
+	shell->exit_status = exit_status;
 }
 
 void	error_st(char *msg, char *more, int exit_status, t_shell *shell)

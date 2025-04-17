@@ -44,11 +44,6 @@ int	obtain_last_status(int *status)
 	return (WEXITSTATUS(*status));
 }
 
-void	handle_eof(void)
-{
-	g_sig = -1;
-}
-
 void	sig_parent(void)
 {
 	signal(SIGINT, main_signal);

@@ -40,7 +40,7 @@ static	bool	readentry(t_env **envs, t_cmd **cmds, t_shell *shell)
 			free(line);
 	}
 	free (promptt);
-	return (ft_readentry(line, line2, cmds, envs));
+	return (ft_readentry(line, line2, cmds, envs, shell));
 }
 
 static int	program(t_cmd **cmds, t_env **envs, t_shell *shell)

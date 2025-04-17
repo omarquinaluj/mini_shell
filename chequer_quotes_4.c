@@ -68,7 +68,7 @@ int	detectedtour_quotes_2(char *line, int b, int aux)
 	return (aux);
 }
 
-int	funtion_quotes_echo(char *line)
+int	funtion_quotes_echo(char *line, t_shell *shell)
 {
 	int	aux;
 	int	b;
@@ -84,12 +84,15 @@ int	funtion_quotes_echo(char *line)
 		aux = detectedtour_quotes_2(line, b, aux);
 	}
 	if (aux != 0)
-		return (write(1, "command not found\n", 18), 1);
+	{
+		error_stb("command not found", 127, shell);
+		return (1);
+	}
 	else
 		return (0);
 }
 
-int	aux_detector_1(char *line, t_shell *shell)
+int	aux_detector_1(char *line)
 {
 	int	b;
 	int	*counter_quotes;
@@ -98,14 +101,13 @@ int	aux_detector_1(char *line, t_shell *shell)
 	counter_quotes = contquotes(line, b);
 	if (is_valid(line, counter_quotes, b) == 1)
 	{
-		shell->exit_status = 0;
 		return (free(counter_quotes), 1);
 	}
 	else
 		return (free(counter_quotes), 0);
 }
 
-int	aux_detector_2(char *line, t_shell *shell)
+int	aux_detector_2(char *line)
 {
 	int	b;
 	int	*counter_quotes;
@@ -114,7 +116,6 @@ int	aux_detector_2(char *line, t_shell *shell)
 	counter_quotes = contquotes_34(line, b);
 	if (is_valid(line, counter_quotes, b) == 1)
 	{
-		shell->exit_status = 0;
 		return (free(counter_quotes), 1);
 	}
 	else
