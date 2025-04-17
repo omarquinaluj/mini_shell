@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:43:18 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/04/01 09:29:52 by alexander        ###   ########.fr       */
+/*   Updated: 2025/04/17 13:18:18 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	ft_breack_check(t_cmd *crt, char **envp, t_shell *shell)
 {
 	if (((crt->cmd && !crt->cmd[0]) || (ft_check_cmd(crt, envp) != 0))
 		&& (!(is_builtin(crt) || (is_arrows(crt)))))
-		error_st(crt->name_cmd, "command not found", 127, shell);
+		error_st(crt->name_cmd, "command not found", 130, shell);
 	else if (crt->infile && (!crt->infile[0] || !crt->infile[1]))
 		perror ("falla el infile");
 	else if (crt->outfile && (!crt->outfile[0] || !crt->outfile[1]))
