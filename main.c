@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:41:04 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/04/16 10:02:25 by alexander        ###   ########.fr       */
+/*   Updated: 2025/04/17 19:00:33 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,8 @@ static	bool	readentry(t_env **envs, t_cmd **cmds, t_shell *shell)
 {
 	char	*line;
 	char	*promptt;
-	char	*line2;
-	int		aux;
 
 	*cmds = NULL;
-	line2 = NULL;
 	promptt = funtion_aux2();
 	line = readline(promptt);
 	if (!line)
@@ -32,15 +29,8 @@ static	bool	readentry(t_env **envs, t_cmd **cmds, t_shell *shell)
 		return (funtion_my_free(promptt, line), true);
 	if (chequer_quotes(line, shell) == 1)
 		return (funtion_my_free(promptt, line), true);
-	aux = ft_compared(line);
-	if (aux == 1)
-	{
-		line2 = ft_dup_line(line);
-		if (!line2)
-			free(line);
-	}
 	free (promptt);
-	return (ft_readentry(line, line2, cmds, envs, shell));
+	return (ft_readentry(line, cmds, envs, shell));
 }
 
 static int	program(t_cmd **cmds, t_env **envs, t_shell *shell)

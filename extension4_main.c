@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:41:04 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/04/16 10:01:32 by alexander        ###   ########.fr       */
+/*   Updated: 2025/04/17 18:59:08 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,20 @@ bool	false_funtion(char *promptt)
 }
 
 //35 funtion_my_free(promptt, line);
-bool	ft_readentry(char *line, char *line2,
-			t_cmd **cmds, t_env **envs, t_shell *shell)
+bool	ft_readentry(char *line, t_cmd **cmds, t_env **envs, t_shell *shell)
 {
 	char	**tokens;
 	int		aux;
+	char	*line2;
 
+	line2 = NULL;
 	aux = ft_compared(line);
+	if (aux == 1)
+	{
+		line2 = ft_dup_line(line);
+		if (!line2)
+			free(line);
+	}
 	tokens = NULL;
 	if (aux == 1)
 		tokens = tokenize(line2, *envs, NULL, shell);
