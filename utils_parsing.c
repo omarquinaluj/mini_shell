@@ -38,7 +38,7 @@ bool	check_tokens(char **tokens, int i, t_shell *shell)
 	return (true);
 }
 
-bool	check_newline(char **tokens)
+bool	check_newline(char **tokens, t_shell *shell)
 {
 	size_t	i;
 
@@ -49,7 +49,10 @@ bool	check_newline(char **tokens)
 		{
 			if (!tokens[i + 1] || (tokens[i][0] == '<'
 				&& tokens[i + 1][0] == '>'))
-				return (true);
+			{
+				error_unexpected(tokens[i], 1, shell);
+				return (false);
+			}
 		}
 		i++;
 	}
@@ -58,13 +61,7 @@ bool	check_newline(char **tokens)
 
 bool	handle_unexpected(char ***tokens, t_shell *shell)
 {
-	if (!check_tokens(*tokens, 0, shell))
-	{
-		free_tokens(*tokens);
-		*tokens = NULL;
-		return (false);
-	}
-	if (!check_newline(*tokens))
+	if (!check_tokens(*tokens, 0, shell) || !check_newline(*tokens, shell))
 	{
 		free_tokens(*tokens);
 		*tokens = NULL;

@@ -45,7 +45,7 @@ void	ft_wait_for_childs(t_exec exec, t_shell *shell)
 	while (j < exec.i)
 	{
 		waitpid(exec.pid[j], &status, 0);
-		if (j == exec.i - 1)
+		if (j == exec.i - 1 && exec.i >= 2)
 			update_exit_status_from_last(status, shell);
 		j++;
 	}
