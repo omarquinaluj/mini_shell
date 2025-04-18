@@ -40,7 +40,7 @@ void	ft_heredoc_write(char *line, int file, t_env **envs)
 	write(file, "\n", 1);
 }
 
-void	ft_heredoc(t_cmd *current, int file, t_env **envs)
+void	ft_heredoc(t_cmd *current, int file, t_shell *shell)
 {
 	char	*line;
 	pid_t	pid;
@@ -50,18 +50,18 @@ void	ft_heredoc(t_cmd *current, int file, t_env **envs)
 	if (pid == -1)
 		return (perror("fork"));
 	if (pid == 0)
-		auxiliar_heredoc(&line, current, file, envs);
+		auxiliar_heredoc(&line, current, file, shell);
 	else
 	{
 		signal(SIGINT, SIG_IGN);
 		waitpid(pid, &status, 0);
 		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
 		{
+			shell->exit_status = 128 + SIGINT;
 			close(file);
-			unlink(current->pth_hd);
-			free(current->pth_hd);
-			current->pth_hd = NULL;
 		}
+		else if (WIFEXITED(status))
+			shell->exit_status = WEXITSTATUS(status);
 	}
 }
 
@@ -89,7 +89,7 @@ char	*ft_temp_name(void)
 	return (NULL);
 }
 
-void	ft_init_heredoc(t_cmd *current, t_env **envs)
+void	ft_init_heredoc(t_cmd *current, t_shell *shell)
 {
 	int	fd;
 
@@ -111,7 +111,7 @@ void	ft_init_heredoc(t_cmd *current, t_env **envs)
 				perror("Error al abrir archivo temporal");
 				return ;
 			}
-			ft_heredoc(current, fd, envs);
+			ft_heredoc(current, fd, shell);
 			close(fd);
 		}
 		current = current->next;
