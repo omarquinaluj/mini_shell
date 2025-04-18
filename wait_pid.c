@@ -12,23 +12,29 @@
 
 #include "mini_shell.h"
 
-void	update_exit_status_from_last(int status, t_shell *shell)
+pid_t	ft_execute(t_cmd *current, char **envp, int infile, int outfile)
 {
-	int	exit_code;
-	int	sig;
+	pid_t	pid;
 
-	sig = 0;
-	exit_code = 0;
-	if (WIFSIGNALED(status))
+	pid = ft_fork();
+	if (pid == 0)
 	{
-		sig = WTERMSIG(status);
-		if (sig == SIGINT)
-			write(STDOUT_FILENO, "\n", 1);
-		else if (sig == SIGQUIT)
-			ft_putstr_fd("Quit (core dumped)\n", 2);
-		shell->exit_status = 128 + sig;
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
+		ft_infile(current, infile);
+		ft_outfile(current, outfile);
+		if (execve(current->pth_cmd, current->cmd, envp) == -1)
+		{
+			free(current->pth_cmd);
+			exit(127);
+		}
 	}
-	else if (WIFEXITED(status))
+	return (pid);
+}
+
+void	update_exit_status_from_last(int status, t_shell *shell, int exit_code)
+{
+	if (WIFEXITED(status))
 	{
 		exit_code = WEXITSTATUS(status);
 		if (shell->exit_status == 127)
@@ -40,13 +46,19 @@ void	ft_wait_for_childs(t_exec exec, t_shell *shell)
 {
 	int	j;
 	int	status;
+	int	sig;
+	int	exit_code;
 
+	exit_code = 0;
+	sig = 0;
 	j = 0;
 	while (j < exec.i)
 	{
 		waitpid(exec.pid[j], &status, 0);
+		exit_code = obtain_last_status(&status);
+		shell->exit_status = exit_code;
 		if (j == exec.i - 1 && exec.i >= 2)
-			update_exit_status_from_last(status, shell);
+			update_exit_status_from_last(status, shell, exit_code);
 		j++;
 	}
 	free(exec.pid);

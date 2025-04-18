@@ -31,26 +31,6 @@ void	ft_pipe(int fd[2])
 		perror("pipe");
 }
 
-pid_t	ft_execute(t_cmd *current, char **envp, int infile, int outfile)
-{
-	pid_t	pid;
-
-	pid = ft_fork();
-	if (pid == 0)
-	{
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
-		ft_infile(current, infile);
-		ft_outfile(current, outfile);
-		if (execve(current->pth_cmd, current->cmd, envp) == -1)
-		{
-			free(current->pth_cmd);
-			exit(127);
-		}
-	}
-	return (pid);
-}
-
 int	ft_pipex(t_cmd *cmd, char **envp, int file, t_exec exec)
 {
 	int	pipex[2];
@@ -63,31 +43,39 @@ int	ft_pipex(t_cmd *cmd, char **envp, int file, t_exec exec)
 	return (pipex[READ]);
 }
 
+void	execution_loop(t_cmd *crt, t_shell *shell, t_exec *exec, char **envp)
+{
+	while (crt)
+	{
+		if (is_builtin(crt))
+			exec->file = ft_builtin(crt, &shell->envs, exec->len, shell);
+		else if (!crt->next)
+		{
+			exec->pid[exec->i] = ft_execute(crt, envp, exec->file, 1);
+			exec->i++;
+		}
+		else
+		{
+			exec->file = ft_pipex(crt, envp, exec->file, *exec);
+			exec->i++;
+		}
+		crt = crt->next;
+	}
+}
+
 void	ft_init_exec(t_cmd **cmds, t_env **env, t_shell *shell)
 {
 	t_cmd	*current;
 	t_exec	exec;
-	int		len;
 	char	**envp;
 
 	current = *cmds;
-	len = count_cmd_nodes(*cmds);
 	envp = format_env(*env);
 	ft_check_exec(current, envp, shell);
-	ft_init_heredoc(current, env);
-	exec = init_t_exec(len);
+	ft_init_heredoc(current, shell);
+	exec = init_t_exec(*cmds);
 	signal(SIGINT, SIG_IGN);
-	while (current)
-	{
-		if (is_builtin(current))
-			exec.file = ft_builtin(current, env, len, shell);
-		else if (!current->next)
-			exec.pid[exec.i] = ft_execute(current, envp, exec.file, 1);
-		else
-			exec.file = ft_pipex(current, envp, exec.file, exec);
-		current = current->next;
-		exec.i++;
-	}
+	execution_loop(current, shell, &exec, envp);
 	ft_wait_for_childs(exec, shell);
 	ft_free_cmd(cmds, envp);
 }
