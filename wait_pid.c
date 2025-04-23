@@ -46,11 +46,9 @@ void	ft_wait_for_childs(t_exec exec, t_shell *shell)
 {
 	int	j;
 	int	status;
-	int	sig;
 	int	exit_code;
 
 	exit_code = 0;
-	sig = 0;
 	j = 0;
 	while (j < exec.i)
 	{

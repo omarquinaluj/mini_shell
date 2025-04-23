@@ -154,7 +154,7 @@ bool		special_char(char c);
 
 //utils parsing
 bool		check_tokens(char **tokens, int i, t_shell *shell);
-bool		check_newline(char **tokens, t_shell *shell);
+bool		check_newline(char **tokens);
 bool		handle_unexpected(char ***tokens, t_shell *shell);
 //funciones de errores
 void		error_unexpected(char *token, size_t len, t_shell *shell);

@@ -35,6 +35,7 @@ static	bool	readentry(t_env **envs, t_cmd **cmds, t_shell *shell)
 
 static int	program(t_cmd **cmds, t_env **envs, t_shell *shell)
 {
+	rl_bind_key('\t', rl_insert);
 	sig_parent();
 	while (1)
 	{

@@ -79,7 +79,7 @@ int	ft_compared(char *line)
 	int	i;
 
 	i = 0;
-	if (line && line[0] == ' ')
+	if (line && (line[0] == ' '))
 	{
 		while (line[i] != '\0')
 		{

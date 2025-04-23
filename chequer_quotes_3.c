@@ -66,7 +66,7 @@ int	is_valid(char *line, int *position, int aux)
 		j = position[b + 1];
 		while (i < j)
 		{
-			if (line[i] == ' ')
+			if (line[i] == ' ' || (line[i] >= 9 && line[i] <= 13))
 				return (1);
 			i++;
 		}

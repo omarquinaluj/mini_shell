@@ -31,7 +31,7 @@ int	detectedtour_quotes_1(char *line, int b, int aux)
 	{
 		while (i < p)
 		{
-			if (line[i] == ' ')
+			if (line[i] == ' ' || (line[i] >= 9 && line[i] <= 13))
 				aux++;
 			i++;
 		}
@@ -59,7 +59,7 @@ int	detectedtour_quotes_2(char *line, int b, int aux)
 	{
 		while (i < p)
 		{
-			if (line[i] == ' ')
+			if (line[i] == ' ' || (line[i] >= 9 && line[i] <= 13))
 				aux++;
 			i++;
 		}
