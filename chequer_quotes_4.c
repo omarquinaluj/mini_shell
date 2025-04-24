@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:41:04 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/04/14 08:39:24 by alexander        ###   ########.fr       */
+/*   Updated: 2025/04/24 08:54:35 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	detectedtour_quotes_1(char *line, int b, int aux)
 	{
 		while (i < p)
 		{
-			if (line[i] == ' ' || (line[i] >= 9 && line[i] <= 13))
+			if (line[i] == ' ' || line[i] == '\t' ||(line[i] >= 9 && line[i] <= 13))
 				aux++;
 			i++;
 		}
@@ -59,7 +59,7 @@ int	detectedtour_quotes_2(char *line, int b, int aux)
 	{
 		while (i < p)
 		{
-			if (line[i] == ' ' || (line[i] >= 9 && line[i] <= 13))
+			if ((line[i] == ' ' || line[i] == '\t') || (line[i] >= 9 && line[i] <= 13))
 				aux++;
 			i++;
 		}

@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:41:04 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/04/02 09:49:11 by alexander        ###   ########.fr       */
+/*   Updated: 2025/04/24 08:54:57 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*ft_dup_line(const char *str)
 
 	if (!str)
 		return (NULL);
-	while (*str == ' ')
+	while (*str == ' ' || *str == '\t')
 		str++;
 	new_str = malloc(strlen(str) + 1);
 	if (!new_str)

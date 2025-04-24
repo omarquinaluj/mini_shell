@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:41:04 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/04/13 11:37:46 by alexander        ###   ########.fr       */
+/*   Updated: 2025/04/24 08:52:44 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	is_valid(char *line, int *position, int aux)
 		j = position[b + 1];
 		while (i < j)
 		{
-			if (line[i] == ' ' || (line[i] >= 9 && line[i] <= 13))
+			if ((line[i] == ' ' || line[i] == '\t') || (line[i] >= 9 && line[i] <= 13))
 				return (1);
 			i++;
 		}
