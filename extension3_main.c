@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:41:04 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/04/24 08:54:57 by alexander        ###   ########.fr       */
+/*   Updated: 2025/04/28 08:10:07 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	ft_compared(char *line)
 	int	i;
 
 	i = 0;
-	if (line && (line[0] == ' '))
+	if (line && (line[0] == ' ' || line[0] == '\t'))
 	{
 		while (line[i] != '\0')
 		{

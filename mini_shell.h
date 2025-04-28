@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 15:11:06 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/04/17 18:59:59 by alexander        ###   ########.fr       */
+/*   Updated: 2025/04/28 07:57:40 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,6 +275,25 @@ int			dtectoreunset_ok(char *line);
 int			dtectorepwd_ok(char *line);
 char		*ft_strncpy(char *dest, const char *src, size_t n);
 char		*ft_strcpy(char *dest, const char *src);
+void		*ft_memmove(void *dest, const void *src, size_t n);
+void		clean_quotes(char *str);
+int			ft_isspace(char c);
+bool		quotes_empty_or_spaces(const char *str, char c);
+void		aux_funtion(const char *delim, char *remaining);
+char		*dup_string(const char *origin);
+char		*ft_strtok(char *str, const char *delim);
+int			line_valid(const char *line, char c);
+void		clean_quotes_aux(char *str, char c);
+int			ft_sscanf(const char *input, const char *format, char *output);
+bool		comand_valid_aux(char *token, char *rute, char *comand);
+bool		comand_valid_axu(const char *line, char c);
+int			obtenersizehastabinslash(const char *s, char c);
+int			mi_strncmp(const char *s1, const char *s2, size_t n, char c);
+int			funtion_bin(char *line, char c);
+int			hay_espacio_entre_coma_y_bin(char *str, char c);
+int			isquotes(char *line);
+int			isbin(char *line);
+int			funtio_dettorecho(char *line, t_shell *shell);
 bool		false_funtion(char *promptt);
 
 #endif

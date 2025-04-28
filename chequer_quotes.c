@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:41:04 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/04/13 11:39:11 by alexander        ###   ########.fr       */
+/*   Updated: 2025/04/28 08:02:57 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,29 +60,71 @@ int	dtectorepwd_ok(char *line)
 	return (0);
 }
 
-int	chequer_quotes(char *line, t_shell *shell)
+int	funtion_nosuch_aux(char *line, int aux1, int b)
 {
+	aux1 = comand_valid_axu(line, '\'');
+	if (aux1 == 0)
+		b = 3;
+	else
+	{
+		aux1 = line_valid(line, '\'');
+		if (aux1 == 1)
+			b = 5;
+		else
+			b = 4;
+	}
+	return (b);
+}
+
+int	funtion_nosuch(char *line)
+{
+	int	aux1;
 	int	b;
 
 	b = 0;
-	if (detected_quotes(line) == 1 && detectorecho_ok(line) == 0)
+	if (isquotes(line) == 2)
 	{
-		if (detectedtour_quotes(line) == 1)
+		aux1 = comand_valid_axu(line, '"');
+		if (aux1 == 0)
+			b = 3;
+		else
+		{
+			aux1 = line_valid(line, '"');
+			if (aux1 == 1)
+				b = 5;
+			else
+				b = 4;
+		}
+	}
+	if (isquotes(line) == 1)
+		b = funtion_nosuch_aux(line, aux1, b);
+	return (b);
+}
+
+int	chequer_quotes(char *line, t_shell *shell)
+{
+	int	b;
+	int	aux2;
+
+	b = 0;
+	aux2 = isbin(line);
+	if (detected_quotes(line) == 1 && detectorecho_ok(line) == 0 && aux2 == 0)
+	{
+		b = funtion_nosuch(line);
+		if (detectedtour_quotes(line) == 1 && (b == 0 || b == 4))
 			b = aux_detector_1(line);
-		if (detectedtour_quotes(line) == 2)
+		if (detectedtour_quotes(line) == 2 && (b == 0 || b == 4))
 			b = aux_detector_2(line);
 	}
+	if (aux2 == 7)
+		return (error_stb("no such file or directory", 127, shell), 1);
+	if (b == 5)
+		return (error_stb("no such file or directory", 127, shell), 1);
 	if (b == 1)
-	{
-		error_stb("command not found", 127, shell);
+		return (error_stb("comand not found", 127, shell), 1);
+	if (funtio_dettorecho(line, shell))
 		return (1);
-	}
-	if (detectorecho_ok(line) == 1)
-	{
-		if (funtion_quotes_echo(line, shell) == 1)
-			return (1);
-		else
-			return (0);
-	}
+	else
+		return (0);
 	return (0);
 }
