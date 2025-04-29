@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 14:41:40 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/04/25 11:00:45 by alexander        ###   ########.fr       */
+/*   Updated: 2025/04/29 10:00:01 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*dup_string(const char *origin)
 
 	if (origin == NULL)
 		return (NULL);
-	lon = strlen(origin);
+	lon = ft_strlen(origin);
 	neuw = (char *)malloc(lon + 1);
 	if (neuw == NULL)
 		return (NULL);
@@ -69,13 +69,13 @@ int	line_valid(const char *line, char c)
 
 	if (!line)
 		return (0);
-	strncpy(copy, line, sizeof(copy));
+	ft_strncpy(copy, line, sizeof(copy));
 	copy[sizeof(copy) - 1] = '\0';
 	token = strtok(copy, " ");
 	if (!token)
 		return (0);
 	clean_quotes(token);
-	if (strlen(token) == 0)
+	if (ft_strlen(token) == 0)
 		return (0);
 	rest = strstr(line, " ");
 	if (!rest)
@@ -90,7 +90,7 @@ void	clean_quotes_aux(char *str, char c)
 	int		end;
 
 	init = 0;
-	len = strlen(str);
+	len = ft_strlen(str);
 	while (str[init] == c && (init < len))
 		init++;
 	end = len - 1;
@@ -114,9 +114,9 @@ int	ft_sscanf(const char *input, const char *format, char *output)
 	max = 0;
 	i = 0;
 	j = 0;
-	if (format[0] == '%' && format[strlen(format) - 1] == 's')
+	if (format[0] == '%' && format[ft_strlen(format) - 1] == 's')
 	{
-		max = atoi(&format[1]);
+		max = ft_atoi(&format[1]);
 		if (max <= 0)
 			max = 255;
 	}

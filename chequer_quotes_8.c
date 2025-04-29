@@ -6,35 +6,35 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 14:41:40 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/04/25 18:56:47 by alexander        ###   ########.fr       */
+/*   Updated: 2025/04/29 10:16:32 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_shell.h"
 
-int	hay_entre_coma_bin(const char *p, char c, const char *esp)
+int	get_int_quotes_and_bin(const char *p, char c, const char *esp)
 {
 	const char	*q;
-	int			hay_espacio;
+	int			iss_space;
 
 	q = p;
 	while (*q == c)
 		q++;
 	esp = q;
-	hay_espacio = 0;
+	iss_space = 0;
 	while (*esp == ' ')
 	{
-		hay_espacio = 1;
+		iss_space = 1;
 		esp++;
 	}
-	return (hay_espacio);
+	return (iss_space);
 }
 
-int	hay_espacio_entre_coma_y_bin(char *str, char c)
+int	iss_space_in_quotes_bin(char *str, char c)
 {
 	const char	*p;
 	const char	*esp;
-	int			hay_espacio;
+	int			iss_space;
 
 	p = str;
 	esp = NULL;
@@ -42,9 +42,9 @@ int	hay_espacio_entre_coma_y_bin(char *str, char c)
 	{
 		if (*p == c)
 		{
-			hay_espacio = hay_entre_coma_bin(p, c, esp);
-			if (strncmp(esp, "bin/", 4) == 0)
-				return (hay_espacio);
+			iss_space = get_int_quotes_and_bin(p, c, esp);
+			if (ft_strncmp(esp, "bin/", 4) == 0)
+				return (iss_space);
 		}
 		p++;
 	}

@@ -6,11 +6,29 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 09:47:23 by alexander         #+#    #+#             */
-/*   Updated: 2025/02/28 09:47:25 by alexander        ###   ########.fr       */
+/*   Updated: 2025/04/29 10:12:43 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_shell.h"
+
+char	*ft_strcat(char *dest, const char *src)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	j = 0;
+	while (dest[i] != '\0')
+		i++;
+	while (src[j] != '\0')
+	{
+		dest[i + j] = src[j];
+		j++;
+	}
+	dest[i + j] = '\0';
+	return (dest);
+}
 
 size_t	count_envs(t_env *envs)
 {

@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 14:41:40 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/04/24 18:33:12 by alexander        ###   ########.fr       */
+/*   Updated: 2025/04/29 09:31:58 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	clean_quotes(char *str)
 {
 	size_t	len;
 
-	len = strlen(str);
+	len = ft_strlen(str);
 	while (str[0] == '"' && len > 0)
 	{
 		ft_memmove(str, str + 1, len);
@@ -84,13 +84,13 @@ bool	quotes_empty_or_spaces(const char *str, char c)
 	const char	*second_quote;
 	const char	*p;
 
-	fist_quote = strchr(str, c);
+	fist_quote = ft_strchr(str, c);
 	if (!fist_quote)
 		return (0);
-	second_quote = strchr(fist_quote + 1, c);
+	second_quote = ft_strchr(fist_quote + 1, c);
 	if (!second_quote)
 		return (0);
-	if (strchr(second_quote + 1, c))
+	if (ft_strchr(second_quote + 1, c))
 		return (0);
 	p = fist_quote + 1;
 	while (p < second_quote)

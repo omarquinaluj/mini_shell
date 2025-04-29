@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 15:11:06 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/04/28 07:57:40 by alexander        ###   ########.fr       */
+/*   Updated: 2025/04/29 10:16:32 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,13 +287,14 @@ void		clean_quotes_aux(char *str, char c);
 int			ft_sscanf(const char *input, const char *format, char *output);
 bool		comand_valid_aux(char *token, char *rute, char *comand);
 bool		comand_valid_axu(const char *line, char c);
-int			obtenersizehastabinslash(const char *s, char c);
+int			get_size_bin(const char *s, char c);
 int			mi_strncmp(const char *s1, const char *s2, size_t n, char c);
 int			funtion_bin(char *line, char c);
-int			hay_espacio_entre_coma_y_bin(char *str, char c);
+int			iss_space_in_quotes_bin(char *str, char c);
 int			isquotes(char *line);
 int			isbin(char *line);
 int			funtio_dettorecho(char *line, t_shell *shell);
+char		*ft_strcat(char *dest, const char *src);
 bool		false_funtion(char *promptt);
 
 #endif
