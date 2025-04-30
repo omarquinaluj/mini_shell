@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 10:50:24 by alexander         #+#    #+#             */
-/*   Updated: 2025/02/19 10:51:11 by alexander        ###   ########.fr       */
+/*   Updated: 2025/04/30 17:58:20 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,12 @@
 
 void	skip_spaces(char *line, size_t *i)
 {
-	while (line[*i] && (line[*i] == ' ' || line[*i] == '\t'))
+	size_t	len;
+
+	len = ft_strlen(line);
+	if (!line || !i)
+		return ;
+	while (*i < len && line[*i] && line[*i] && (line[*i] == ' ' || line[*i] == '\t'))
 		(*i)++;
 }
 

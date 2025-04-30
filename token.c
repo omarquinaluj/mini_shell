@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 14:09:31 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/04/16 10:01:50 by alexander        ###   ########.fr       */
+/*   Updated: 2025/04/30 17:56:32 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool	loop_get_next_token(char *line, int *quote, size_t *i)
 {
-	while (line[*i] && !is_space(line[*i]))
+	while (*i < ft_strlen(line) && line[*i] && !is_space(line[*i]))
 	{
 		if (line[*i] == '\'' || line[*i] == '"')
 		{
