@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 14:41:40 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/05/01 10:35:34 by alexander        ###   ########.fr       */
+/*   Updated: 2025/05/01 11:20:59 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,18 +66,18 @@ int	line_valide(const char *line, char c)
 	char		*token;
 	const char	*rest;
 
-	strncpy(copi, line, sizeof(copi));
+	ft_strncpy(copi, line, sizeof(copi));
 	copi[sizeof(copi) - 1] = '\0';
 	token = strtok(copi, " ");
 	if (!token)
 		return (0);
 	cleandd_quotes(token, c);
-	if (strlen(token) == 0)
+	if (ft_strlen(token) == 0)
 		return (0);
-	rest = strstr(line, " ");
+	rest = ft_strstr(line, " ");
 	if (!rest)
 		return (0);
-	return (quotes_empty_or_sapces(rest, c));
+	return (quotes_empty_or_sapcess(rest, c));
 }
 
 void	clean_quotes_aux(char *str, char c)

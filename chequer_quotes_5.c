@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 14:41:40 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/05/01 10:42:14 by alexander        ###   ########.fr       */
+/*   Updated: 2025/05/01 11:29:05 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ void	cleandd_quotes(char *str, char c)
 {
 	size_t	len;
 
-	len = strlen(str);
+	len = ft_strlen(str);
 	while (str[0] == c && len > 0)
 	{
-		memmove(str, str + 1, len);
+		ft_memmove(str, str + 1, len);
 		len--;
 	}
 	while (len > 0 && str[len - 1] == c)
@@ -58,48 +58,38 @@ void	cleandd_quotes(char *str, char c)
 	}
 }
 
-int	ft_isspace(char c)
+int	while_funtion(const char **p, char c)
 {
-	const char	*spaces;
-	int			i;
-
-	i = 0;
-	spaces = " \t\n\r\f\v";
-	while (spaces[i])
+	(*p)++;
+	while (**p && **p != c)
 	{
-		if (c == spaces[i])
-		{
-			return (1);
-		}
-		i++;
+		if (!ft_isspace((unsigned char)**p))
+			return (0);
+		(*p)++;
 	}
-	return (0);
+	if (**p != c)
+		return (0);
+	(*p)++;
+	return (1);
 }
 
-int	quotes_empty_or_sapces(const char *str, char c)
+// Verifica si hay pares de comillas válidos con solo espacios entre ellas
+int	quotes_empty_or_sapcess(const char *str, char c)
 {
 	const char	*p;
 	int			have_quotes;
 
-	p = str;
 	have_quotes = 0;
+	p = str;
 	while (*p != '\0')
 	{
 		if (*p == c)
 		{
 			have_quotes = 1;
-			p++;
-			while (*p != c && *p != '\0')
-			{
-				if (!isspace((unsigned char)*p))
-					return (0);
-				p++;
-			}
-			if (*p != c)
+			if (!while_funtion(&p, c))
 				return (0);
-			p++;
 		}
-		else if (isspace((unsigned char)*p))
+		else if (ft_isspace((unsigned char)*p))
 			p++;
 		else
 			return (0);

@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 15:11:06 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/05/01 10:44:22 by alexander        ###   ########.fr       */
+/*   Updated: 2025/05/01 11:26:09 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -277,7 +277,6 @@ char		*ft_strncpy(char *dest, const char *src, size_t n);
 char		*ft_strcpy(char *dest, const char *src);
 void		*ft_memmove(void *dest, const void *src, size_t n);
 void		clean_quotes(char *str);
-int			ft_isspace(char c);
 bool		quotes_empty_or_spaces(const char *str, char c);
 void		aux_funtion(const char *delim, char *remaining);
 char		*dup_string(const char *origin);
@@ -296,8 +295,11 @@ int			isbin(char *line);
 int			funtio_dettorecho(char *line, t_shell *shell);
 char		*ft_strcat(char *dest, const char *src);
 void		cleandd_quotes(char *str, char c);
-int			quotes_empty_or_sapces(const char *str, char c);
+int			quotes_empty_or_sapcess(const char *str, char c);
 int			line_valide(const char *linea, char c);
+char		*ft_strstr(const char *haystack, const char *needle);
+//int			while_funtion(const char *p, char c);
 bool		false_funtion(char *promptt);
+int			ft_isspace(char c);
 
 #endif
