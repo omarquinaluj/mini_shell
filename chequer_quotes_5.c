@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 14:41:40 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/04/30 08:30:03 by alexander        ###   ########.fr       */
+/*   Updated: 2025/05/01 10:42:14 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,17 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 	return (dest);
 }
 
-// Elimina comillas alrededor de un string
-void	clean_quotes(char *str)
+void	cleandd_quotes(char *str, char c)
 {
 	size_t	len;
 
-	len = ft_strlen(str);
-	while (str[0] == '"' && len > 0)
+	len = strlen(str);
+	while (str[0] == c && len > 0)
 	{
-		ft_memmove(str, str + 1, len);
+		memmove(str, str + 1, len);
 		len--;
 	}
-	while (len > 0 && str[len - 1] == '"')
+	while (len > 0 && str[len - 1] == c)
 	{
 		str[len - 1] = '\0';
 		len--;
@@ -77,29 +76,35 @@ int	ft_isspace(char c)
 	return (0);
 }
 
-// Verifica si el argumento entre comillas está vacío o contiene solo spaces
-bool	quotes_empty_or_spaces(const char *str, char c)
+int	quotes_empty_or_sapces(const char *str, char c)
 {
-	const char	*fist_quote;
-	const char	*second_quote;
 	const char	*p;
+	int			have_quotes;
 
-	fist_quote = ft_strchr(str, c);
-	if (!fist_quote)
-		return (0);
-	second_quote = ft_strchr(fist_quote + 1, c);
-	if (!second_quote)
-		return (0);
-	if (ft_strchr(second_quote + 1, c))
-		return (0);
-	p = fist_quote + 1;
-	while (p < second_quote)
+	p = str;
+	have_quotes = 0;
+	while (*p != '\0')
 	{
-		if (!ft_isspace((unsigned char)*p))
+		if (*p == c)
+		{
+			have_quotes = 1;
+			p++;
+			while (*p != c && *p != '\0')
+			{
+				if (!isspace((unsigned char)*p))
+					return (0);
+				p++;
+			}
+			if (*p != c)
+				return (0);
+			p++;
+		}
+		else if (isspace((unsigned char)*p))
+			p++;
+		else
 			return (0);
-		p++;
 	}
-	return (1);
+	return (have_quotes);
 }
 
 void	aux_funtion(const char *delim, char *remaining)

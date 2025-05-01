@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 14:41:40 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/04/29 10:00:01 by alexander        ###   ########.fr       */
+/*   Updated: 2025/05/01 10:35:34 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,27 +60,24 @@ char	*ft_strtok(char *str, const char *delim)
 	return (init);
 }
 
-// Función que une todo: limpia el comand y revisa el argumento
-int	line_valid(const char *line, char c)
+int	line_valide(const char *line, char c)
 {
-	char		copy[256];
+	char		copi[256];
 	char		*token;
 	const char	*rest;
 
-	if (!line)
-		return (0);
-	ft_strncpy(copy, line, sizeof(copy));
-	copy[sizeof(copy) - 1] = '\0';
-	token = strtok(copy, " ");
+	strncpy(copi, line, sizeof(copi));
+	copi[sizeof(copi) - 1] = '\0';
+	token = strtok(copi, " ");
 	if (!token)
 		return (0);
-	clean_quotes(token);
-	if (ft_strlen(token) == 0)
+	cleandd_quotes(token, c);
+	if (strlen(token) == 0)
 		return (0);
 	rest = strstr(line, " ");
 	if (!rest)
 		return (0);
-	return (quotes_empty_or_spaces(rest, c));
+	return (quotes_empty_or_sapces(rest, c));
 }
 
 void	clean_quotes_aux(char *str, char c)

@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:41:04 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/04/28 08:02:57 by alexander        ###   ########.fr       */
+/*   Updated: 2025/05/01 10:43:39 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	funtion_nosuch_aux(char *line, int aux1, int b)
 		b = 3;
 	else
 	{
-		aux1 = line_valid(line, '\'');
+		aux1 = line_valide(line, '\'');
 		if (aux1 == 1)
 			b = 5;
 		else
@@ -89,7 +89,7 @@ int	funtion_nosuch(char *line)
 			b = 3;
 		else
 		{
-			aux1 = line_valid(line, '"');
+			aux1 = line_valide(line, '"');
 			if (aux1 == 1)
 				b = 5;
 			else

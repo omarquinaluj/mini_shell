@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 15:11:06 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/04/29 10:16:32 by alexander        ###   ########.fr       */
+/*   Updated: 2025/05/01 10:44:22 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -295,6 +295,9 @@ int			isquotes(char *line);
 int			isbin(char *line);
 int			funtio_dettorecho(char *line, t_shell *shell);
 char		*ft_strcat(char *dest, const char *src);
+void		cleandd_quotes(char *str, char c);
+int			quotes_empty_or_sapces(const char *str, char c);
+int			line_valide(const char *linea, char c);
 bool		false_funtion(char *promptt);
 
 #endif
