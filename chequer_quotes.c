@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:41:04 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/05/01 10:43:39 by alexander        ###   ########.fr       */
+/*   Updated: 2025/05/02 08:06:50 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ int	chequer_quotes(char *line, t_shell *shell)
 	if (detected_quotes(line) == 1 && detectorecho_ok(line) == 0 && aux2 == 0)
 	{
 		b = funtion_nosuch(line);
+		printf("%d\n", b);
 		if (detectedtour_quotes(line) == 1 && (b == 0 || b == 4))
 			b = aux_detector_1(line);
 		if (detectedtour_quotes(line) == 2 && (b == 0 || b == 4))
@@ -120,7 +121,7 @@ int	chequer_quotes(char *line, t_shell *shell)
 		return (error_stb("no such file or directory", 127, shell), 1);
 	if (b == 5)
 		return (error_stb("no such file or directory", 127, shell), 1);
-	if (b == 1)
+	if (b == 1 || b == 3)
 		return (error_stb("comand not found", 127, shell), 1);
 	if (funtio_dettorecho(line, shell))
 		return (1);
