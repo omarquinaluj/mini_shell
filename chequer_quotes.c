@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:41:04 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/05/02 08:06:50 by alexander        ###   ########.fr       */
+/*   Updated: 2025/05/02 08:13:07 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,6 @@ int	chequer_quotes(char *line, t_shell *shell)
 	if (detected_quotes(line) == 1 && detectorecho_ok(line) == 0 && aux2 == 0)
 	{
 		b = funtion_nosuch(line);
-		printf("%d\n", b);
 		if (detectedtour_quotes(line) == 1 && (b == 0 || b == 4))
 			b = aux_detector_1(line);
 		if (detectedtour_quotes(line) == 2 && (b == 0 || b == 4))
