@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 14:41:40 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/04/30 18:00:04 by alexander        ###   ########.fr       */
+/*   Updated: 2025/05/04 10:29:14 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,15 +62,15 @@ int	get_size_bin(const char *s, char c)
 	onlyquotes = 1;
 	while (s[i] != '\0')
 	{
-		if (ft_strncmp(&s[i], "bin/", 4) == 0)
+		if (ft_strncmp(&s[i], "/bin/", 5) == 0)
 		{
 			if (onlyquotes == 0)
 			{
-				return (4);
+				return (5);
 			}
 			else
 			{
-				return (i + 4);
+				return (i + 5);
 			}
 		}
 		if (s[i] != c && s[i] != ' ')
@@ -103,7 +103,7 @@ int	mi_strncmp(const char *s1, const char *s2, size_t n, char c)
 		i++;
 		b++;
 	}
-	if (aux == 4)
+	if (aux == 5)
 		return (1);
 	return (0);
 }
@@ -114,6 +114,6 @@ int	funtion_bin(char *line, char c)
 	int	n;
 
 	n = get_size_bin(line, c);
-	aux2 = mi_strncmp(line, "bin/", n, c);
+	aux2 = mi_strncmp(line, "/bin/", n, c);
 	return (aux2);
 }
