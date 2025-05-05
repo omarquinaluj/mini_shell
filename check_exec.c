@@ -12,34 +12,6 @@
 
 #include "mini_shell.h"
 
-int	ft_check_path(t_cmd *current, char **envp)
-{
-	int		i;
-	char	**env_path;
-	char	*path;
-	char	*path_cmd;
-
-	i = ft_path(envp);
-	env_path = ft_split(envp[i] + 5, ':');
-	i = -1;
-	while (env_path[++i])
-	{
-		path = ft_strjoin(env_path[i], "/");
-		path_cmd = ft_strjoin(path, current->cmd[0]);
-		free(path);
-		if (access(path_cmd, X_OK) == 0)
-		{
-			current->pth_cmd = ft_strdup(path_cmd);
-			free(path_cmd);
-			ft_free_double(env_path);
-			return (0);
-		}
-		free(path_cmd);
-	}
-	ft_free_double(env_path);
-	return (1);
-}
-
 int	ft_check_cmd(t_cmd *current, char **envp)
 {
 	if (access(current->cmd[0], X_OK) != 0)
