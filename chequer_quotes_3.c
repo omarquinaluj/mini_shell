@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:41:04 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/04/24 09:05:41 by alexander        ###   ########.fr       */
+/*   Updated: 2025/05/07 17:50:23 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,8 @@ int	detectorecho_ok(char *line)
 			aux++;
 		i++;
 	}
-	if ((aux == j) || dtectorepwd_ok(line) || dtectoreunset_ok(line))
+	if ((aux == j) || dtectorepwd_ok(line)
+		|| dtectoreunset_ok(line) || dtectorexport_ok(line))
 		return (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 15:11:06 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/05/01 11:26:09 by alexander        ###   ########.fr       */
+/*   Updated: 2025/05/07 17:53:13 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -300,6 +300,7 @@ int			line_valide(const char *linea, char c);
 char		*ft_strstr(const char *haystack, const char *needle);
 //int			while_funtion(const char *p, char c);
 bool		false_funtion(char *promptt);
+int			dtectorexport_ok(char *line);
 int			ft_isspace(char c);
 
 #endif
