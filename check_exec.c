@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:43:18 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/04/17 13:18:18 by alexander        ###   ########.fr       */
+/*   Updated: 2025/05/08 13:14:40 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	ft_break_dl(t_cmd *current, int *i)
 	free(aux);
 }
 
-void	ft_break_redir(t_cmd *current, char **args, int *i)
+void	ft_process_single_redir(t_cmd *current, char **args, int *i)
 {
 	char	*aux;
 	int		file;
@@ -74,16 +74,25 @@ void	ft_break_redir(t_cmd *current, char **args, int *i)
 	{
 		if (current->args[*i][1] == '<')
 			ft_break_dl(current, i);
+		if (current->infile)
+			ft_free_double(current->infile);
 		current->infile = ft_split(aux, 32);
 	}
 	if (current->args[*i][0] == '>')
 	{
+		if (current->outfile)
+			ft_free_double(current->outfile);
 		current->outfile = ft_split(aux, 32);
 		file = ft_open(args[*i + 1], O_WRONLY | O_CREAT | O_TRUNC);
 		close(file);
 	}
 	(*i) += 2;
 	free(aux);
+}
+
+void	ft_break_redir(t_cmd *current, char **args, int *i)
+{
+	ft_process_single_redir(current, args, i);
 	if ((current->args[*i]) && (current->args[*i + 1])
 		&& (current->args[*i][0] == '<' || current->args[*i][0] == '>'))
 		ft_break_redir(current, args, i);

@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 14:41:40 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/05/07 17:56:11 by alexander        ###   ########.fr       */
+/*   Updated: 2025/05/08 17:44:47 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int	ft_isspace(char c)
 	}
 	return (0);
 }
-
 
 int	dtectorexport_ok(char *line)
 {

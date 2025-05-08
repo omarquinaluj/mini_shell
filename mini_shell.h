@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 15:11:06 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/05/07 17:53:13 by alexander        ###   ########.fr       */
+/*   Updated: 2025/05/08 13:42:11 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -302,5 +302,9 @@ char		*ft_strstr(const char *haystack, const char *needle);
 bool		false_funtion(char *promptt);
 int			dtectorexport_ok(char *line);
 int			ft_isspace(char c);
+int			handle_export_arg(char *arg, t_env **envs);
+int			builtin_export(t_cmd *cmd, t_env **envs);
+void		error_identifier(char *identifier);
+void		export_no_args(t_env *env);
 
 #endif
