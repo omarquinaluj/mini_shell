@@ -6,7 +6,7 @@
 /*   By: alexander <alexander@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 18:41:04 by owmarqui          #+#    #+#             */
-/*   Updated: 2025/04/16 09:51:40 by alexander        ###   ########.fr       */
+/*   Updated: 2025/05/12 10:36:51 by alexander        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,10 +110,11 @@ char	*read_hostname_file(int fd, char **buffer,
 		if (*total_read >= *buffer_size - 1)
 		{
 			*buffer_size *= 2;
-			new_buffer = (char *)realloc(*buffer, *buffer_size);
+			new_buffer = (char *)malloc(*buffer_size);
 			if (!new_buffer)
-				return (funtion_perror("Error al reasignar memoria",
-						buffer, fd), NULL);
+				return (funtion_perror("Error memoria", buffer, fd), NULL);
+			ft_memcpy(new_buffer, *buffer, *total_read);
+			free(*buffer);
 			*buffer = new_buffer;
 		}
 		bytes_read = read(fd, *buffer + *total_read,
