@@ -23,6 +23,8 @@ pid_t	ft_execute(t_cmd *current, char **envp, int infile, int outfile)
 		signal(SIGQUIT, SIG_DFL);
 		ft_infile(current, infile);
 		ft_outfile(current, outfile);
+		if (!current->pth_cmd)
+			exit(127);
 		if (execve(current->pth_cmd, current->cmd, envp) == -1)
 		{
 			free(current->pth_cmd);
