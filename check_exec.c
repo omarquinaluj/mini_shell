@@ -66,7 +66,6 @@ void	ft_break_dl(t_cmd *current, int *i)
 void	ft_process_single_redir(t_cmd *current, char **args, int *i)
 {
 	char	*aux;
-	int		file;
 
 	aux = ft_strjoin(args[*i], " ");
 	aux = ft_strjoin_gnl(aux, args[*i + 1]);
@@ -83,8 +82,6 @@ void	ft_process_single_redir(t_cmd *current, char **args, int *i)
 		if (current->outfile)
 			ft_free_double(current->outfile);
 		current->outfile = ft_split(aux, 32);
-		file = ft_open(args[*i + 1], O_WRONLY | O_CREAT | O_TRUNC);
-		close(file);
 	}
 	(*i) += 2;
 	free(aux);

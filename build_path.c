@@ -21,7 +21,7 @@ void	error_invalid(char *path)
 	ft_putstr_fd(path, STDERR_FILENO);
 	if (stat(path, &sb) == -1)
 		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
-	else if (!S_ISDIR(sb.st_mode))
+	if (!S_ISDIR(sb.st_mode))
 		ft_putstr_fd(": Not a directory\n", STDERR_FILENO);
 	else
 		ft_putstr_fd(": Unknown error\n", STDERR_FILENO);

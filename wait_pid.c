@@ -12,7 +12,7 @@
 
 #include "mini_shell.h"
 
-pid_t	ft_execute(t_cmd *current, char **envp, int infile, int outfile)
+pid_t	ft_execute(t_cmd *current, t_shell *shell, int infile, int outfile)
 {
 	pid_t	pid;
 
@@ -21,11 +21,12 @@ pid_t	ft_execute(t_cmd *current, char **envp, int infile, int outfile)
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
-		ft_infile(current, infile);
-		ft_outfile(current, outfile);
+		if (ft_infile(current, infile) != 0
+			|| ft_outfile(current, outfile, shell) != 0)
+			exit(1);
 		if (!current->pth_cmd)
 			exit(127);
-		if (execve(current->pth_cmd, current->cmd, envp) == -1)
+		if (execve(current->pth_cmd, current->cmd, shell->envp) == -1)
 		{
 			free(current->pth_cmd);
 			exit(127);
@@ -64,3 +65,4 @@ void	ft_wait_for_childs(t_exec exec, t_shell *shell)
 	free(exec.pid);
 	signal(SIGINT, main_signal);
 }
+

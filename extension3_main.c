@@ -93,3 +93,4 @@ int	ft_compared(char *line)
 	}
 	return (0);
 }
+

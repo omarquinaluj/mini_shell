@@ -18,6 +18,7 @@ SRCS := check_exec.c free_exec.c parsing.c utils_file.c\
 	chequer_quotes_2.c chequer_quotes_3.c chequer_quotes_4.c\
 	wait_pid.c chequer_quotes_5.c chequer_quotes_6.c chequer_quotes_7.c\
 	chequer_quotes_8.c chequer_quotes9.c check_path.c build_export_2.c\
+	part2_open_file.c
 
 OBJS := ${SRCS:.c=.o}
 LDFLAGS := -lreadline

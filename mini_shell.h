@@ -80,8 +80,8 @@ typedef struct s_shell
 	bool	heredoc;
 	bool	signal_heredoc;
 	bool	child_running;
-	//int		signal;
 	int		exit_status;
+	char	**envp;
 	t_env	*envs;
 }	t_shell;
 
@@ -100,7 +100,6 @@ void		add_cmd(t_cmd **cmds, t_cmd *new);
 char		*last_cmd_arg(t_cmd *cmds);
 void		free_cmds(t_cmd *cmds);
 
-bool		analysis_heredoc(t_cmd *current, char **envp, t_shell *shell);
 void		ft_check_exec(t_cmd *current, char **envp, t_shell *shell);
 int			control_cases(char *line);
 int			is_arrows(t_cmd *cmd);
@@ -116,15 +115,17 @@ int			ft_path(char **env);
 //----------executing---------------------------------------
 int			count_cmd_nodes(t_cmd *cmds);
 int			ft_open(char *file, int flags);
-void		ft_infile(struct s_cmd *ps, int std);
-void		ft_outfile(struct s_cmd *ps, int std);
+int			ft_infile(t_cmd *ps, int std);
+int			ft_outfile(t_cmd *ps, int std, t_shell *shell);
+int			ft_validate_directory(char *path, t_shell *shell);
 pid_t		ft_fork(void);
 void		ft_pipe(int fd[2]);
-pid_t		ft_execute(t_cmd *current, char **envp, int infile, int outfile);
-int			ft_pipex(t_cmd *cmd, char **envp, int file, t_exec exec);
+pid_t		ft_execute(t_cmd *current, t_shell *shell, int infile, int outfile);
+int			ft_pipex(t_cmd *cmd, t_shell *shell, int file, t_exec exec);
 void		ft_wait_for_childs(t_exec exec, t_shell *shell);
 void		ft_init_exec(t_cmd **cmds, t_env **env, t_shell *shell);
 t_exec		init_t_exec(t_cmd *cmds);
+void		free_t_exec(t_exec *exec);
 
 char		**token_split(char **tokens, size_t *i, bool *split_token, int k);
 
