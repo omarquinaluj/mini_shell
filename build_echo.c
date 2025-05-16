@@ -40,6 +40,19 @@ int	handle_options(char **args, bool *n_option)
 	return (i - 1);
 }
 
+int	auxiliar_echo(t_cmd *cmd, int i)
+{
+	if (ft_strcmp(cmd->args[i], "<") == 0)
+		return (1);
+	if (ft_strcmp(cmd->args[i], ">") == 0)
+		return (1);
+	if (ft_strcmp(cmd->args[i], ">>") == 0)
+		return (1);
+	if (ft_strcmp(cmd->args[i], "<<") == 0)
+		return (1);
+	return (0);
+}
+
 int	builtin_echo(t_cmd *cmd, t_env **envs)
 {
 	bool	n_option;
@@ -51,6 +64,8 @@ int	builtin_echo(t_cmd *cmd, t_env **envs)
 	{
 		if (cmd->args[i][0])
 		{
+			if (auxiliar_echo(cmd, i) == 1)
+				break ;
 			if (!ft_putstr_fd(cmd->args[i], STDOUT_FILENO))
 				return (error_write("echo"), EXIT_FAILURE);
 			if (cmd->args[i + 1])

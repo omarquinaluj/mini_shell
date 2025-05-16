@@ -122,7 +122,7 @@ void		ft_infile(struct s_cmd *ps, int std);
 void		ft_outfile(struct s_cmd *ps, int std);
 pid_t		ft_fork(void);
 void		ft_pipe(int fd[2]);
-pid_t		ft_execute(t_cmd *current, char **envp, t_exec exec, t_shell *shell);
+pid_t		ft_execute(t_cmd *crt, char **envp, t_exec exec, t_shell *shell);
 int			ft_pipex(t_cmd *cmd, char **envp, t_shell *shell, t_exec exec);
 void		ft_wait_for_childs(t_exec exec, t_shell *shell);
 void		ft_init_exec(t_cmd **cmds, t_env **env, t_shell *shell);
