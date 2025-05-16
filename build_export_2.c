@@ -12,42 +12,27 @@
 
 #include "mini_shell.h"
 
-int	is_valid_identifier(const char *arg)
-{
-	int	i;
-
-	if (!arg || !arg[0])
-		return (0);
-	if (!ft_isalpha(arg[0]) && arg[0] != '_')
-		return (0);
-	i = 1;
-	while (arg[i] && arg[i] != '=')
-	{
-		if (!ft_isalnum(arg[i]) && arg[i] != '_')
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
 int	handle_export_arg(char *arg, t_env **envs)
 {
-	char	*key;
-	char	*value;
-	char	*equal_sign;
+	size_t	j;
 
-	if (!is_valid_identifier(arg))
+	if (arg[0] >= '0' && arg[0] <= '9')
 		return (error_identifier(arg), EXIT_FAILURE);
-	equal_sign = ft_strchr(arg, '=');
-	if (!equal_sign)
-		return (EXIT_SUCCESS);
-	key = ft_substr(arg, 0, equal_sign - arg);
-	value = ft_strdup(equal_sign + 1);
-	if (!key || !value)
-		return (free(key), free(value), EXIT_FAILURE);
-	if (!set_env(envs, key, value))
-		return (free(key), free(value), EXIT_FAILURE);
-	free(key);
+	j = 0;
+	while (arg[j] && arg[j] != '=')
+	{
+		if (special_char(arg[j]))
+			return (error_identifier(arg), EXIT_FAILURE);
+		j++;
+	}
+	if (j == 0)
+		return (error_identifier(&arg[j]), EXIT_FAILURE);
+	if (arg[j])
+	{
+		arg[j] = '\0';
+		if (!set_env(envs, arg, ft_strdup(&arg[j + 1])))
+			return (EXIT_FAILURE);
+	}
 	return (EXIT_SUCCESS);
 }
 

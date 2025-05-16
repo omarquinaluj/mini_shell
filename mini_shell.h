@@ -70,6 +70,8 @@ typedef struct s_exec
 	pid_t	*pid;
 	int		i;
 	int		status;
+	int		infile;
+	int		outfile;
 	int		file;
 	int		len;
 }	t_exec;
@@ -80,8 +82,8 @@ typedef struct s_shell
 	bool	heredoc;
 	bool	signal_heredoc;
 	bool	child_running;
+	//int		signal;
 	int		exit_status;
-	char	**envp;
 	t_env	*envs;
 }	t_shell;
 
@@ -100,6 +102,7 @@ void		add_cmd(t_cmd **cmds, t_cmd *new);
 char		*last_cmd_arg(t_cmd *cmds);
 void		free_cmds(t_cmd *cmds);
 
+bool		analysis_heredoc(t_cmd *current, char **envp, t_shell *shell);
 void		ft_check_exec(t_cmd *current, char **envp, t_shell *shell);
 int			control_cases(char *line);
 int			is_arrows(t_cmd *cmd);
@@ -115,17 +118,15 @@ int			ft_path(char **env);
 //----------executing---------------------------------------
 int			count_cmd_nodes(t_cmd *cmds);
 int			ft_open(char *file, int flags);
-int			ft_infile(t_cmd *ps, int std);
-int			ft_outfile(t_cmd *ps, int std, t_shell *shell);
-int			ft_validate_directory(char *path, t_shell *shell);
+void		ft_infile(struct s_cmd *ps, int std);
+void		ft_outfile(struct s_cmd *ps, int std);
 pid_t		ft_fork(void);
 void		ft_pipe(int fd[2]);
-pid_t		ft_execute(t_cmd *current, t_shell *shell, int infile, int outfile);
-int			ft_pipex(t_cmd *cmd, t_shell *shell, int file, t_exec exec);
+pid_t		ft_execute(t_cmd *current, char **envp, t_exec exec, t_shell *shell);
+int			ft_pipex(t_cmd *cmd, char **envp, t_shell *shell, t_exec exec);
 void		ft_wait_for_childs(t_exec exec, t_shell *shell);
 void		ft_init_exec(t_cmd **cmds, t_env **env, t_shell *shell);
 t_exec		init_t_exec(t_cmd *cmds);
-void		free_t_exec(t_exec *exec);
 
 char		**token_split(char **tokens, size_t *i, bool *split_token, int k);
 
@@ -233,7 +234,7 @@ int			builtin_cd(t_cmd *cmd, t_env **envs);
 void		ft_echo_env_pwd(t_cmd *cmd, t_env **env, t_shell *shell);
 void		ft_cd_exit_export_unset(t_cmd *cmd, t_env **env, t_shell *shell);
 int			ft_execute_built(t_cmd *cmd, t_env **env, t_shell *shell);
-int			ft_builtin(t_cmd *cmd, t_env **env, int len, t_shell *shell);
+int			ft_run_builtin(t_cmd *cmd, t_env **env, t_shell *shell);
 t_cmd		*init_cmds(char **tokens);
 t_env		*init_envs(char **envp);
 char		*expand_variable_2(char *input);

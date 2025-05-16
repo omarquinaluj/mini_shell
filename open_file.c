@@ -31,24 +31,20 @@ int	ft_open(char *file, int flags)
 
 	fd = open(file, flags, 0644);
 	if (fd < 0)
-	{
 		perror(file);
-		return (-1);
-	}
 	return (fd);
 }
 
-int	ft_infile(t_cmd *ps, int std)
+void	ft_infile(struct s_cmd *ps, int std)
 {
 	if (ps->infile && ps->infile[0][0] == '<')
 	{
-		if (ps->infile && ps->infile[0][1] == '<'
-			&& ps->infile[0][0] == '<')
+		if (ps->infile && ps->infile[0][1] == '<' && ps->infile[0][0] == '<')
 			std = ft_open(ps->pth_hd, O_RDONLY);
 		else
 			std = ft_open(ps->infile[1], O_RDONLY);
 		if (std == -1)
-			return (-1);
+			exit(1);
 		dup2(std, STDIN_FILENO);
 		close(std);
 	}
@@ -57,26 +53,17 @@ int	ft_infile(t_cmd *ps, int std)
 		dup2(std, STDIN_FILENO);
 		close(std);
 	}
-	return (0);
 }
 
-int	ft_outfile(t_cmd *ps, int std, t_shell *shell)
+void	ft_outfile(struct s_cmd *ps, int std)
 {
-	int file;
 	if (ps->outfile && ps->outfile[0][0] == '>')
 	{
-		if (ft_validate_directory(ps->outfile[1], shell) == -1)
-		{
-			error_st(*ps->outfile, "No such file or directory", 1, shell);
-            return (-1);
-		}
 		if (ps->outfile[0][1] == '>' && ps->outfile[0][0] == '>')
-			file = ft_open(ps->outfile[1], O_WRONLY | O_CREAT | O_APPEND);
+			std = ft_open(ps->outfile[1], O_WRONLY | O_CREAT | O_APPEND);
 		else
-			file = ft_open(ps->outfile[1], O_WRONLY | O_CREAT | O_TRUNC);
-		if (file == -1)
-			return (-1);
-		dup2(file, STDOUT_FILENO);
+			std = ft_open(ps->outfile[1], O_WRONLY | O_CREAT | O_TRUNC);
+		dup2(std, STDOUT_FILENO);
 		close(std);
 	}
 	else if (std != STDOUT_FILENO)
@@ -84,5 +71,4 @@ int	ft_outfile(t_cmd *ps, int std, t_shell *shell)
 		dup2(std, STDOUT_FILENO);
 		close(std);
 	}
-	return (0);
 }

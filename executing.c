@@ -31,32 +31,33 @@ void	ft_pipe(int fd[2])
 		perror("pipe");
 }
 
-int	ft_pipex(t_cmd *cmd, t_shell *shell, int file, t_exec exec)
+int	ft_pipex(t_cmd *cmd, char **envp, t_shell *shell, t_exec exec)
 {
 	int	pipex[2];
 
 	ft_pipe(pipex);
-	exec.pid[exec.i] = ft_execute(cmd, shell, file, pipex[WRITE]);
+	exec.outfile = pipex[WRITE];
+	exec.pid[exec.i] = ft_execute(cmd, envp, exec, shell);
 	close(pipex[WRITE]);
-	if (file != STDIN_FILENO)
-		close(file);
+	if (exec.infile != STDIN_FILENO)
+		close(exec.infile);
 	return (pipex[READ]);
 }
 
-void	execution_loop(t_cmd *crt, t_shell *shell, t_exec *exec)
+void	execution_loop(t_cmd *crt, t_shell *shell, t_exec *exec, char **envp)
 {
 	while (crt)
 	{
-		if (is_builtin(crt))
-			exec->file = ft_builtin(crt, &shell->envs, exec->len, shell);
+		if (is_builtin(crt) && exec->len == 1 && !crt->infile && !crt->outfile)
+			shell->exit_status = ft_run_builtin(crt, &shell->envs, shell);
 		else if (!crt->next)
 		{
-			exec->pid[exec->i] = ft_execute(crt, shell, exec->file, 1);
+			exec->pid[exec->i] = ft_execute(crt, envp, *exec, shell);
 			exec->i++;
 		}
 		else
 		{
-			exec->file = ft_pipex(crt, shell, exec->file, *exec);
+			exec->file = ft_pipex(crt, envp, shell, *exec);
 			exec->i++;
 		}
 		crt = crt->next;
@@ -75,7 +76,7 @@ void	ft_init_exec(t_cmd **cmds, t_env **env, t_shell *shell)
 	ft_init_heredoc(current, shell);
 	exec = init_t_exec(*cmds);
 	signal(SIGINT, SIG_IGN);
-	execution_loop(current, shell, &exec);
+	execution_loop(current, shell, &exec, envp);
 	ft_wait_for_childs(exec, shell);
 	ft_free_cmd(cmds, envp);
 }

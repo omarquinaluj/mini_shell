@@ -18,6 +18,8 @@ void	funtion_return(int fd)
 	close(fd);
 }
 
+//original dividido
+
 void	funtion_while(char *buffer, ssize_t	total_read)
 {
 	int	i;
@@ -56,6 +58,11 @@ char	*get_hostname(void)
 	funtion_while(buffer, total_read);
 	return (close(fd), buffer);
 }
+//original dividida
+
+/////hahah
+
+////jahahha
 
 void	str_plus(char *result, char *str2, int len1, int len2)
 {
