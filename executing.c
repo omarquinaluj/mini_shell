@@ -36,6 +36,7 @@ int	ft_pipex(t_cmd *cmd, char **envp, t_shell *shell, t_exec exec)
 	int	pipex[2];
 
 	ft_pipe(pipex);
+	exec.infile = 0;
 	exec.outfile = pipex[WRITE];
 	exec.pid[exec.i] = ft_execute(cmd, envp, exec, shell);
 	close(pipex[WRITE]);
@@ -48,8 +49,13 @@ void	execution_loop(t_cmd *crt, t_shell *shell, t_exec *exec, char **envp)
 {
 	while (crt)
 	{
-		if (is_builtin(crt) && exec->len == 1 && !crt->infile && !crt->outfile)
-			shell->exit_status = ft_run_builtin(crt, &shell->envs, shell);
+		if (is_builtin(crt) && exec->len == 1
+			&& (crt->infile == 0 || builtin_ignores_input(crt))
+			&& crt->outfile == 0)
+		{
+			if (auxiliar_builtin_loop(crt, shell) == 1)
+				return ;
+		}
 		else if (!crt->next)
 		{
 			exec->pid[exec->i] = ft_execute(crt, envp, *exec, shell);

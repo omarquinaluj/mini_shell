@@ -27,24 +27,22 @@ int	count_cmd_nodes(t_cmd *cmds)
 
 int	ft_open(char *file, int flags)
 {
-	int	fd;
-
-	fd = open(file, flags, 0644);
-	if (fd < 0)
-		perror(file);
-	return (fd);
+	return (open(file, flags, 0644));
 }
 
-void	ft_infile(struct s_cmd *ps, int std)
+int	ft_infile(struct s_cmd *ps, int std)
 {
 	if (ps->infile && ps->infile[0][0] == '<')
 	{
-		if (ps->infile && ps->infile[0][1] == '<' && ps->infile[0][0] == '<')
+		if (ps->infile[0][1] == '<')
 			std = ft_open(ps->pth_hd, O_RDONLY);
 		else
 			std = ft_open(ps->infile[1], O_RDONLY);
 		if (std == -1)
-			exit(1);
+		{
+			perror(ps->infile[1]);
+			return (1);
+		}
 		dup2(std, STDIN_FILENO);
 		close(std);
 	}
@@ -53,9 +51,10 @@ void	ft_infile(struct s_cmd *ps, int std)
 		dup2(std, STDIN_FILENO);
 		close(std);
 	}
+	return (0);
 }
 
-void	ft_outfile(struct s_cmd *ps, int std)
+int	ft_outfile(struct s_cmd *ps, int std)
 {
 	if (ps->outfile && ps->outfile[0][0] == '>')
 	{
@@ -63,6 +62,11 @@ void	ft_outfile(struct s_cmd *ps, int std)
 			std = ft_open(ps->outfile[1], O_WRONLY | O_CREAT | O_APPEND);
 		else
 			std = ft_open(ps->outfile[1], O_WRONLY | O_CREAT | O_TRUNC);
+		if (std == -1)
+		{
+			perror(ps->outfile[1]);
+			return (1);
+		}
 		dup2(std, STDOUT_FILENO);
 		close(std);
 	}
@@ -71,4 +75,5 @@ void	ft_outfile(struct s_cmd *ps, int std)
 		dup2(std, STDOUT_FILENO);
 		close(std);
 	}
+	return (0);
 }

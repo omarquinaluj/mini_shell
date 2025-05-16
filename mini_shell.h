@@ -118,10 +118,14 @@ int			ft_path(char **env);
 //----------executing---------------------------------------
 int			count_cmd_nodes(t_cmd *cmds);
 int			ft_open(char *file, int flags);
-void		ft_infile(struct s_cmd *ps, int std);
-void		ft_outfile(struct s_cmd *ps, int std);
+int			ft_infile(struct s_cmd *ps, int std);
+int			ft_outfile(struct s_cmd *ps, int std);
 pid_t		ft_fork(void);
 void		ft_pipe(int fd[2]);
+
+bool		builtin_ignores_input(t_cmd *cmd);
+int			auxiliar_builtin_loop(t_cmd *crt, t_shell *shell);
+
 pid_t		ft_execute(t_cmd *crt, char **envp, t_exec exec, t_shell *shell);
 int			ft_pipex(t_cmd *cmd, char **envp, t_shell *shell, t_exec exec);
 void		ft_wait_for_childs(t_exec exec, t_shell *shell);
